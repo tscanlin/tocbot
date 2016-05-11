@@ -1,6 +1,6 @@
 {
   "name": "tocbot",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Generate a table of contents based on the heading structure of a html document.",
   "main": "src/js/index.js",
   "scripts": {
@@ -13,7 +13,9 @@
     "build-css-watch": "node-sass --source-map-embed --watch --include-path ./node_modules --output-style compressed -o build/assets/css src/scss",
     "build-js": "webpack src/js/index.js build/assets/js/tocbot.js -d",
     "build-js-watch": "webpack src/js/index.js build/assets/js/tocbot.js -d --watch",
-    "build-js-uglify": "webpack src/js/index.js build/assets/js/tocbot.js -d --optimize-minimize",
+    "build-js-uglify": "webpack src/js/index.js build/assets/js/tocbot.min.js -d --optimize-minimize",
+    "estimate-js-size": "gzip -9 -c build/assets/js/tocbot.min.js | wc -c",
+    "estimate-css-size": "gzip -9 -c build/assets/css/tocbot.css | wc -c",
     "build-docs": "node ./script/parse.js --src **/*.md | babel-node ./script/render.js",
     "build-docs-watch": "onchange \"**/*.js\" \"**/*.jsx\" \"**/*.md\" \"src/**/*.html\" -- npm run build-docs",
     "build-static": "cp -r src/files/* build/",
