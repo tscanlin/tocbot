@@ -182,6 +182,7 @@ tocbot.refresh()
 ### v2.1.1
 
 #### Changed
+- [patch] update file size estimates in the docs
 - [patch] switch from throwing errors to using console.warn
 
 
