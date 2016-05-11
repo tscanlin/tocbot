@@ -95,7 +95,7 @@
     try {
       document.querySelector(options.tocSelector).innerHTML = '';
     } catch (e) {
-      throw new Error('Element not found: ' + options.tocSelector);
+      console.warn('Element not found: ' + options.tocSelector); // eslint-disable-line
     }
 
 		// Remove event listeners.

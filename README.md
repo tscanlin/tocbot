@@ -179,6 +179,12 @@ tocbot.refresh()
 ## Changelog
 
 
+### v2.1.1
+
+#### Changed
+- [patch] switch from throwing errors to using console.warn
+
+
 ### v2.1
 
 #### Added
