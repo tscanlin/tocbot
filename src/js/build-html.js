@@ -45,6 +45,11 @@ module.exports = function(options) {
 
     var parent = document.querySelector(selector);
 
+    // Return if no parent is found.
+    if (parent === null) {
+      return;
+    }
+
     // Remove existing child if it exists.
     if (parent.firstChild) {
       parent.removeChild(parent.firstChild);

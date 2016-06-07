@@ -178,6 +178,12 @@ tocbot.refresh()
 ## Changelog
 
 
+### v2.1.2
+
+#### Fixed
+- [patch] prevent errors from being thrown when elements are not present and add tests.
+
+
 ### v2.1.1
 
 #### Changed

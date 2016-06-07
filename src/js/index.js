@@ -138,8 +138,12 @@
     // Destroy it if it exists first.
     tocbot.destroy();
 
-    // Get headings array
+    // Get headings array.
     headingsArray = parseContent.selectHeadings(options.contentSelector, options.headingSelector);
+    // Return if no headings are found.
+    if (headingsArray === null) {
+      return;
+    }
 
     // Build nested headings array.
     var nestedHeadingsObj = parseContent.nestHeadingsArray(headingsArray);

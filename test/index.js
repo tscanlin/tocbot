@@ -77,6 +77,22 @@ describe('Tocbot', function () {
       // The 4th event is added by smooth-scroll.
       expect(count).to.equal(4);
     });
+
+    it('should not throw an error if a content element isn\'t found', function () {
+      GLOBAL.window.tocbot.destroy();
+      expect(GLOBAL.window.tocbot.init).to.not.throw(Error);
+      GLOBAL.window.tocbot.init({
+        tocSelector: '.missing'
+      });
+    });
+
+    it('should not throw an error if a toc element isn\'t found', function () {
+      GLOBAL.window.tocbot.destroy();
+      expect(GLOBAL.window.tocbot.init).to.not.throw(Error);
+      GLOBAL.window.tocbot.init({
+        contentSelector: '.not-here'
+      });
+    });
   });
 
   describe('#destroy', function () {

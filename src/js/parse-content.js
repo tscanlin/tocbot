@@ -92,6 +92,7 @@ module.exports = function parseContent(options) {
         .querySelectorAll(selectors);
     } catch (e) {
       console.warn('Element not found: ' + contentSelector); // eslint-disable-line
+      return null;
     }
   }
 
