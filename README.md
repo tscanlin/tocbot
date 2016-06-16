@@ -1,6 +1,6 @@
 <h1 class="display--none">
 <a href="http://tscanlin.github.io/tocbot">Tocbot</a>
-<img src="https://travis-ci.org/tscanlin/tocbot.svg?branch=master" alt="travis-ci" />
+<a href="https://travis-ci.org/tscanlin/tocbot" target="_blank"><img src="https://travis-ci.org/tscanlin/tocbot.svg?branch=master" alt="travis-ci" /></a>
 </h1>
 
 
