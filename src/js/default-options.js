@@ -30,6 +30,8 @@ module.exports = {
   // Class that gets added when a list should be able
   // to be collapsed but isn't necessarily collpased.
   collapsibleClass: 'is-collapsible',
+  // Class to add to list items.
+  listItemClass: 'toc-list-item',
   // How many heading levels should not be collpased.
   // For example, number 6 will show everything since
   // there are only 6 heading levels and number 0 will collpase them all.
