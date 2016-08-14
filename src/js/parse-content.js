@@ -37,7 +37,8 @@ module.exports = function parseContent(options) {
       children: [],
       nodeName: heading.nodeName,
       headingLevel: getHeadingLevel(heading),
-      textContent: heading.textContent.trim()
+      textContent: heading.textContent.trim(),
+      childNodes: heading.childNodes
     };
   }
 
