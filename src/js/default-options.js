@@ -59,5 +59,8 @@ module.exports = {
   // fixedSidebarOffset can be any number but by default is set
   // to auto which sets the fixedSidebarOffset to the sidebar
   // element's offsetTop from the top of the document on init.
-  fixedSidebarOffset: 'auto'
+  fixedSidebarOffset: 'auto',
+  // includeHtml can be set to true to include the HTML markup from the
+  // heading node instead of just including the textContent.
+  includeHtml: false
 };

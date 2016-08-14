@@ -32,14 +32,19 @@ module.exports = function parseContent(options) {
    * @return {Object}
    */
   function getHeadingObject(heading) {
-    return {
+    var obj = {
       id: heading.id,
       children: [],
       nodeName: heading.nodeName,
       headingLevel: getHeadingLevel(heading),
-      textContent: heading.textContent.trim(),
-      childNodes: heading.childNodes
+      textContent: heading.textContent.trim()
     };
+
+    if (options.includeHtml) {
+      obj.childNodes = heading.childNodes;
+    }
+
+    return obj;
   }
 
   /**

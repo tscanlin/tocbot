@@ -67,11 +67,17 @@ module.exports = function(options) {
   function createLink(data) {
     var item = document.createElement('li');
     var a = document.createElement('a');
-    item.setAttribute('class', options.listItemClass);
-    // a.textContent = data.textContent;
-    forEach.call(data.childNodes, function(node) {
-      a.appendChild(node.cloneNode(true));
-    });
+    if (options.listItemClass) {
+      item.setAttribute('class', options.listItemClass);
+    }
+    if (options.includeHtml && data.childNodes.length) {
+      forEach.call(data.childNodes, function(node) {
+        a.appendChild(node.cloneNode(true));
+      });
+    } else {
+      // Default behavior.
+      a.textContent = data.textContent;
+    }
     // Property for smooth-scroll.
     a.setAttribute('data-scroll', '');
     a.setAttribute('href', '#' + data.id);

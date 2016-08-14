@@ -139,7 +139,10 @@ positionFixedClass: 'is-position-fixed',
 // fixedSidebarOffset can be any number but by default is set
 // to auto which sets the fixedSidebarOffset to the sidebar
 // element's offsetTop from the top of the document on init.
-fixedSidebarOffset: 'auto'
+fixedSidebarOffset: 'auto',
+// includeHtml can be set to true to include the HTML markup from the
+// heading node instead of just including the textContent.
+includeHtml: false
 ```
 
 
@@ -180,10 +183,19 @@ tocbot.refresh()
 ## Changelog
 
 
+### v2.1.4
+
+#### Added
+- [patch] `includeHtml` option to mirror markup from the headings in the TOC (#14).
+- [patch] `listItemClass` will be omitted if an empty string in passed.
+- [dev] `test:watch` command.
+- [dev] more tests.
+
+
 ### v2.1.3
 
 #### Added
-- [patch] `listItemClass` option to set classes on list items (#12)
+- [patch] `listItemClass` option to set classes on list items (#12).
 
 
 ### v2.1.2
@@ -195,44 +207,44 @@ tocbot.refresh()
 ### v2.1.1
 
 #### Changed
-- [patch] update file size estimates in the docs
-- [patch] switch from throwing errors to using console.warn
+- [patch] update file size estimates in the docs.
+- [patch] switch from throwing errors to using console.warn.
 
 
 ### v2.1
 
 #### Added
-- [minor] add `positionFixedSelector` option to specify the element to add a fixed position class to
-- [dev] use travis-ci for builds
+- [minor] add `positionFixedSelector` option to specify the element to add a fixed position class to.
+- [dev] use travis-ci for builds.
 
 
 ### v2.0
 
 #### Added
-- [major] smooth-scroll is included by default now
-- [patch] throttling support to improve performance, also the `throttleTimeout` option
-- [patch] new "try it now" option on documentation site
+- [major] smooth-scroll is included by default now.
+- [patch] throttling support to improve performance, also the `throttleTimeout` option.
+- [patch] new "try it now" option on documentation site.
 
 #### Changed
-- [minor] broke up scss files and separate tocbot styles better
-- [minor] default option for `contentSelector` to be `.js-toc-content`
-- [minor] default option for `ignoreSelector` to be `.js-toc-ignore`
-- [minor] default option for `collapsibleClass` to be `.is-collapsible`
-- [patch] reorder `default-options.js`
-- [patch] update documentation
+- [minor] broke up scss files and separate tocbot styles better.
+- [minor] default option for `contentSelector` to be `.js-toc-content`.
+- [minor] default option for `ignoreSelector` to be `.js-toc-ignore`.
+- [minor] default option for `collapsibleClass` to be `.is-collapsible`.
+- [patch] reorder `default-options.js`.
+- [patch] update documentation.
 
 #### Removed
-- [patch] dependency on classList to improve browser support
+- [patch] dependency on classList to improve browser support.
 
 #### Fixed
-- [minor] new and improved tests using jsdom
-- [dev] switched from gulp to npm scripts
-- [dev] switched from browserify to webpack
-- [dev] switched from swig to react for building the documentation
+- [minor] new and improved tests using jsdom.
+- [dev] switched from gulp to npm scripts.
+- [dev] switched from browserify to webpack.
+- [dev] switched from swig to react for building the documentation.
 
 
 ### v1.0
-- First published source code
+- First published source code.
 
 
 ## Contributing

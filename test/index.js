@@ -9,6 +9,7 @@ var TEST_HTML = fs.readFileSync('./test/data/rendered.html').toString();
 var GLOBAL = {
   window: {}
 };
+var tocbot;
 
 function spy(fn) {
   var args = [];
@@ -31,33 +32,34 @@ before(function(done) {
     ],
     function (err, window) {
       GLOBAL.window = window;
+      tocbot = window.tocbot;
       done();
     }
   );
 });
 
 beforeEach(function() {
-  GLOBAL.window.tocbot.init();
+  tocbot.init();
 });
 
 afterEach(function() {
-  GLOBAL.window.tocbot.destroy();
+  tocbot.destroy();
 });
 
 describe('Tocbot', function () {
   describe('#init', function () {
     it('should expose a global object', function () {
-      expect(GLOBAL.window.tocbot).to.not.equal(undefined);
+      expect(tocbot).to.not.equal(undefined);
     });
 
     it('should expose public functions', function () {
-      expect(GLOBAL.window.tocbot.init).to.be.a('function');
-      expect(GLOBAL.window.tocbot.destroy).to.be.a('function');
-      expect(GLOBAL.window.tocbot.refresh).to.be.a('function');
+      expect(tocbot.init).to.be.a('function');
+      expect(tocbot.destroy).to.be.a('function');
+      expect(tocbot.refresh).to.be.a('function');
     });
 
     it('should add event listeners when initialized', function () {
-      GLOBAL.window.tocbot.destroy();
+      tocbot.destroy();
       var count = 0;
       var args = [];
 
@@ -66,7 +68,7 @@ describe('Tocbot', function () {
         count++;
       };
 
-      GLOBAL.window.tocbot.init();
+      tocbot.init();
 
       var eventTypes = args.map(function(arg) {
         return arg[0];
@@ -79,17 +81,17 @@ describe('Tocbot', function () {
     });
 
     it('should not throw an error if a content element isn\'t found', function () {
-      GLOBAL.window.tocbot.destroy();
-      expect(GLOBAL.window.tocbot.init).to.not.throw(Error);
-      GLOBAL.window.tocbot.init({
+      tocbot.destroy();
+      expect(tocbot.init).to.not.throw(Error);
+      tocbot.init({
         tocSelector: '.missing'
       });
     });
 
     it('should not throw an error if a toc element isn\'t found', function () {
-      GLOBAL.window.tocbot.destroy();
-      expect(GLOBAL.window.tocbot.init).to.not.throw(Error);
-      GLOBAL.window.tocbot.init({
+      tocbot.destroy();
+      expect(tocbot.init).to.not.throw(Error);
+      tocbot.init({
         contentSelector: '.not-here'
       });
     });
@@ -105,7 +107,7 @@ describe('Tocbot', function () {
         count++;
       };
 
-      GLOBAL.window.tocbot.destroy();
+      tocbot.destroy();
 
       var eventTypes = args.map(function(arg) {
         return arg[0];
@@ -122,7 +124,6 @@ describe('Tocbot', function () {
 // Parse content
 describe('Parse content', function () {
   it('#selectHeadings with default options', function () {
-    var tocbot = GLOBAL.window.tocbot;
     var selectHeadings = tocbot._parseContent.selectHeadings;
     var defaultHeadings = selectHeadings(tocbot.options.contentSelector, tocbot.options.headingSelector);
     defaultHeadings = [].map.call(defaultHeadings, function(node) {
@@ -153,7 +154,6 @@ describe('Parse content', function () {
   });
 
   it('#selectHeadings with custom headingSelector option', function () {
-    var tocbot = GLOBAL.window.tocbot;
     var selectHeadings = tocbot._parseContent.selectHeadings;
     var defaultHeadings = selectHeadings(tocbot.options.contentSelector, 'h1, h2');
     defaultHeadings = [].map.call(defaultHeadings, function(node) {
@@ -175,7 +175,6 @@ describe('Parse content', function () {
   });
 
   it('#nestHeadingsArray', function () {
-    var tocbot = GLOBAL.window.tocbot;
     var selectHeadings = tocbot._parseContent.selectHeadings;
     var defaultHeadings = selectHeadings(tocbot.options.contentSelector, tocbot.options.headingSelector);
     var nestHeadingsData = tocbot._parseContent.nestHeadingsArray(defaultHeadings);
@@ -187,12 +186,65 @@ describe('Parse content', function () {
 // Build HTML
 describe('Build HTML', function () {
   it('#render', function () {
-    var tocbot = GLOBAL.window.tocbot;
+    tocbot.destroy();
+    tocbot.init({
+      listItemClass: ''
+    });
     var render = tocbot._buildHtml.render;
     var tocEl = render(tocbot.options.tocSelector, TEST_DATA);
     var html = TEST_HTML.split('\n').join('')
       .replace(/\>\s+\</g, '><'); // Remove spaces between all elements.
 
     expect(html).to.contain(tocEl.innerHTML);
+  });
+
+  it('should be able to include HTML markup when `includeHtml` is true', function () {
+    tocbot.destroy();
+    tocbot.init({
+      listItemClass: '',
+      includeHtml: true
+    });
+    // includeHtml
+    var render = tocbot._buildHtml.render;
+    var nodes = [
+       GLOBAL.window.document.createTextNode('What'),
+       GLOBAL.window.document.createElement('SUP')
+    ];
+    nodes[1].textContent = 'sup';
+    var tocEl = render(tocbot.options.tocSelector, [{
+      "id": "Whatsup",
+      "children": [],
+      "nodeName": "H2",
+      "headingLevel": 2,
+      "textContent": "Whatsup",
+      "isCollapsed": true,
+      "childNodes": nodes
+    }]);
+    expect(tocEl.innerHTML).to.contain('What<sup>sup</sup>');
+  });
+
+  it('should not include HTML markup when `includeHtml` is false', function () {
+    tocbot.destroy();
+    tocbot.init({
+      listItemClass: '',
+      includeHtml: false
+    });
+    // includeHtml
+    var render = tocbot._buildHtml.render;
+    var nodes = [
+       GLOBAL.window.document.createTextNode('What'),
+       GLOBAL.window.document.createElement('SUP')
+    ];
+    nodes[1].textContent = 'sup';
+    var tocEl = render(tocbot.options.tocSelector, [{
+      "id": "Whatsup",
+      "children": [],
+      "nodeName": "H2",
+      "headingLevel": 2,
+      "textContent": "Whatsup",
+      "isCollapsed": true,
+      "childNodes": nodes
+    }]);
+    expect(tocEl.innerHTML).to.contain('<li><a data-scroll="" href="#Whatsup" class="toc-link node-name--H2 ">Whatsup</a></li>');
   });
 });

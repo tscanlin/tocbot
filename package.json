@@ -1,6 +1,6 @@
 {
   "name": "tocbot",
-  "version": "2.1.3",
+  "version": "2.1.4",
   "description": "Generate a table of contents based on the heading structure of a html document.",
   "main": "src/js/index.js",
   "scripts": {
@@ -24,7 +24,8 @@
     "serve": "webpack-dev-server --content-base build/ --port 4001",
     "start": "npm run clean && npm run mkdirs && npm run build-css && npm run build-docs && npm run dev",
     "deploy": "npm run build && gh-pages -d build",
-    "test": "mocha test/index.js"
+    "test": "mocha test/index.js",
+    "test:watch": "mocha --watch test/index.js"
   },
   "repository": {
     "type": "git",
