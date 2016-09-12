@@ -1,5 +1,9 @@
 /* Core Styles */
 
+.toc {
+  overflow-y: auto;
+}
+
 .toc > ul {
   overflow: hidden;
   position: relative;

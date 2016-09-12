@@ -183,6 +183,14 @@ tocbot.refresh()
 ## Changelog
 
 
+### v2.1.5
+
+#### Added
+- [patch] Added `overflow-y: auto` to the `.toc selector so that it scrolls` (#17).
+- [dev] Added to deploy script to commit /dist files to master.
+- [dev] Added to package.json for cdnjs.
+
+
 ### v2.1.4
 
 #### Added
