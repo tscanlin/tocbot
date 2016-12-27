@@ -1,38 +1,38 @@
 /* Styles */
 
 // Third Party
-@import 'optimizely-oui/src/oui/oui';
+@import 'tachyons/css/tachyons.min';
 @import 'highlight.js/styles/github-gist'; // atelier-dune-light
 // Page
 @import 'page-styles';
 @import 'tocbot-responsive';
-
-body {
-  font-size: 1.2rem;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin-bottom: 10px;
-  margin-top: 25px;
-  padding-top: 15px;
-}
-
-pre {
-  @extend .code;
-  display: block;
-  line-height: 1.2;
-  margin-bottom: 10px;
-  overflow: auto;
-  white-space: pre-wrap;
-}
-
-code {
-  display: inline;
-  font-size: .8em;
-  max-width: 100%;
-}
+//
+// body {
+//   font-size: 1.2rem;
+// }
+//
+// h1,
+// h2,
+// h3,
+// h4,
+// h5,
+// h6 {
+//   margin-bottom: 10px;
+//   margin-top: 25px;
+//   padding-top: 15px;
+// }
+//
+// pre {
+//   @extend .code;
+//   display: block;
+//   line-height: 1.2;
+//   margin-bottom: 10px;
+//   overflow: auto;
+//   white-space: pre-wrap;
+// }
+//
+// code {
+//   display: inline;
+//   font-size: .8em;
+//   max-width: 100%;
+// }

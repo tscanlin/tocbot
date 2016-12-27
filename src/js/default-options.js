@@ -13,7 +13,7 @@ module.exports = {
   headingSelector: 'h1, h2, h3',
 
   // Element that is scrolling, this is used to calculate scrollTop, defaults to the document.
-  scrollingSelector: null,
+  scrollingSelector: 'main',
   // Headings that match the ignoreSelector will be skipped.
   ignoreSelector: '.js-toc-ignore',
   // Main class to add to links.
