@@ -82,3 +82,14 @@
 #try-it-checkbox:checked + .try-it-container .is-open {
   display: inline-block;
 }
+
+// Test scrollingSelector option.
+body {
+  overflow: hidden;
+  height: 100vh;
+}
+
+main {
+  height: 100%;
+  overflow-y: auto;
+}

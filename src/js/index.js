@@ -99,7 +99,8 @@
     }
 
 		// Remove event listeners.
-    document.removeEventListener('scroll', this._scrollListener, false);
+    var scrollingEl = document.querySelector(options.scrollingSelector) || document;
+    scrollingEl.removeEventListener('scroll', this._scrollListener, false);
     document.removeEventListener('resize', this._scrollListener, false);
     if (buildHtml) {
       document.removeEventListener('click', this._clickListener, false);
@@ -158,7 +159,8 @@
       buildHtml.updateToc(headingsArray);
     }, options.throttleTimeout);
     this._scrollListener();
-    document.addEventListener('scroll', this._scrollListener, false);
+    var scrollingEl = document.querySelector(options.scrollingSelector) || document;
+    scrollingEl.addEventListener('scroll', this._scrollListener, false);
     document.addEventListener('resize', this._scrollListener, false);
 
     // Bind click listeners to disable animation.
