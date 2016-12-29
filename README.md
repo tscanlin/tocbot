@@ -71,6 +71,13 @@ tocbot.refresh();
 ```
 
 
+## Examples
+
+- [Tocbot Homepage](http://tscanlin.github.io/tocbot/)
+- [Optimizely's Developer Documentation](https://developers.optimizely.com/x/solutions/javascript/reference/index.html)
+If you'd like to add your page to this list open a pull request.
+
+
 ## Requirements
 
 This library uses **vanilla JavaScript**. It is less than 400 bytes of CSS and about 4Kb of JavaScript (minified and gzipped). The only dependency this script has is [Smooth Scroll](https://github.com/cferdinandi/smooth-scroll) (which has no dependencies).
