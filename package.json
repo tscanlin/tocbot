@@ -25,7 +25,8 @@
     "serve": "webpack-dev-server --content-base build/ --port 4001",
     "start": "npm run clean && npm run mkdirs && npm run build-css && npm run build-docs && npm run dev",
     "deploy": "npm run build && gh-pages -d build",
-    "test": "mocha test/index.js",
+    "test": "mocha --grep \"$TEST_NAME\" test/index.js",
+    "test:debug": "node-debug _mocha --timeout 0 --grep \"$TEST_NAME\" test/index.js",
     "test:watch": "mocha --watch test/index.js"
   },
   "repository": {
