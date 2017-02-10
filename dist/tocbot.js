@@ -195,7 +195,7 @@
 	    }
 	
 	    // Build nested headings array.
-	    var nestedHeadingsObj = parseContent.nestHeadingsArray(headingsArray);
+	    var nestedHeadingsObj = parseContent.nestHeadingsArray(headingsArray, options.tocHrefAttribute);
 	    var nestedHeadings = nestedHeadingsObj.nest;
 	
 	    // Render.
@@ -277,6 +277,9 @@
 	
 	  // Headings that match the ignoreSelector will be skipped.
 	  ignoreSelector: '.js-toc-ignore',
+	  // Heading attribute whose value can be used to override the link href.
+	  // (The default link href is '#' followed by the value of the heading's id attribute.)
+	  tocHrefAttribute: 'data-toc-href',
 	  // Main class to add to links.
 	  linkClass: 'toc-link',
 	  // Extra classes to add to links.
@@ -417,7 +420,7 @@
 	    }
 	    // Property for smooth-scroll.
 	    a.setAttribute('data-scroll', '');
-	    a.setAttribute('href', '#' + data.id);
+	    a.setAttribute('href', data.tocHref);
 	    a.setAttribute('class', options.linkClass
 	      + SPACE_CHAR + 'node-name--' + data.nodeName
 	      + SPACE_CHAR + options.extraLinkClasses);
@@ -505,7 +508,7 @@
 	      var activeTocLink = document.querySelector(options.tocSelector)
 	        .querySelector('.' + options.linkClass
 	          + '.node-name--' + topHeader.nodeName
-	          + '[href="#' + topHeader.id + '"]');
+	          + '[href="' + (topHeader.getAttribute(options.tocHrefAttribute) || ('#' + topHeader.id)) + '"]');
 	      activeTocLink.className += SPACE_CHAR + options.activeLinkClass;
 	
 	      var tocLists = document.querySelector(options.tocSelector)
@@ -608,11 +611,12 @@
 	  /**
 	   * Get important properties from a heading element and store in a plain object.
 	   * @param {HTMLElement} heading
+	   * @param {String} tocHrefAttribute
 	   * @return {Object}
 	   */
-	  function getHeadingObject(heading) {
+	  function getHeadingObject(heading, tocHrefAttribute) {
 	    var obj = {
-	      id: heading.id,
+	      tocHref: heading.tocHref || heading.getAttribute(tocHrefAttribute) || ('#' + heading.id),
 	      children: [],
 	      nodeName: heading.nodeName,
 	      headingLevel: getHeadingLevel(heading),
@@ -630,10 +634,11 @@
 	   * Add a node to the nested array.
 	   * @param {Object} node
 	   * @param {Array} nest
+	   * @param {String} tocHrefAttribute
 	   * @return {Array}
 	   */
-	  function addNode(node, nest) {
-	    var obj = getHeadingObject(node);
+	  function addNode(node, nest, tocHrefAttribute) {
+	    var obj = getHeadingObject(node, tocHrefAttribute);
 	    var level = getHeadingLevel(node);
 	    var array = nest;
 	    var lastItem = getLastItem(array);
@@ -684,13 +689,14 @@
 	  /**
 	   * Nest headings array into nested arrays with 'children' property.
 	   * @param {Array} headingsArray
+	   * @param {String} tocHrefAttribute
 	   * @return {Object}
 	   */
-	  function nestHeadingsArray(headingsArray) {
+	  function nestHeadingsArray(headingsArray, tocHrefAttribute) {
 	    return reduce.call(headingsArray, function reducer(prev, curr) {
-	      var currentHeading = getHeadingObject(curr);
+	      var currentHeading = getHeadingObject(curr, tocHrefAttribute);
 	
-	      addNode(currentHeading, prev.nest);
+	      addNode(currentHeading, prev.nest, tocHrefAttribute);
 	      return prev;
 	    }, {
 	      nest: []

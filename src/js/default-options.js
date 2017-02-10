@@ -14,6 +14,9 @@ module.exports = {
 
   // Headings that match the ignoreSelector will be skipped.
   ignoreSelector: '.js-toc-ignore',
+  // Heading attribute whose value can be used to override the link href.
+  // (The default link href is '#' followed by the value of the heading's id attribute.)
+  tocHrefAttribute: 'data-toc-href',
   // Main class to add to links.
   linkClass: 'toc-link',
   // Extra classes to add to links.

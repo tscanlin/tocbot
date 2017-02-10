@@ -1,10 +1,10 @@
 module.exports = function() {
   return [
     {
-      "id": "bacon",
+      "tocHref": "#bacon",
       "children": [
         {
-          "id": "brisket",
+          "tocHref": "#brisket",
           "children": [
 
           ],
@@ -14,10 +14,10 @@ module.exports = function() {
           "isCollapsed": true
         },
         {
-          "id": "flank",
+          "tocHref": "#flank",
           "children": [
             {
-              "id": "pork",
+              "tocHref": "#pork",
               "children": [
 
               ],
@@ -33,10 +33,23 @@ module.exports = function() {
           "isCollapsed": true
         },
         {
-          "id": "capicola",
+          "tocHref": "#capicola",
           "children": [
+
+            // Controfiletto was configured as an alias for Sirloin.
             {
-              "id": "drumstick",
+              "tocHref": "#sirloin",
+              "children": [
+
+              ],
+              "nodeName": "H3",
+              "headingLevel": 3,
+              "textContent": "Controfiletto",
+              "isCollapsed": true
+            },
+
+            {
+              "tocHref": "#drumstick",
               "children": [
 
               ],
@@ -46,7 +59,7 @@ module.exports = function() {
               "isCollapsed": true
             },
             {
-              "id": "pastrami",
+              "tocHref": "#pastrami",
               "children": [
 
               ],
@@ -56,7 +69,7 @@ module.exports = function() {
               "isCollapsed": true
             },
             {
-              "id": "meatloaf",
+              "tocHref": "#meatloaf",
               "children": [
 
               ],
@@ -78,10 +91,10 @@ module.exports = function() {
       "isCollapsed": true
     },
     {
-      "id": "sirloin",
+      "tocHref": "#sirloin",
       "children": [
         {
-          "id": "pork-belly",
+          "tocHref": "#pork-belly",
           "children": [
 
           ],
@@ -91,7 +104,7 @@ module.exports = function() {
           "isCollapsed": true
         },
         {
-          "id": "bresaola-shankle",
+          "tocHref": "#bresaola-shankle",
           "children": [
 
           ],
@@ -101,10 +114,10 @@ module.exports = function() {
           "isCollapsed": true
         },
         {
-          "id": "cow-pancetta",
+          "tocHref": "#cow-pancetta",
           "children": [
             {
-              "id": "turducken",
+              "tocHref": "#turducken",
               "children": [
 
               ],
@@ -114,7 +127,7 @@ module.exports = function() {
               "isCollapsed": true
             },
             {
-              "id": "alcatra",
+              "tocHref": "#alcatra",
               "children": [
 
               ],
@@ -124,7 +137,7 @@ module.exports = function() {
               "isCollapsed": true
             },
             {
-              "id": "chuck",
+              "tocHref": "#chuck",
               "children": [
 
               ],
@@ -134,7 +147,7 @@ module.exports = function() {
               "isCollapsed": true
             },
             {
-              "id": "spare-ribs",
+              "tocHref": "#spare-ribs",
               "children": [
 
               ],
@@ -150,7 +163,7 @@ module.exports = function() {
           "isCollapsed": true
         },
         {
-          "id": "swine-venison-chicken",
+          "tocHref": "#swine-venison-chicken",
           "children": [
 
           ],
@@ -166,10 +179,10 @@ module.exports = function() {
       "isCollapsed": true
     },
     {
-      "id": "landjaeger",
+      "tocHref": "#landjaeger",
       "children": [
         {
-          "id": "kevin-capicola-shank",
+          "tocHref": "#kevin-capicola-shank",
           "children": [
 
           ],

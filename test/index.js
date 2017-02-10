@@ -136,6 +136,7 @@ describe('Parse content', function () {
       'Flank',
       'Pork',
       'Capicola',
+      'Controfiletto',
       'Drumstick',
       'Pastrami',
       'Meatloaf',
@@ -177,7 +178,7 @@ describe('Parse content', function () {
   it('#nestHeadingsArray', function () {
     var selectHeadings = tocbot._parseContent.selectHeadings;
     var defaultHeadings = selectHeadings(tocbot.options.contentSelector, tocbot.options.headingSelector);
-    var nestHeadingsData = tocbot._parseContent.nestHeadingsArray(defaultHeadings);
+    var nestHeadingsData = tocbot._parseContent.nestHeadingsArray(defaultHeadings, tocbot.options.tocHrefAttribute);
 
     expect(nestHeadingsData.nest).to.eql(TEST_DATA);
   });
@@ -212,7 +213,7 @@ describe('Build HTML', function () {
     ];
     nodes[1].textContent = 'sup';
     var tocEl = render(tocbot.options.tocSelector, [{
-      "id": "Whatsup",
+      "tocHref": "#Whatsup",
       "children": [],
       "nodeName": "H2",
       "headingLevel": 2,
@@ -237,7 +238,7 @@ describe('Build HTML', function () {
     ];
     nodes[1].textContent = 'sup';
     var tocEl = render(tocbot.options.tocSelector, [{
-      "id": "Whatsup",
+      "tocHref": "#Whatsup",
       "children": [],
       "nodeName": "H2",
       "headingLevel": 2,

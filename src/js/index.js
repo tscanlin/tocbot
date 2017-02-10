@@ -146,7 +146,7 @@
     }
 
     // Build nested headings array.
-    var nestedHeadingsObj = parseContent.nestHeadingsArray(headingsArray);
+    var nestedHeadingsObj = parseContent.nestHeadingsArray(headingsArray, options.tocHrefAttribute);
     var nestedHeadings = nestedHeadingsObj.nest;
 
     // Render.

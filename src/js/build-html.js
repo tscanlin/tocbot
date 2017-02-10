@@ -80,7 +80,7 @@ module.exports = function(options) {
     }
     // Property for smooth-scroll.
     a.setAttribute('data-scroll', '');
-    a.setAttribute('href', '#' + data.id);
+    a.setAttribute('href', data.tocHref);
     a.setAttribute('class', options.linkClass
       + SPACE_CHAR + 'node-name--' + data.nodeName
       + SPACE_CHAR + options.extraLinkClasses);
@@ -168,7 +168,7 @@ module.exports = function(options) {
       var activeTocLink = document.querySelector(options.tocSelector)
         .querySelector('.' + options.linkClass
           + '.node-name--' + topHeader.nodeName
-          + '[href="#' + topHeader.id + '"]');
+          + '[href="' + (topHeader.getAttribute(options.tocHrefAttribute) || ('#' + topHeader.id)) + '"]');
       activeTocLink.className += SPACE_CHAR + options.activeLinkClass;
 
       var tocLists = document.querySelector(options.tocSelector)

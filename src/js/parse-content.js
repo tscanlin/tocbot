@@ -29,11 +29,12 @@ module.exports = function parseContent(options) {
   /**
    * Get important properties from a heading element and store in a plain object.
    * @param {HTMLElement} heading
+   * @param {String} tocHrefAttribute
    * @return {Object}
    */
-  function getHeadingObject(heading) {
+  function getHeadingObject(heading, tocHrefAttribute) {
     var obj = {
-      id: heading.id,
+      tocHref: heading.tocHref || heading.getAttribute(tocHrefAttribute) || ('#' + heading.id),
       children: [],
       nodeName: heading.nodeName,
       headingLevel: getHeadingLevel(heading),
@@ -51,10 +52,11 @@ module.exports = function parseContent(options) {
    * Add a node to the nested array.
    * @param {Object} node
    * @param {Array} nest
+   * @param {String} tocHrefAttribute
    * @return {Array}
    */
-  function addNode(node, nest) {
-    var obj = getHeadingObject(node);
+  function addNode(node, nest, tocHrefAttribute) {
+    var obj = getHeadingObject(node, tocHrefAttribute);
     var level = getHeadingLevel(node);
     var array = nest;
     var lastItem = getLastItem(array);
@@ -105,13 +107,14 @@ module.exports = function parseContent(options) {
   /**
    * Nest headings array into nested arrays with 'children' property.
    * @param {Array} headingsArray
+   * @param {String} tocHrefAttribute
    * @return {Object}
    */
-  function nestHeadingsArray(headingsArray) {
+  function nestHeadingsArray(headingsArray, tocHrefAttribute) {
     return reduce.call(headingsArray, function reducer(prev, curr) {
-      var currentHeading = getHeadingObject(curr);
+      var currentHeading = getHeadingObject(curr, tocHrefAttribute);
 
-      addNode(currentHeading, prev.nest);
+      addNode(currentHeading, prev.nest, tocHrefAttribute);
       return prev;
     }, {
       nest: []
