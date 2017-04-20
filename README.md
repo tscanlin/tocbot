@@ -191,6 +191,13 @@ tocbot.refresh()
 ## Changelog
 
 
+### v2.3.2
+
+#### Fixed
+- [patch] Fix for smooth-scroll callback to work properly. [#36](https://github.com/tscanlin/tocbot/issues/36)
+- [patch] Fix for cdnjs to update properly. [#35](https://github.com/tscanlin/tocbot/issues/35)
+
+
 ### v2.3.1
 
 #### Fixed
