@@ -5,11 +5,13 @@
   height: 200px;
   min-width: 40%;
   bottom: 0;
+  right: 0;
   transform: translateY(100%);
 
   & > .label:first-child {
     height: 40px;
     position: absolute;
+    right: 0;
     top: -40px;
   }
 
