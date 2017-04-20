@@ -131,7 +131,8 @@ collapseDepth: 0,
 smoothScrollOptions: {
   easing: 'easeInOutCubic',
   offset: 0,
-  speed: 300 // animation duration.
+  speed: 300, // animation duration.
+  callback: function(anchor, toggle) { } // callback after link is scrolled to.
 },
 // Headings offset between the headings and the top of the document.
 headingsOffset: 0,

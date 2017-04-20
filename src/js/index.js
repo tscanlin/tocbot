@@ -171,7 +171,12 @@
     // Initialize smoothscroll if it exists.
     if (smoothScroll) {
       this.smoothScroll = smoothScroll.init(extend(options.smoothScrollOptions, {
-        callback: buildHtml.enableTocAnimation
+        callback: function(anchor, toggle) {
+          buildHtml.enableTocAnimation();
+          if (typeof options.smoothScrollOptions.callback === 'function') {
+            options.smoothScrollOptions.callback(anchor, toggle);
+          }
+        }
       }));
     }
 

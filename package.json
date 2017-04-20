@@ -80,7 +80,7 @@
     "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
-    "smooth-scroll": "cferdinandi/smooth-scroll"
+    "smooth-scroll": "github:cferdinandi/smooth-scroll"
   },
   "npmName": "tocbot",
   "npmFileMap": [
