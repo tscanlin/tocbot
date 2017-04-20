@@ -16,73 +16,21 @@
 
 .hero {
   background-color: #54BC4B;
-  min-height: 300px;
-  overflow: hidden;
-  position: relative;
-  text-align: center;
-  z-index: 1;
+}
 
-  h1 {
-    font-size: 4.2rem;
-  }
-
-  .hero-inner {
-    padding: 60px 0;
-  }
+.title {
+  font-size: 3em;
 }
 
 .content {
   margin-bottom: 95vh;
 
-  > h1:first-child {
-    padding-top: 0;
-    margin-top: 0;
-  }
-
   ul,
   ol {
     list-style: inherit;
-    margin-left: 20px;
   }
 }
 
 a.toc-link {
   text-decoration: none;
-}
-
-
-/* Try it Styles */
-.try-it-container {
-  display: none;
-  position: fixed;
-  height: 200px;
-  min-width: 40%;
-  bottom: 0;
-  transform: translateY(100%);
-
-  & > .label:first-child {
-    height: 40px;
-    position: absolute;
-    top: -40px;
-  }
-
-  .textarea {
-    height: 170px;
-    width: 100%;
-    opacity: 0.9;
-  }
-}
-
-#try-it-checkbox:checked + .try-it-container {
-  transform: translateY(-5%);
-}
-
-.is-open {
-  display: none;
-}
-#try-it-checkbox:checked + .try-it-container .is-closed {
-  display: none;
-}
-#try-it-checkbox:checked + .try-it-container .is-open {
-  display: inline-block;
 }

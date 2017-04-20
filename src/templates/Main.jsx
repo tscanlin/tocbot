@@ -20,12 +20,12 @@ module.exports = React.createClass({
 
     return (
       <main>
-        <div className="hero">
-          <div className="hero-inner mw7 center white">
-            <h1 className="normal ma0 pa0">
+        <div className="hero relative overflow-hidden tc z1">
+          <div className="hero-inner mw7 center white pv4 mv4">
+            <h1 className="title normal ma0 pa0">
               Tocbot
             </h1>
-            <h4 className="normal ma0 pv2">
+            <h4 className="subtitle normal ma0 pv3">
               Generate a table of contents based on the heading structure of an html document.
             </h4>
             <div className="mv2 ml4">
@@ -34,7 +34,7 @@ module.exports = React.createClass({
           </div>
         </div>
 
-        <div className="mw7 center lh-copy">
+        <div className="mw7 center dark-gray lh-copy">
           <input id="toc" type="checkbox" className="dn" />
           <label className="toc-icon" htmlFor="toc">Menu</label>
           <nav className="toc js-toc transition--300 absolute pa3"></nav>
@@ -44,7 +44,7 @@ module.exports = React.createClass({
 
 
           <input id="try-it-checkbox" type="checkbox" className="" />
-          <div className="try-it-container transition--300 w-60">
+          <div className="try-it-container transition--300 fixed w-60">
             <label className="label" htmlFor="try-it-checkbox">
               <span className={'button is-closed ' + buttonClasses}>
                 Try it

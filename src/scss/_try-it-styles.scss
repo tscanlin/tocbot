@@ -1,0 +1,35 @@
+/* Try it Styles */
+
+.try-it-container {
+  display: none;
+  height: 200px;
+  min-width: 40%;
+  bottom: 0;
+  transform: translateY(100%);
+
+  & > .label:first-child {
+    height: 40px;
+    position: absolute;
+    top: -40px;
+  }
+
+  .textarea {
+    height: 170px;
+    width: 100%;
+    opacity: 0.9;
+  }
+}
+
+#try-it-checkbox:checked + .try-it-container {
+  transform: translateY(-5%);
+}
+
+.is-open {
+  display: none;
+}
+#try-it-checkbox:checked + .try-it-container .is-closed {
+  display: none;
+}
+#try-it-checkbox:checked + .try-it-container .is-open {
+  display: inline-block;
+}
