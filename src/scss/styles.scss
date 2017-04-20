@@ -1,11 +1,14 @@
 /* Styles */
 
 // Third Party
-@import 'optimizely-oui/src/oui/oui';
 @import 'highlight.js/styles/github-gist'; // atelier-dune-light
 // Page
 @import 'page-styles';
 @import 'tocbot-responsive';
+
+* {
+  box-sizing: border-box;
+}
 
 body {
   font-size: 1.2rem;
@@ -17,14 +20,19 @@ h3,
 h4,
 h5,
 h6 {
-  margin-bottom: 10px;
-  margin-top: 25px;
-  padding-top: 15px;
+  padding-top: 0.5em;
+}
+
+p {
+  margin-top: 0.25rem;
 }
 
 pre {
-  @extend .code;
   display: block;
+  background: #f7f7f7;
+  border-radius: 2px;
+  border: 1px solid #e0e0e0;
+  padding: 1px 3px;
   line-height: 1.2;
   margin-bottom: 10px;
   overflow: auto;

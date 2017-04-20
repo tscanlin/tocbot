@@ -46,6 +46,10 @@
   }
 }
 
+a.toc-link {
+  text-decoration: none;
+}
+
 
 /* Try it Styles */
 .try-it-container {
@@ -63,8 +67,8 @@
   }
 
   .textarea {
-    height: 180px;
-    min-width: inherit;
+    height: 170px;
+    width: 100%;
     opacity: 0.9;
   }
 }

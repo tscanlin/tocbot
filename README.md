@@ -1,4 +1,4 @@
-<h1 class="display--none">
+<h1 class="dn">
 <a href="http://tscanlin.github.io/tocbot">Tocbot</a>
 <a href="https://travis-ci.org/tscanlin/tocbot" target="_blank"><img src="https://travis-ci.org/tscanlin/tocbot.svg?branch=master" alt="travis-ci" /></a>
 </h1>

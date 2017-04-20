@@ -71,7 +71,6 @@
     "mocha": "^2.3.4",
     "node-sass": "^3.4.2",
     "onchange": "^2.2.0",
-    "optimizely-oui": "^11.3.0",
     "parallelshell": "^2.0.0",
     "react": "^15.0.1",
     "react-dom": "^15.0.1",
