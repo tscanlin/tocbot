@@ -186,6 +186,7 @@ tocbot.refresh()
 - More tests
 - Option for changing the url hash on scroll
 - React.js support
+- ability to switch the side
 
 
 ## Changelog
