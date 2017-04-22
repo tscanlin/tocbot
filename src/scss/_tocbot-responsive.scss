@@ -26,7 +26,7 @@
 @media (min-width: 52em) {
   .toc {
     transform: translateX(0);
-    right: calc((100% - 48rem) / 2);
+    right: calc((100% - 48rem - 4rem) / 2);
   }
 
   .toc-icon {

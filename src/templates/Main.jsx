@@ -20,7 +20,7 @@ module.exports = React.createClass({
 
     return (
       <main>
-        <div className="hero relative overflow-hidden tc z1">
+        <div className="hero relative overflow-hidden tc z-3">
           <div className="hero-inner mw7 center white pv4 mv4">
             <h1 className="title normal ma0 pa0">
               Tocbot
@@ -34,10 +34,10 @@ module.exports = React.createClass({
           </div>
         </div>
 
-        <div className="mw7 center dark-gray lh-copy">
+        <div className="relative mw7 center dark-gray lh-copy">
           <input id="toc" type="checkbox" className="dn" />
-          <label className="toc-icon" htmlFor="toc">Menu</label>
-          <nav className="toc js-toc transition--300 absolute pa3"></nav>
+          <label className="toc-icon relative z-2 f6 lh-solid shadow-hover bg-near-white b--silver pa1 ma1 ba br1" htmlFor="toc">Menu</label>
+          <nav className="toc js-toc relative z-1 transition--300 absolute pa3"></nav>
           <div className="content js-toc-content pa3">
               <TemplateComponent {...this.props.json} />
           </div>
