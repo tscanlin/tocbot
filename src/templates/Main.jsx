@@ -50,7 +50,7 @@ module.exports = React.createClass({
 
 
           <input id="try-it-checkbox" type="checkbox" className="dn" />
-          <div className="try-it-container transition--300 fixed w-60">
+          <div className="try-it-container transition--300 fixed w-60 z-3">
             <label className="label" htmlFor="try-it-checkbox">
               <span className={'button is-closed ' + buttonClasses}>
                 Try it
