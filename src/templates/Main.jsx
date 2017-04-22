@@ -30,7 +30,7 @@ module.exports = React.createClass({
               <h1 className="title normal ma0 pa0">
                 Tocbot
               </h1>
-              <h4 className="subtitle normal ma0 pv3">
+              <h4 className="subtitle normal ma0 pa3">
                 Generate a table of contents based on the heading structure of an html document.
               </h4>
               <div className="mv2 ml4">
@@ -42,7 +42,7 @@ module.exports = React.createClass({
 
         <div className="mw7 center dark-gray lh-copy">
           <input id="toc" type="checkbox" className="dn" />
-          <label className="toc-icon relative z-2 f6 lh-solid shadow-hover bg-near-white b--silver pa1 ma1 ba br1" htmlFor="toc">Menu</label>
+          <label className="toc-icon relative z-2 f6 lh-solid bg-near-white b--silver pa1 ma1 ba br1" htmlFor="toc">Menu</label>
           <nav className="toc js-toc relative z-1 transition--300 absolute pa3"></nav>
           <div className="content js-toc-content pa3">
               <TemplateComponent {...this.props.json} />
