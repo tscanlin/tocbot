@@ -21,20 +21,26 @@ module.exports = React.createClass({
     return (
       <main>
         <div className="hero relative overflow-hidden tc z-3">
-          <div className="hero-inner mw7 center white pv4 mv4">
-            <h1 className="title normal ma0 pa0">
-              Tocbot
-            </h1>
-            <h4 className="subtitle normal ma0 pv3">
-              Generate a table of contents based on the heading structure of an html document.
-            </h4>
-            <div className="mv2 ml4">
-              <iframe src="https://ghbtns.com/github-btn.html?user=tscanlin&repo=tocbot&type=star&count=true&size=large" frameBorder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <div className="hero-inner relative mw7 center white pv4">
+            <div className="absolute top-0 right-0">
+              <a className="dib f6 white pa1 ma1" href="#">About</a>
+              <a className="dib f6 white pa1 ma1" href="https://github.com/tscanlin/tocbot">Github</a>
+            </div>
+            <div className="pv4">
+              <h1 className="title normal ma0 pa0">
+                Tocbot
+              </h1>
+              <h4 className="subtitle normal ma0 pv3">
+                Generate a table of contents based on the heading structure of an html document.
+              </h4>
+              <div className="mv2 ml4">
+                <iframe src="https://ghbtns.com/github-btn.html?user=tscanlin&repo=tocbot&type=star&count=true&size=large" frameBorder="0" scrolling="0" width="160px" height="30px"></iframe>
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="relative mw7 center dark-gray lh-copy">
+        <div className="mw7 center dark-gray lh-copy">
           <input id="toc" type="checkbox" className="dn" />
           <label className="toc-icon relative z-2 f6 lh-solid shadow-hover bg-near-white b--silver pa1 ma1 ba br1" htmlFor="toc">Menu</label>
           <nav className="toc js-toc relative z-1 transition--300 absolute pa3"></nav>
