@@ -4,7 +4,7 @@
   "description": "Generate a table of contents based on the heading structure of a html document.",
   "main": "src/js/index.js",
   "scripts": {
-    "build": "npm run mkdirs && npm run build-js && npm run build-js-uglify && npm run build-css && npm run build-docs && npm run build-dist",
+    "build": "npm run clean && npm run mkdirs && npm run build-js && npm run build-js-uglify && npm run build-css && npm run build-docs && npm run build-dist",
     "clean": "rm -rf build/ && rm -rf dist/",
     "mkdirs": "npm run mkdir-build & npm run mkdir-dist",
     "mkdir-build": "mkdir build && cd build && mkdir data && mkdir assets && cd assets && mkdir js && mkdir css",
@@ -23,7 +23,7 @@
     "lint": "eslint *.js",
     "dev": "parallelshell \"npm run serve\" \"npm run build-js-watch\" \"npm run build-css-watch\" \"npm run build-docs-watch\"",
     "serve": "webpack-dev-server --content-base build/ --port 4001",
-    "start": "npm run mkdirs && npm run build-css && npm run build-docs && npm run dev",
+    "start": "npm run build-css && npm run build-docs && npm run dev",
     "deploy": "npm run build && gh-pages -d build",
     "test": "mocha --grep \"$TEST_NAME\" test/index.js",
     "test:debug": "node-debug _mocha --timeout 0 --grep \"$TEST_NAME\" test/index.js",

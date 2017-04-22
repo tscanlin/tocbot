@@ -29,6 +29,17 @@
   ol {
     list-style: inherit;
   }
+
+  a {
+    color: #128bde;
+    text-decoration: none;
+    border-bottom: 1px solid #EEE;
+    transition: all 300ms ease;
+  }
+
+  a:hover {
+    border-bottom: 1px solid #128bde;
+  }
 }
 
 a.toc-link {

@@ -7,6 +7,10 @@
 .toc > ul {
   overflow: hidden;
   position: relative;
+
+  li {
+    list-style: none;
+  }
 }
 
 .toc-list {
