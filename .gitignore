@@ -1,6 +1,8 @@
 .git
 .publish
+.next
 .DS_Store
+-script/
 build/
 node_modules/
 npm-debug.*

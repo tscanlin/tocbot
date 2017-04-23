@@ -31,7 +31,7 @@
     "no-unreachable": 2,
     "no-unused-vars": 0,
     "quotes": [1, "single"],
-    "semi": 1,
+    "semi": 0,
     "strict": [0, "global"],
     "valid-jsdoc": 0,
     "valid-typeof": 1,
