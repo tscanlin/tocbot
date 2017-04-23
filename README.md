@@ -192,6 +192,11 @@ tocbot.refresh()
 ## Changelog
 
 
+### v3.0.0
+
+#### Changed
+
+
 ### v2.3.2
 
 #### Fixed

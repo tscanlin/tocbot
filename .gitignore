@@ -3,6 +3,7 @@
 .next
 .DS_Store
 -script/
-build/
+static/js/*
+static/css/*
 node_modules/
 npm-debug.*

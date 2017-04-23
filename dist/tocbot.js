@@ -6,21 +6,21 @@
 /******/ 	function __webpack_require__(moduleId) {
 /******/
 /******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
+/******/ 		if(installedModules[moduleId]) {
 /******/ 			return installedModules[moduleId].exports;
-/******/
+/******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
-/******/ 			exports: {},
-/******/ 			id: moduleId,
-/******/ 			loaded: false
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
 /******/ 		};
 /******/
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
 /******/
 /******/ 		// Flag the module as loaded
-/******/ 		module.loaded = true;
+/******/ 		module.l = true;
 /******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
@@ -33,683 +33,104 @@
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
 /******/
+/******/ 	// identity function for calling harmony imports with the correct context
+/******/ 	__webpack_require__.i = function(value) { return value; };
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/*!*************************!*\
-  !*** ./src/js/index.js ***!
-  \*************************/
-/***/ (function(module, exports, __webpack_require__) {
+/* unknown exports provided */
+/* all exports used */
+/*!***********************************!*\
+  !*** (webpack)/buildin/global.js ***!
+  \***********************************/
+/***/ (function(module, exports) {
 
-	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {/**
-	 * Tocbot
-	 * Tocbot creates a toble of contents based on HTML headings on a page,
-	 * this allows users to easily jump to different sections of the document.
-	 * Tocbot was inspired by tocify (http://gregfranko.com/jquery.tocify.js/).
-	 * The main differences are that it works natively without any need for jquery or jquery UI).
-	 *
-	 * @author Tim Scanlin
-	 */
-	
-	/* globals define */
-	
-	(function(root, factory) {
-	  if (true) {
-	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory(root)), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-		} else if (typeof exports === 'object') {
-	    module.exports = factory(root);
-		} else {
-	    root.tocbot = factory(root);
-		}
-	})(typeof global !== 'undefined' ? global : this.window || this.global, function(root) {
-	
-	  'use strict';
-	
-	  // Require smooth-scroll by default.
-	  var smoothScroll = __webpack_require__(/*! smooth-scroll */ 1);
-	
-	  // Default options.
-	  var defaultOptions = __webpack_require__(/*! ./default-options.js */ 2);
-	  // Object to store current options.
-	  var options = {};
-	  // Object for public APIs.
-	  var tocbot = {};
-	
-	  var BuildHtml = __webpack_require__(/*! ./build-html.js */ 3);
-	  var ParseContent = __webpack_require__(/*! ./parse-content.js */ 4);
-	  // Keep these variables at top scope once options are passed in.
-	  var buildHtml;
-	  var parseContent;
-	
-	  var doc = root.document;
-	  var body = document.body;
-	  var supports = !!root.document.querySelector && !!root.addEventListener; // Feature test
-	  var headingsArray;
-	
-	  // From: https://github.com/Raynos/xtend
-	  var hasOwnProperty = Object.prototype.hasOwnProperty;
-	  function extend() {
-	    var target = {};
-	    for (var i = 0; i < arguments.length; i++) {
-	      var source = arguments[i];
-	      for (var key in source) {
-	        if (hasOwnProperty.call(source, key)) {
-	          target[key] = source[key];
-	        }
-	      }
-	    }
-	    return target;
-	  }
-	
-	  // From: https://remysharp.com/2010/07/21/throttling-function-calls
-	  function throttle(fn, threshhold, scope) {
-	    threshhold || (threshhold = 250);
-	    var last;
-	    var deferTimer;
-	    return function() {
-	      var context = scope || this;
-	      var now = +new Date;
-	      var args = arguments;
-	      if (last && now < last + threshhold) {
-	        // hold on to it
-	        clearTimeout(deferTimer);
-	        deferTimer = setTimeout(function() {
-	          last = now;
-	          fn.apply(context, args);
-	        }, threshhold);
-	      } else {
-	        last = now;
-	        fn.apply(context, args);
-	      }
-	    };
-	  }
-	
-	  function updateTocListener(headings) {
-	    return function updateToc() {
-	      return buildHtml.updateToc(headings);
-	    };
-	  }
-	
-	  /**
-		 * Destroy tocbot.
-		 */
-	  tocbot.destroy = function() {
-	    // Clear HTML.
-	    try {
-	      document.querySelector(options.tocSelector).innerHTML = '';
-	    } catch (e) {
-	      console.warn('Element not found: ' + options.tocSelector); // eslint-disable-line
-	    }
-	
-			// Remove event listeners.
-	    document.removeEventListener('scroll', this._scrollListener, false);
-	    document.removeEventListener('resize', this._scrollListener, false);
-	    if (buildHtml) {
-	      document.removeEventListener('click', this._clickListener, false);
-	    }
-	
-	    // Destroy smoothScroll if it exists.
-	    if (smoothScroll) {
-	      smoothScroll.destroy();
-	    }
-	  };
-	
-	  /**
-		 * Initialize tocbot.
-		 * @param {object} customOptions
-		 */
-	  tocbot.init = function(customOptions) {
-	    // feature test
-	    if (!supports) {
-	      return;
-	    }
-	
-	    // Merge defaults with user options.
-	    // Set to options variable at the top.
-	    options = extend(defaultOptions, customOptions || {});
-	    this.options = options;
-	    this.state = {};
-	
-	    // Pass options to these modules.
-	    buildHtml = BuildHtml(options);
-	    parseContent = ParseContent(options);
-	
-	    // For testing purposes.
-	    this._buildHtml = buildHtml;
-	    this._parseContent = parseContent;
-	
-	    // Destroy it if it exists first.
-	    tocbot.destroy();
-	
-	    // Get headings array.
-	    headingsArray = parseContent.selectHeadings(options.contentSelector, options.headingSelector);
-	    // Return if no headings are found.
-	    if (headingsArray === null) {
-	      return;
-	    }
-	
-	    // Build nested headings array.
-	    var nestedHeadingsObj = parseContent.nestHeadingsArray(headingsArray);
-	    var nestedHeadings = nestedHeadingsObj.nest;
-	
-	    // Render.
-	    buildHtml.render(options.tocSelector, nestedHeadings);
-	
-	    // Update Sidebar and bind listeners.
-	    // buildHtml.updateToc(headingsArray);
-	    this._scrollListener = throttle(function() {
-	      buildHtml.updateToc(headingsArray);
-	    }, options.throttleTimeout);
-	    this._scrollListener();
-	    document.addEventListener('scroll', this._scrollListener, false);
-	    document.addEventListener('resize', this._scrollListener, false);
-	
-	    // Bind click listeners to disable animation.
-	    this._clickListener = throttle(function(event) {
-	      buildHtml.disableTocAnimation(event); // Save reference so event is created / removed properly.
-	      buildHtml.updateToc(headingsArray);
-	    }, options.throttleTimeout);
-	    document.addEventListener('click', this._clickListener, false);
-	
-	    // Initialize smoothscroll if it exists.
-	    if (smoothScroll) {
-	      this.smoothScroll = smoothScroll.init(extend(options.smoothScrollOptions, {
-	        callback: function(anchor, toggle) {
-	          buildHtml.enableTocAnimation();
-	          if (typeof options.smoothScrollOptions.callback === 'function') {
-	            options.smoothScrollOptions.callback(anchor, toggle);
-	          }
-	        }
-	      }));
-	    }
-	
-	    return this;
-	  };
-	
-	  /**
-	   * Refresh tocbot.
-	   */
-	  tocbot.refresh = function(customOptions) {
-	    tocbot.destroy();
-	    tocbot.init(customOptions || this.options);
-	  };
-	
-	  // Make tocbot available globally.
-	  root.tocbot = tocbot;
-	
-	  return tocbot;
-	});
-	
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+eval("var g;\r\n\r\n// This works in non-strict mode\r\ng = (function() {\r\n\treturn this;\r\n})();\r\n\r\ntry {\r\n\t// This works if eval is allowed (see CSP)\r\n\tg = g || Function(\"return this\")() || (1,eval)(\"this\");\r\n} catch(e) {\r\n\t// This works if the window reference is available\r\n\tif(typeof window === \"object\")\r\n\t\tg = window;\r\n}\r\n\r\n// g can still be undefined, but nothing to do about it...\r\n// We return undefined, instead of nothing here, so it's\r\n// easier to handle this case. if(!global) { ...}\r\n\r\nmodule.exports = g;\r\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiMC5qcyIsInNvdXJjZXMiOlsid2VicGFjazovLy8od2VicGFjaykvYnVpbGRpbi9nbG9iYWwuanM/MzY5OCJdLCJzb3VyY2VzQ29udGVudCI6WyJ2YXIgZztcclxuXHJcbi8vIFRoaXMgd29ya3MgaW4gbm9uLXN0cmljdCBtb2RlXHJcbmcgPSAoZnVuY3Rpb24oKSB7XHJcblx0cmV0dXJuIHRoaXM7XHJcbn0pKCk7XHJcblxyXG50cnkge1xyXG5cdC8vIFRoaXMgd29ya3MgaWYgZXZhbCBpcyBhbGxvd2VkIChzZWUgQ1NQKVxyXG5cdGcgPSBnIHx8IEZ1bmN0aW9uKFwicmV0dXJuIHRoaXNcIikoKSB8fCAoMSxldmFsKShcInRoaXNcIik7XHJcbn0gY2F0Y2goZSkge1xyXG5cdC8vIFRoaXMgd29ya3MgaWYgdGhlIHdpbmRvdyByZWZlcmVuY2UgaXMgYXZhaWxhYmxlXHJcblx0aWYodHlwZW9mIHdpbmRvdyA9PT0gXCJvYmplY3RcIilcclxuXHRcdGcgPSB3aW5kb3c7XHJcbn1cclxuXHJcbi8vIGcgY2FuIHN0aWxsIGJlIHVuZGVmaW5lZCwgYnV0IG5vdGhpbmcgdG8gZG8gYWJvdXQgaXQuLi5cclxuLy8gV2UgcmV0dXJuIHVuZGVmaW5lZCwgaW5zdGVhZCBvZiBub3RoaW5nIGhlcmUsIHNvIGl0J3NcclxuLy8gZWFzaWVyIHRvIGhhbmRsZSB0aGlzIGNhc2UuIGlmKCFnbG9iYWwpIHsgLi4ufVxyXG5cclxubW9kdWxlLmV4cG9ydHMgPSBnO1xyXG5cblxuXG4vLy8vLy8vLy8vLy8vLy8vLy9cbi8vIFdFQlBBQ0sgRk9PVEVSXG4vLyAod2VicGFjaykvYnVpbGRpbi9nbG9iYWwuanNcbi8vIG1vZHVsZSBpZCA9IDBcbi8vIG1vZHVsZSBjaHVua3MgPSAwIl0sIm1hcHBpbmdzIjoiQUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7Iiwic291cmNlUm9vdCI6IiJ9");
 
 /***/ }),
 /* 1 */
+/* unknown exports provided */
+/* all exports used */
 /*!******************************************************!*\
   !*** ./~/smooth-scroll/dist/js/smooth-scroll.min.js ***!
   \******************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {/*! smooth-scroll v10.3.1 | (c) 2017 Chris Ferdinandi | MIT License | http://github.com/cferdinandi/smooth-scroll */
-	!(function(e,t){ true?!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (t(e)), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):"object"==typeof exports?module.exports=t(e):e.smoothScroll=t(e)})("undefined"!=typeof global?global:this.window||this.global,(function(e){"use strict";var t,n,o,r,a,c,l,i={},u="querySelector"in document&&"addEventListener"in e,s={selector:"[data-scroll]",selectorHeader:null,speed:500,easing:"easeInOutCubic",offset:0,callback:function(){}},f=function(){var e={},t=!1,n=0,o=arguments.length;"[object Boolean]"===Object.prototype.toString.call(arguments[0])&&(t=arguments[0],n++);for(;n<o;n++){var r=arguments[n];!(function(n){for(var o in n)Object.prototype.hasOwnProperty.call(n,o)&&(t&&"[object Object]"===Object.prototype.toString.call(n[o])?e[o]=f(!0,e[o],n[o]):e[o]=n[o])})(r)}return e},d=function(e){return Math.max(e.scrollHeight,e.offsetHeight,e.clientHeight)},h=function(e,t){for(Element.prototype.matches||(Element.prototype.matches=Element.prototype.matchesSelector||Element.prototype.mozMatchesSelector||Element.prototype.msMatchesSelector||Element.prototype.oMatchesSelector||Element.prototype.webkitMatchesSelector||function(e){for(var t=(this.document||this.ownerDocument).querySelectorAll(e),n=t.length;--n>=0&&t.item(n)!==this;);return n>-1});e&&e!==document;e=e.parentNode)if(e.matches(t))return e;return null},m=function(e){"#"===e.charAt(0)&&(e=e.substr(1));for(var t,n=String(e),o=n.length,r=-1,a="",c=n.charCodeAt(0);++r<o;){if(0===(t=n.charCodeAt(r)))throw new InvalidCharacterError("Invalid character: the input contains U+0000.");a+=t>=1&&t<=31||127==t||0===r&&t>=48&&t<=57||1===r&&t>=48&&t<=57&&45===c?"\\"+t.toString(16)+" ":t>=128||45===t||95===t||t>=48&&t<=57||t>=65&&t<=90||t>=97&&t<=122?n.charAt(r):"\\"+n.charAt(r)}return"#"+a},p=function(e,t){var n;return"easeInQuad"===e&&(n=t*t),"easeOutQuad"===e&&(n=t*(2-t)),"easeInOutQuad"===e&&(n=t<.5?2*t*t:(4-2*t)*t-1),"easeInCubic"===e&&(n=t*t*t),"easeOutCubic"===e&&(n=--t*t*t+1),"easeInOutCubic"===e&&(n=t<.5?4*t*t*t:(t-1)*(2*t-2)*(2*t-2)+1),"easeInQuart"===e&&(n=t*t*t*t),"easeOutQuart"===e&&(n=1- --t*t*t*t),"easeInOutQuart"===e&&(n=t<.5?8*t*t*t*t:1-8*--t*t*t*t),"easeInQuint"===e&&(n=t*t*t*t*t),"easeOutQuint"===e&&(n=1+--t*t*t*t*t),"easeInOutQuint"===e&&(n=t<.5?16*t*t*t*t*t:1+16*--t*t*t*t*t),n||t},g=function(e,t,n){var o=0;if(e.offsetParent)do{o+=e.offsetTop,e=e.offsetParent}while(e);return o=Math.max(o-t-n,0),Math.min(o,y()-b())},b=function(){return Math.max(document.documentElement.clientHeight,e.innerHeight||0)},y=function(){return Math.max(document.body.scrollHeight,document.documentElement.scrollHeight,document.body.offsetHeight,document.documentElement.offsetHeight,document.body.clientHeight,document.documentElement.clientHeight)},v=function(e){return e&&"object"==typeof JSON&&"function"==typeof JSON.parse?JSON.parse(e):{}},O=function(e){return e?d(e)+e.offsetTop:0},S=function(t,n,o){o||(t.focus(),document.activeElement.id!==t.id&&(t.setAttribute("tabindex","-1"),t.focus(),t.style.outline="none"),e.scrollTo(0,n))};i.animateScroll=function(n,o,c){var i=v(o?o.getAttribute("data-options"):null),u=f(t||s,c||{},i),d="[object Number]"===Object.prototype.toString.call(n),h=d||!n.tagName?null:n;if(d||h){var m=e.pageYOffset;u.selectorHeader&&!r&&(r=document.querySelector(u.selectorHeader)),a||(a=O(r));var b,E,I=d?n:g(h,a,parseInt("function"==typeof u.offset?u.offset():u.offset,10)),H=I-m,A=y(),j=0,C=function(t,r,a){var c=e.pageYOffset;(t==r||c==r||e.innerHeight+c>=A)&&(clearInterval(a),S(n,r,d),u.callback(n,o))},M=function(){j+=16,b=j/parseInt(u.speed,10),b=b>1?1:b,E=m+H*p(u.easing,b),e.scrollTo(0,Math.floor(E)),C(E,I,l)};0===e.pageYOffset&&e.scrollTo(0,0),(function(){clearInterval(l),l=setInterval(M,16)})()}};var E=function(t){try{m(decodeURIComponent(e.location.hash))}catch(t){m(e.location.hash)}n&&(n.id=n.getAttribute("data-scroll-id"),i.animateScroll(n,o),n=null,o=null)},I=function(r){if(0===r.button&&!r.metaKey&&!r.ctrlKey&&(o=h(r.target,t.selector))&&"a"===o.tagName.toLowerCase()&&o.hostname===e.location.hostname&&o.pathname===e.location.pathname&&/#/.test(o.href)){var a;try{a=m(decodeURIComponent(o.hash))}catch(e){a=m(o.hash)}if("#"===a){r.preventDefault(),n=document.body;var c=n.id?n.id:"smooth-scroll-top";return n.setAttribute("data-scroll-id",c),n.id="",void(e.location.hash.substring(1)===c?E():e.location.hash=c)}n=document.querySelector(a),n&&(n.setAttribute("data-scroll-id",n.id),n.id="",o.hash===e.location.hash&&(r.preventDefault(),E()))}},H=function(e){c||(c=setTimeout((function(){c=null,a=O(r)}),66))};return i.destroy=function(){t&&(document.removeEventListener("click",I,!1),e.removeEventListener("resize",H,!1),t=null,n=null,o=null,r=null,a=null,c=null,l=null)},i.init=function(n){u&&(i.destroy(),t=f(s,n||{}),r=t.selectorHeader?document.querySelector(t.selectorHeader):null,a=O(r),document.addEventListener("click",I,!1),e.addEventListener("hashchange",E,!1),r&&e.addEventListener("resize",H,!1))},i}));
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+eval("/* WEBPACK VAR INJECTION */(function(global) {var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! smooth-scroll v10.3.1 | (c) 2017 Chris Ferdinandi | MIT License | http://github.com/cferdinandi/smooth-scroll */\n!(function(e,t){ true?!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (t(e)),\n\t\t\t\t__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?\n\t\t\t\t(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),\n\t\t\t\t__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):\"object\"==typeof exports?module.exports=t(e):e.smoothScroll=t(e)})(\"undefined\"!=typeof global?global:this.window||this.global,(function(e){\"use strict\";var t,n,o,r,a,c,l,i={},u=\"querySelector\"in document&&\"addEventListener\"in e,s={selector:\"[data-scroll]\",selectorHeader:null,speed:500,easing:\"easeInOutCubic\",offset:0,callback:function(){}},f=function(){var e={},t=!1,n=0,o=arguments.length;\"[object Boolean]\"===Object.prototype.toString.call(arguments[0])&&(t=arguments[0],n++);for(;n<o;n++){var r=arguments[n];!(function(n){for(var o in n)Object.prototype.hasOwnProperty.call(n,o)&&(t&&\"[object Object]\"===Object.prototype.toString.call(n[o])?e[o]=f(!0,e[o],n[o]):e[o]=n[o])})(r)}return e},d=function(e){return Math.max(e.scrollHeight,e.offsetHeight,e.clientHeight)},h=function(e,t){for(Element.prototype.matches||(Element.prototype.matches=Element.prototype.matchesSelector||Element.prototype.mozMatchesSelector||Element.prototype.msMatchesSelector||Element.prototype.oMatchesSelector||Element.prototype.webkitMatchesSelector||function(e){for(var t=(this.document||this.ownerDocument).querySelectorAll(e),n=t.length;--n>=0&&t.item(n)!==this;);return n>-1});e&&e!==document;e=e.parentNode)if(e.matches(t))return e;return null},m=function(e){\"#\"===e.charAt(0)&&(e=e.substr(1));for(var t,n=String(e),o=n.length,r=-1,a=\"\",c=n.charCodeAt(0);++r<o;){if(0===(t=n.charCodeAt(r)))throw new InvalidCharacterError(\"Invalid character: the input contains U+0000.\");a+=t>=1&&t<=31||127==t||0===r&&t>=48&&t<=57||1===r&&t>=48&&t<=57&&45===c?\"\\\\\"+t.toString(16)+\" \":t>=128||45===t||95===t||t>=48&&t<=57||t>=65&&t<=90||t>=97&&t<=122?n.charAt(r):\"\\\\\"+n.charAt(r)}return\"#\"+a},p=function(e,t){var n;return\"easeInQuad\"===e&&(n=t*t),\"easeOutQuad\"===e&&(n=t*(2-t)),\"easeInOutQuad\"===e&&(n=t<.5?2*t*t:(4-2*t)*t-1),\"easeInCubic\"===e&&(n=t*t*t),\"easeOutCubic\"===e&&(n=--t*t*t+1),\"easeInOutCubic\"===e&&(n=t<.5?4*t*t*t:(t-1)*(2*t-2)*(2*t-2)+1),\"easeInQuart\"===e&&(n=t*t*t*t),\"easeOutQuart\"===e&&(n=1- --t*t*t*t),\"easeInOutQuart\"===e&&(n=t<.5?8*t*t*t*t:1-8*--t*t*t*t),\"easeInQuint\"===e&&(n=t*t*t*t*t),\"easeOutQuint\"===e&&(n=1+--t*t*t*t*t),\"easeInOutQuint\"===e&&(n=t<.5?16*t*t*t*t*t:1+16*--t*t*t*t*t),n||t},g=function(e,t,n){var o=0;if(e.offsetParent)do{o+=e.offsetTop,e=e.offsetParent}while(e);return o=Math.max(o-t-n,0),Math.min(o,y()-b())},b=function(){return Math.max(document.documentElement.clientHeight,e.innerHeight||0)},y=function(){return Math.max(document.body.scrollHeight,document.documentElement.scrollHeight,document.body.offsetHeight,document.documentElement.offsetHeight,document.body.clientHeight,document.documentElement.clientHeight)},v=function(e){return e&&\"object\"==typeof JSON&&\"function\"==typeof JSON.parse?JSON.parse(e):{}},O=function(e){return e?d(e)+e.offsetTop:0},S=function(t,n,o){o||(t.focus(),document.activeElement.id!==t.id&&(t.setAttribute(\"tabindex\",\"-1\"),t.focus(),t.style.outline=\"none\"),e.scrollTo(0,n))};i.animateScroll=function(n,o,c){var i=v(o?o.getAttribute(\"data-options\"):null),u=f(t||s,c||{},i),d=\"[object Number]\"===Object.prototype.toString.call(n),h=d||!n.tagName?null:n;if(d||h){var m=e.pageYOffset;u.selectorHeader&&!r&&(r=document.querySelector(u.selectorHeader)),a||(a=O(r));var b,E,I=d?n:g(h,a,parseInt(\"function\"==typeof u.offset?u.offset():u.offset,10)),H=I-m,A=y(),j=0,C=function(t,r,a){var c=e.pageYOffset;(t==r||c==r||e.innerHeight+c>=A)&&(clearInterval(a),S(n,r,d),u.callback(n,o))},M=function(){j+=16,b=j/parseInt(u.speed,10),b=b>1?1:b,E=m+H*p(u.easing,b),e.scrollTo(0,Math.floor(E)),C(E,I,l)};0===e.pageYOffset&&e.scrollTo(0,0),(function(){clearInterval(l),l=setInterval(M,16)})()}};var E=function(t){try{m(decodeURIComponent(e.location.hash))}catch(t){m(e.location.hash)}n&&(n.id=n.getAttribute(\"data-scroll-id\"),i.animateScroll(n,o),n=null,o=null)},I=function(r){if(0===r.button&&!r.metaKey&&!r.ctrlKey&&(o=h(r.target,t.selector))&&\"a\"===o.tagName.toLowerCase()&&o.hostname===e.location.hostname&&o.pathname===e.location.pathname&&/#/.test(o.href)){var a;try{a=m(decodeURIComponent(o.hash))}catch(e){a=m(o.hash)}if(\"#\"===a){r.preventDefault(),n=document.body;var c=n.id?n.id:\"smooth-scroll-top\";return n.setAttribute(\"data-scroll-id\",c),n.id=\"\",void(e.location.hash.substring(1)===c?E():e.location.hash=c)}n=document.querySelector(a),n&&(n.setAttribute(\"data-scroll-id\",n.id),n.id=\"\",o.hash===e.location.hash&&(r.preventDefault(),E()))}},H=function(e){c||(c=setTimeout((function(){c=null,a=O(r)}),66))};return i.destroy=function(){t&&(document.removeEventListener(\"click\",I,!1),e.removeEventListener(\"resize\",H,!1),t=null,n=null,o=null,r=null,a=null,c=null,l=null)},i.init=function(n){u&&(i.destroy(),t=f(s,n||{}),r=t.selectorHeader?document.querySelector(t.selectorHeader):null,a=O(r),document.addEventListener(\"click\",I,!1),e.addEventListener(\"hashchange\",E,!1),r&&e.addEventListener(\"resize\",H,!1))},i}));\n/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../webpack/buildin/global.js */ 0)))//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiMS5qcyIsInNvdXJjZXMiOlsid2VicGFjazovLy8uL34vc21vb3RoLXNjcm9sbC9kaXN0L2pzL3Ntb290aC1zY3JvbGwubWluLmpzP2UzMGQiXSwic291cmNlc0NvbnRlbnQiOlsiLyohIHNtb290aC1zY3JvbGwgdjEwLjMuMSB8IChjKSAyMDE3IENocmlzIEZlcmRpbmFuZGkgfCBNSVQgTGljZW5zZSB8IGh0dHA6Ly9naXRodWIuY29tL2NmZXJkaW5hbmRpL3Ntb290aC1zY3JvbGwgKi9cbiEoZnVuY3Rpb24oZSx0KXtcImZ1bmN0aW9uXCI9PXR5cGVvZiBkZWZpbmUmJmRlZmluZS5hbWQ/ZGVmaW5lKFtdLHQoZSkpOlwib2JqZWN0XCI9PXR5cGVvZiBleHBvcnRzP21vZHVsZS5leHBvcnRzPXQoZSk6ZS5zbW9vdGhTY3JvbGw9dChlKX0pKFwidW5kZWZpbmVkXCIhPXR5cGVvZiBnbG9iYWw/Z2xvYmFsOnRoaXMud2luZG93fHx0aGlzLmdsb2JhbCwoZnVuY3Rpb24oZSl7XCJ1c2Ugc3RyaWN0XCI7dmFyIHQsbixvLHIsYSxjLGwsaT17fSx1PVwicXVlcnlTZWxlY3RvclwiaW4gZG9jdW1lbnQmJlwiYWRkRXZlbnRMaXN0ZW5lclwiaW4gZSxzPXtzZWxlY3RvcjpcIltkYXRhLXNjcm9sbF1cIixzZWxlY3RvckhlYWRlcjpudWxsLHNwZWVkOjUwMCxlYXNpbmc6XCJlYXNlSW5PdXRDdWJpY1wiLG9mZnNldDowLGNhbGxiYWNrOmZ1bmN0aW9uKCl7fX0sZj1mdW5jdGlvbigpe3ZhciBlPXt9LHQ9ITEsbj0wLG89YXJndW1lbnRzLmxlbmd0aDtcIltvYmplY3QgQm9vbGVhbl1cIj09PU9iamVjdC5wcm90b3R5cGUudG9TdHJpbmcuY2FsbChhcmd1bWVudHNbMF0pJiYodD1hcmd1bWVudHNbMF0sbisrKTtmb3IoO248bztuKyspe3ZhciByPWFyZ3VtZW50c1tuXTshKGZ1bmN0aW9uKG4pe2Zvcih2YXIgbyBpbiBuKU9iamVjdC5wcm90b3R5cGUuaGFzT3duUHJvcGVydHkuY2FsbChuLG8pJiYodCYmXCJbb2JqZWN0IE9iamVjdF1cIj09PU9iamVjdC5wcm90b3R5cGUudG9TdHJpbmcuY2FsbChuW29dKT9lW29dPWYoITAsZVtvXSxuW29dKTplW29dPW5bb10pfSkocil9cmV0dXJuIGV9LGQ9ZnVuY3Rpb24oZSl7cmV0dXJuIE1hdGgubWF4KGUuc2Nyb2xsSGVpZ2h0LGUub2Zmc2V0SGVpZ2h0LGUuY2xpZW50SGVpZ2h0KX0saD1mdW5jdGlvbihlLHQpe2ZvcihFbGVtZW50LnByb3RvdHlwZS5tYXRjaGVzfHwoRWxlbWVudC5wcm90b3R5cGUubWF0Y2hlcz1FbGVtZW50LnByb3RvdHlwZS5tYXRjaGVzU2VsZWN0b3J8fEVsZW1lbnQucHJvdG90eXBlLm1vek1hdGNoZXNTZWxlY3Rvcnx8RWxlbWVudC5wcm90b3R5cGUubXNNYXRjaGVzU2VsZWN0b3J8fEVsZW1lbnQucHJvdG90eXBlLm9NYXRjaGVzU2VsZWN0b3J8fEVsZW1lbnQucHJvdG90eXBlLndlYmtpdE1hdGNoZXNTZWxlY3Rvcnx8ZnVuY3Rpb24oZSl7Zm9yKHZhciB0PSh0aGlzLmRvY3VtZW50fHx0aGlzLm93bmVyRG9jdW1lbnQpLnF1ZXJ5U2VsZWN0b3JBbGwoZSksbj10Lmxlbmd0aDstLW4+PTAmJnQuaXRlbShuKSE9PXRoaXM7KTtyZXR1cm4gbj4tMX0pO2UmJmUhPT1kb2N1bWVudDtlPWUucGFyZW50Tm9kZSlpZihlLm1hdGNoZXModCkpcmV0dXJuIGU7cmV0dXJuIG51bGx9LG09ZnVuY3Rpb24oZSl7XCIjXCI9PT1lLmNoYXJBdCgwKSYmKGU9ZS5zdWJzdHIoMSkpO2Zvcih2YXIgdCxuPVN0cmluZyhlKSxvPW4ubGVuZ3RoLHI9LTEsYT1cIlwiLGM9bi5jaGFyQ29kZUF0KDApOysrcjxvOyl7aWYoMD09PSh0PW4uY2hhckNvZGVBdChyKSkpdGhyb3cgbmV3IEludmFsaWRDaGFyYWN0ZXJFcnJvcihcIkludmFsaWQgY2hhcmFjdGVyOiB0aGUgaW5wdXQgY29udGFpbnMgVSswMDAwLlwiKTthKz10Pj0xJiZ0PD0zMXx8MTI3PT10fHwwPT09ciYmdD49NDgmJnQ8PTU3fHwxPT09ciYmdD49NDgmJnQ8PTU3JiY0NT09PWM/XCJcXFxcXCIrdC50b1N0cmluZygxNikrXCIgXCI6dD49MTI4fHw0NT09PXR8fDk1PT09dHx8dD49NDgmJnQ8PTU3fHx0Pj02NSYmdDw9OTB8fHQ+PTk3JiZ0PD0xMjI/bi5jaGFyQXQocik6XCJcXFxcXCIrbi5jaGFyQXQocil9cmV0dXJuXCIjXCIrYX0scD1mdW5jdGlvbihlLHQpe3ZhciBuO3JldHVyblwiZWFzZUluUXVhZFwiPT09ZSYmKG49dCp0KSxcImVhc2VPdXRRdWFkXCI9PT1lJiYobj10KigyLXQpKSxcImVhc2VJbk91dFF1YWRcIj09PWUmJihuPXQ8LjU/Mip0KnQ6KDQtMip0KSp0LTEpLFwiZWFzZUluQ3ViaWNcIj09PWUmJihuPXQqdCp0KSxcImVhc2VPdXRDdWJpY1wiPT09ZSYmKG49LS10KnQqdCsxKSxcImVhc2VJbk91dEN1YmljXCI9PT1lJiYobj10PC41PzQqdCp0KnQ6KHQtMSkqKDIqdC0yKSooMip0LTIpKzEpLFwiZWFzZUluUXVhcnRcIj09PWUmJihuPXQqdCp0KnQpLFwiZWFzZU91dFF1YXJ0XCI9PT1lJiYobj0xLSAtLXQqdCp0KnQpLFwiZWFzZUluT3V0UXVhcnRcIj09PWUmJihuPXQ8LjU/OCp0KnQqdCp0OjEtOCotLXQqdCp0KnQpLFwiZWFzZUluUXVpbnRcIj09PWUmJihuPXQqdCp0KnQqdCksXCJlYXNlT3V0UXVpbnRcIj09PWUmJihuPTErLS10KnQqdCp0KnQpLFwiZWFzZUluT3V0UXVpbnRcIj09PWUmJihuPXQ8LjU/MTYqdCp0KnQqdCp0OjErMTYqLS10KnQqdCp0KnQpLG58fHR9LGc9ZnVuY3Rpb24oZSx0LG4pe3ZhciBvPTA7aWYoZS5vZmZzZXRQYXJlbnQpZG97bys9ZS5vZmZzZXRUb3AsZT1lLm9mZnNldFBhcmVudH13aGlsZShlKTtyZXR1cm4gbz1NYXRoLm1heChvLXQtbiwwKSxNYXRoLm1pbihvLHkoKS1iKCkpfSxiPWZ1bmN0aW9uKCl7cmV0dXJuIE1hdGgubWF4KGRvY3VtZW50LmRvY3VtZW50RWxlbWVudC5jbGllbnRIZWlnaHQsZS5pbm5lckhlaWdodHx8MCl9LHk9ZnVuY3Rpb24oKXtyZXR1cm4gTWF0aC5tYXgoZG9jdW1lbnQuYm9keS5zY3JvbGxIZWlnaHQsZG9jdW1lbnQuZG9jdW1lbnRFbGVtZW50LnNjcm9sbEhlaWdodCxkb2N1bWVudC5ib2R5Lm9mZnNldEhlaWdodCxkb2N1bWVudC5kb2N1bWVudEVsZW1lbnQub2Zmc2V0SGVpZ2h0LGRvY3VtZW50LmJvZHkuY2xpZW50SGVpZ2h0LGRvY3VtZW50LmRvY3VtZW50RWxlbWVudC5jbGllbnRIZWlnaHQpfSx2PWZ1bmN0aW9uKGUpe3JldHVybiBlJiZcIm9iamVjdFwiPT10eXBlb2YgSlNPTiYmXCJmdW5jdGlvblwiPT10eXBlb2YgSlNPTi5wYXJzZT9KU09OLnBhcnNlKGUpOnt9fSxPPWZ1bmN0aW9uKGUpe3JldHVybiBlP2QoZSkrZS5vZmZzZXRUb3A6MH0sUz1mdW5jdGlvbih0LG4sbyl7b3x8KHQuZm9jdXMoKSxkb2N1bWVudC5hY3RpdmVFbGVtZW50LmlkIT09dC5pZCYmKHQuc2V0QXR0cmlidXRlKFwidGFiaW5kZXhcIixcIi0xXCIpLHQuZm9jdXMoKSx0LnN0eWxlLm91dGxpbmU9XCJub25lXCIpLGUuc2Nyb2xsVG8oMCxuKSl9O2kuYW5pbWF0ZVNjcm9sbD1mdW5jdGlvbihuLG8sYyl7dmFyIGk9dihvP28uZ2V0QXR0cmlidXRlKFwiZGF0YS1vcHRpb25zXCIpOm51bGwpLHU9Zih0fHxzLGN8fHt9LGkpLGQ9XCJbb2JqZWN0IE51bWJlcl1cIj09PU9iamVjdC5wcm90b3R5cGUudG9TdHJpbmcuY2FsbChuKSxoPWR8fCFuLnRhZ05hbWU/bnVsbDpuO2lmKGR8fGgpe3ZhciBtPWUucGFnZVlPZmZzZXQ7dS5zZWxlY3RvckhlYWRlciYmIXImJihyPWRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IodS5zZWxlY3RvckhlYWRlcikpLGF8fChhPU8ocikpO3ZhciBiLEUsST1kP246ZyhoLGEscGFyc2VJbnQoXCJmdW5jdGlvblwiPT10eXBlb2YgdS5vZmZzZXQ/dS5vZmZzZXQoKTp1Lm9mZnNldCwxMCkpLEg9SS1tLEE9eSgpLGo9MCxDPWZ1bmN0aW9uKHQscixhKXt2YXIgYz1lLnBhZ2VZT2Zmc2V0Oyh0PT1yfHxjPT1yfHxlLmlubmVySGVpZ2h0K2M+PUEpJiYoY2xlYXJJbnRlcnZhbChhKSxTKG4scixkKSx1LmNhbGxiYWNrKG4sbykpfSxNPWZ1bmN0aW9uKCl7ais9MTYsYj1qL3BhcnNlSW50KHUuc3BlZWQsMTApLGI9Yj4xPzE6YixFPW0rSCpwKHUuZWFzaW5nLGIpLGUuc2Nyb2xsVG8oMCxNYXRoLmZsb29yKEUpKSxDKEUsSSxsKX07MD09PWUucGFnZVlPZmZzZXQmJmUuc2Nyb2xsVG8oMCwwKSwoZnVuY3Rpb24oKXtjbGVhckludGVydmFsKGwpLGw9c2V0SW50ZXJ2YWwoTSwxNil9KSgpfX07dmFyIEU9ZnVuY3Rpb24odCl7dHJ5e20oZGVjb2RlVVJJQ29tcG9uZW50KGUubG9jYXRpb24uaGFzaCkpfWNhdGNoKHQpe20oZS5sb2NhdGlvbi5oYXNoKX1uJiYobi5pZD1uLmdldEF0dHJpYnV0ZShcImRhdGEtc2Nyb2xsLWlkXCIpLGkuYW5pbWF0ZVNjcm9sbChuLG8pLG49bnVsbCxvPW51bGwpfSxJPWZ1bmN0aW9uKHIpe2lmKDA9PT1yLmJ1dHRvbiYmIXIubWV0YUtleSYmIXIuY3RybEtleSYmKG89aChyLnRhcmdldCx0LnNlbGVjdG9yKSkmJlwiYVwiPT09by50YWdOYW1lLnRvTG93ZXJDYXNlKCkmJm8uaG9zdG5hbWU9PT1lLmxvY2F0aW9uLmhvc3RuYW1lJiZvLnBhdGhuYW1lPT09ZS5sb2NhdGlvbi5wYXRobmFtZSYmLyMvLnRlc3Qoby5ocmVmKSl7dmFyIGE7dHJ5e2E9bShkZWNvZGVVUklDb21wb25lbnQoby5oYXNoKSl9Y2F0Y2goZSl7YT1tKG8uaGFzaCl9aWYoXCIjXCI9PT1hKXtyLnByZXZlbnREZWZhdWx0KCksbj1kb2N1bWVudC5ib2R5O3ZhciBjPW4uaWQ/bi5pZDpcInNtb290aC1zY3JvbGwtdG9wXCI7cmV0dXJuIG4uc2V0QXR0cmlidXRlKFwiZGF0YS1zY3JvbGwtaWRcIixjKSxuLmlkPVwiXCIsdm9pZChlLmxvY2F0aW9uLmhhc2guc3Vic3RyaW5nKDEpPT09Yz9FKCk6ZS5sb2NhdGlvbi5oYXNoPWMpfW49ZG9jdW1lbnQucXVlcnlTZWxlY3RvcihhKSxuJiYobi5zZXRBdHRyaWJ1dGUoXCJkYXRhLXNjcm9sbC1pZFwiLG4uaWQpLG4uaWQ9XCJcIixvLmhhc2g9PT1lLmxvY2F0aW9uLmhhc2gmJihyLnByZXZlbnREZWZhdWx0KCksRSgpKSl9fSxIPWZ1bmN0aW9uKGUpe2N8fChjPXNldFRpbWVvdXQoKGZ1bmN0aW9uKCl7Yz1udWxsLGE9TyhyKX0pLDY2KSl9O3JldHVybiBpLmRlc3Ryb3k9ZnVuY3Rpb24oKXt0JiYoZG9jdW1lbnQucmVtb3ZlRXZlbnRMaXN0ZW5lcihcImNsaWNrXCIsSSwhMSksZS5yZW1vdmVFdmVudExpc3RlbmVyKFwicmVzaXplXCIsSCwhMSksdD1udWxsLG49bnVsbCxvPW51bGwscj1udWxsLGE9bnVsbCxjPW51bGwsbD1udWxsKX0saS5pbml0PWZ1bmN0aW9uKG4pe3UmJihpLmRlc3Ryb3koKSx0PWYocyxufHx7fSkscj10LnNlbGVjdG9ySGVhZGVyP2RvY3VtZW50LnF1ZXJ5U2VsZWN0b3IodC5zZWxlY3RvckhlYWRlcik6bnVsbCxhPU8ociksZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcihcImNsaWNrXCIsSSwhMSksZS5hZGRFdmVudExpc3RlbmVyKFwiaGFzaGNoYW5nZVwiLEUsITEpLHImJmUuYWRkRXZlbnRMaXN0ZW5lcihcInJlc2l6ZVwiLEgsITEpKX0saX0pKTtcblxuXG4vLy8vLy8vLy8vLy8vLy8vLy9cbi8vIFdFQlBBQ0sgRk9PVEVSXG4vLyAuL34vc21vb3RoLXNjcm9sbC9kaXN0L2pzL3Ntb290aC1zY3JvbGwubWluLmpzXG4vLyBtb2R1bGUgaWQgPSAxXG4vLyBtb2R1bGUgY2h1bmtzID0gMCJdLCJtYXBwaW5ncyI6IkFBQUE7QUFDQTtBQUFBO0FBQUE7QUFBQTtBIiwic291cmNlUm9vdCI6IiJ9");
 
 /***/ }),
 /* 2 */
-/*!***********************************!*\
-  !*** ./src/js/default-options.js ***!
-  \***********************************/
-/***/ (function(module, exports) {
-
-	/**
-	 * Tocbot default options should all live in this file.
-	 *
-	 * @author Tim Scanlin
-	 */
-	
-	module.exports = {
-	  // Where to render the table of contents.
-	  tocSelector: '.js-toc',
-	  // Where to grab the headings to build the table of contents.
-	  contentSelector: '.js-toc-content',
-	  // Which headings to grab inside of the contentSelector element.
-	  headingSelector: 'h1, h2, h3',
-	
-	  // Headings that match the ignoreSelector will be skipped.
-	  ignoreSelector: '.js-toc-ignore',
-	  // Main class to add to links.
-	  linkClass: 'toc-link',
-	  // Extra classes to add to links.
-	  extraLinkClasses: '',
-	  // Class to add to active links,
-	  // the link corresponding to the top most heading on the page.
-	  activeLinkClass: 'is-active-link',
-	  // Main class to add to lists.
-	  listClass: 'toc-list',
-	  // Extra classes to add to lists.
-	  extraListClasses: '',
-	  // Class that gets added when a list should be collapsed.
-	  isCollapsedClass: 'is-collapsed',
-	  // Class that gets added when a list should be able
-	  // to be collapsed but isn't necessarily collpased.
-	  collapsibleClass: 'is-collapsible',
-	  // Class to add to list items.
-	  listItemClass: 'toc-list-item',
-	  // How many heading levels should not be collpased.
-	  // For example, number 6 will show everything since
-	  // there are only 6 heading levels and number 0 will collpase them all.
-	  // The sections that are hidden will open
-	  // and close as you scroll to headings within them.
-	  collapseDepth: 0,
-	  // smooth-scroll options object, see docs at:
-	  // https://github.com/cferdinandi/smooth-scroll
-	  smoothScrollOptions: {
-	    easing: 'easeInOutCubic',
-	    offset: 0,
-	    speed: 300, // animation duration.
-	    callback: function(anchor, toggle) { } // callback after link is scrolled to.
-	  },
-	  // Headings offset between the headings and the top of the document.
-	  headingsOffset: 0,
-	  // Timeout between events firing to make sure it's
-	  // not too rapid (for performance reasons).
-	  throttleTimeout: 50,
-	  // Element to add the positionFixedClass to.
-	  positionFixedSelector: null,
-	  // Fixed position class to add to make sidebar fixed after scrolling
-	  // down past the fixedSidebarOffset.
-	  positionFixedClass: 'is-position-fixed',
-	  // fixedSidebarOffset can be any number but by default is set
-	  // to auto which sets the fixedSidebarOffset to the sidebar
-	  // element's offsetTop from the top of the document on init.
-	  fixedSidebarOffset: 'auto',
-	  // includeHtml can be set to true to include the HTML markup from the
-	  // heading node instead of just including the textContent.
-	  includeHtml: false
-	};
-
-
-/***/ }),
-/* 3 */
+/* unknown exports provided */
+/* all exports used */
 /*!******************************!*\
   !*** ./src/js/build-html.js ***!
   \******************************/
 /***/ (function(module, exports) {
 
-	/**
-	 * This file is responsible for building the DOM and updating DOM state.
-	 *
-	 * @author Tim Scanlin
-	 */
-	
-	module.exports = function(options) {
-	  var forEach = [].forEach;
-	  var some = [].some;
-	  var body = document.body;
-	  var currentlyHighlighting = true;
-	  var SPACE_CHAR = ' ';
-	
-	  /**
-	   * Create link and list elements.
-	   * @param {Object} d
-	   * @param {HTMLElement} container
-	   * @return {HTMLElement}
-	   */
-	  function createEl(d, container) {
-	    var link = container.appendChild(createLink(d));
-	    if (d.children.length) {
-	      var list = createList(d.isCollapsed);
-	      d.children.forEach(function(child) {
-	        createEl(child, list);
-	      });
-	      link.appendChild(list);
-	    }
-	  }
-	
-	  /**
-	   * Render nested heading array data into a given selector.
-	   * @param {String} selector
-	   * @param {Array} data
-	   * @return {HTMLElement}
-	   */
-	  function render(selector, data) {
-	    var self = this;
-	    var collapsed = false;
-	    var container = createList(collapsed);
-	
-	    data.forEach(function(d) {
-	      createEl(d, container);
-	    });
-	
-	    var parent = document.querySelector(selector);
-	
-	    // Return if no parent is found.
-	    if (parent === null) {
-	      return;
-	    }
-	
-	    // Remove existing child if it exists.
-	    if (parent.firstChild) {
-	      parent.removeChild(parent.firstChild);
-	    }
-	
-	    // Append the Elements that have been created;
-	    return parent.appendChild(container);
-	  }
-	
-	  /**
-	   * Create link element.
-	   * @param {Object} data
-	   * @return {HTMLElement}
-	   */
-	  function createLink(data) {
-	    var item = document.createElement('li');
-	    var a = document.createElement('a');
-	    if (options.listItemClass) {
-	      item.setAttribute('class', options.listItemClass);
-	    }
-	    if (options.includeHtml && data.childNodes.length) {
-	      forEach.call(data.childNodes, function(node) {
-	        a.appendChild(node.cloneNode(true));
-	      });
-	    } else {
-	      // Default behavior.
-	      a.textContent = data.textContent;
-	    }
-	    // Property for smooth-scroll.
-	    a.setAttribute('data-scroll', '');
-	    a.setAttribute('href', '#' + data.id);
-	    a.setAttribute('class', options.linkClass
-	      + SPACE_CHAR + 'node-name--' + data.nodeName
-	      + SPACE_CHAR + options.extraLinkClasses);
-	    item.appendChild(a);
-	    return item;
-	  }
-	
-	  /**
-	   * Create list element.
-	   * @param {Boolean} isCollapsed
-	   * @return {HTMLElement}
-	   */
-	  function createList(isCollapsed) {
-	    var list = document.createElement('ul');
-	    var classes =  options.listClass
-	      + SPACE_CHAR + options.extraListClasses;
-	    if (isCollapsed) {
-	      classes += SPACE_CHAR + options.collapsibleClass;
-	      classes += SPACE_CHAR + options.isCollapsedClass;
-	    }
-	    list.setAttribute('class', classes);
-	    return list;
-	  }
-	
-	  /**
-	   * Update fixed sidebar class.
-	   * @return {HTMLElement}
-	   */
-	  function updateFixedSidebarClass() {
-	    var top = document.documentElement.scrollTop || body.scrollTop;
-	    var posFixedEl = document.querySelector(options.positionFixedSelector);
-	
-	    if (options.fixedSidebarOffset === 'auto') {
-	      options.fixedSidebarOffset = document.querySelector(options.tocSelector).offsetTop;
-	    }
-	
-	    if (top > options.fixedSidebarOffset) {
-	      if (posFixedEl.className.indexOf(options.positionFixedClass) === -1) {
-	        posFixedEl.className += SPACE_CHAR + options.positionFixedClass;
-	      }
-	    } else {
-	      posFixedEl.className = posFixedEl.className.split(SPACE_CHAR + options.positionFixedClass).join('');
-	    }
-	  }
-	
-	  /**
-	   * Update TOC highlighting and collpased groupings.
-	   */
-	  function updateToc(headingsArray) {
-	    var top = document.documentElement.scrollTop || body.scrollTop;
-	
-	    // Add fixed class at offset;
-	    if (options.positionFixedSelector) {
-	      updateFixedSidebarClass();
-	    }
-	
-	    // Get the top most heading currently visible on the page so we know what to highlight.
-	    var headings = headingsArray;
-	    var topHeader;
-	    // Using some instead of each so that we can escape early.
-	    if (currentlyHighlighting
-	      && document.querySelector(options.tocSelector) !== null
-	      && headings.length > 0) {
-	      some.call(headings, function(heading, i) {
-	        if (heading.offsetTop > top + options.headingsOffset + 1) {
-	          // Don't allow negative index value.
-	          var index = (i === 0) ? i : i - 1;
-	          topHeader = headings[index];
-	          return true;
-	        } else if (i === headings.length - 1) {
-	          // This allows scrolling for the last heading on the page.
-	          topHeader = headings[headings.length - 1];
-	          return true;
-	        }
-	      });
-	
-	      // Remove the active class from the other tocLinks.
-	      var tocLinks = document.querySelector(options.tocSelector)
-	        .querySelectorAll('.' + options.linkClass);
-	      forEach.call(tocLinks, function(tocLink) {
-	        tocLink.className = tocLink.className.split(SPACE_CHAR + options.activeLinkClass).join('');
-	      });
-	
-	      // Add the active class to the active tocLink.
-	      var activeTocLink = document.querySelector(options.tocSelector)
-	        .querySelector('.' + options.linkClass
-	          + '.node-name--' + topHeader.nodeName
-	          + '[href="#' + topHeader.id + '"]');
-	      activeTocLink.className += SPACE_CHAR + options.activeLinkClass;
-	
-	      var tocLists = document.querySelector(options.tocSelector)
-	        .querySelectorAll('.' + options.listClass + '.' + options.collapsibleClass);
-	
-	      // Collapse the other collapsible lists.
-	      forEach.call(tocLists, function(list) {
-	        var collapsedClass = SPACE_CHAR + options.isCollapsedClass;
-	        if (list.className.indexOf(collapsedClass) === -1) {
-	          list.className += SPACE_CHAR + options.isCollapsedClass;
-	        }
-	      });
-	
-	      // Expand the active link's collapsible list and its sibling if applicable.
-	      if (activeTocLink.nextSibling) {
-	        activeTocLink.nextSibling.className = activeTocLink.nextSibling.className.split(SPACE_CHAR + options.isCollapsedClass).join('');
-	      }
-	      removeCollapsedFromParents(activeTocLink.parentNode.parentNode);
-	    }
-	  }
-	
-	  /**
-	   * Remove collpased class from parent elements.
-	   * @param {HTMLElement} element
-	   * @return {HTMLElement}
-	   */
-	  function removeCollapsedFromParents(element) {
-	    if (element.className.indexOf(options.collapsibleClass) !== -1) {
-	      element.className = element.className.split(SPACE_CHAR + options.isCollapsedClass).join('');
-	      return removeCollapsedFromParents(element.parentNode.parentNode);
-	    }
-	    return element;
-	  }
-	
-	  /**
-	   * Disable TOC Animation when a link is clicked.
-	   * @param {Event} event
-	   */
-	  function disableTocAnimation(event) {
-	    var target = event.target || event.srcElement;
-	    if (typeof target.className !== 'string' || target.className.indexOf(options.linkClass) === -1) {
-	      return;
-	    }
-	    // Bind to tocLink clicks to temporarily disable highlighting
-	    // while smoothScroll is animating.
-	    currentlyHighlighting = false;
-	  }
-	
-	  /**
-	   * Enable TOC Animation.
-	   */
-	  function enableTocAnimation() {
-	    currentlyHighlighting = true;
-	  }
-	
-	  return {
-	    enableTocAnimation: enableTocAnimation,
-	    disableTocAnimation: disableTocAnimation,
-	    render: render,
-	    updateToc: updateToc
-	  };
-	};
+eval("/**\n * This file is responsible for building the DOM and updating DOM state.\n *\n * @author Tim Scanlin\n */\n\nmodule.exports = function(options) {\n  var forEach = [].forEach;\n  var some = [].some;\n  var body = document.body;\n  var currentlyHighlighting = true;\n  var SPACE_CHAR = ' ';\n\n  /**\n   * Create link and list elements.\n   * @param {Object} d\n   * @param {HTMLElement} container\n   * @return {HTMLElement}\n   */\n  function createEl(d, container) {\n    var link = container.appendChild(createLink(d));\n    if (d.children.length) {\n      var list = createList(d.isCollapsed);\n      d.children.forEach(function(child) {\n        createEl(child, list);\n      });\n      link.appendChild(list);\n    }\n  }\n\n  /**\n   * Render nested heading array data into a given selector.\n   * @param {String} selector\n   * @param {Array} data\n   * @return {HTMLElement}\n   */\n  function render(selector, data) {\n    var self = this;\n    var collapsed = false;\n    var container = createList(collapsed);\n\n    data.forEach(function(d) {\n      createEl(d, container);\n    });\n\n    var parent = document.querySelector(selector);\n\n    // Return if no parent is found.\n    if (parent === null) {\n      return;\n    }\n\n    // Remove existing child if it exists.\n    if (parent.firstChild) {\n      parent.removeChild(parent.firstChild);\n    }\n\n    // Append the Elements that have been created;\n    return parent.appendChild(container);\n  }\n\n  /**\n   * Create link element.\n   * @param {Object} data\n   * @return {HTMLElement}\n   */\n  function createLink(data) {\n    var item = document.createElement('li');\n    var a = document.createElement('a');\n    if (options.listItemClass) {\n      item.setAttribute('class', options.listItemClass);\n    }\n    if (options.includeHtml && data.childNodes.length) {\n      forEach.call(data.childNodes, function(node) {\n        a.appendChild(node.cloneNode(true));\n      });\n    } else {\n      // Default behavior.\n      a.textContent = data.textContent;\n    }\n    // Property for smooth-scroll.\n    a.setAttribute('data-scroll', '');\n    a.setAttribute('href', '#' + data.id);\n    a.setAttribute('class', options.linkClass\n      + SPACE_CHAR + 'node-name--' + data.nodeName\n      + SPACE_CHAR + options.extraLinkClasses);\n    item.appendChild(a);\n    return item;\n  }\n\n  /**\n   * Create list element.\n   * @param {Boolean} isCollapsed\n   * @return {HTMLElement}\n   */\n  function createList(isCollapsed) {\n    var list = document.createElement('ul');\n    var classes =  options.listClass\n      + SPACE_CHAR + options.extraListClasses;\n    if (isCollapsed) {\n      classes += SPACE_CHAR + options.collapsibleClass;\n      classes += SPACE_CHAR + options.isCollapsedClass;\n    }\n    list.setAttribute('class', classes);\n    return list;\n  }\n\n  /**\n   * Update fixed sidebar class.\n   * @return {HTMLElement}\n   */\n  function updateFixedSidebarClass() {\n    var top = document.documentElement.scrollTop || body.scrollTop;\n    var posFixedEl = document.querySelector(options.positionFixedSelector);\n\n    if (options.fixedSidebarOffset === 'auto') {\n      options.fixedSidebarOffset = document.querySelector(options.tocSelector).offsetTop;\n    }\n\n    if (top > options.fixedSidebarOffset) {\n      if (posFixedEl.className.indexOf(options.positionFixedClass) === -1) {\n        posFixedEl.className += SPACE_CHAR + options.positionFixedClass;\n      }\n    } else {\n      posFixedEl.className = posFixedEl.className.split(SPACE_CHAR + options.positionFixedClass).join('');\n    }\n  }\n\n  /**\n   * Update TOC highlighting and collpased groupings.\n   */\n  function updateToc(headingsArray) {\n    var top = document.documentElement.scrollTop || body.scrollTop;\n\n    // Add fixed class at offset;\n    if (options.positionFixedSelector) {\n      updateFixedSidebarClass();\n    }\n\n    // Get the top most heading currently visible on the page so we know what to highlight.\n    var headings = headingsArray;\n    var topHeader;\n    // Using some instead of each so that we can escape early.\n    if (currentlyHighlighting\n      && document.querySelector(options.tocSelector) !== null\n      && headings.length > 0) {\n      some.call(headings, function(heading, i) {\n        if (heading.offsetTop > top + options.headingsOffset + 1) {\n          // Don't allow negative index value.\n          var index = (i === 0) ? i : i - 1;\n          topHeader = headings[index];\n          return true;\n        } else if (i === headings.length - 1) {\n          // This allows scrolling for the last heading on the page.\n          topHeader = headings[headings.length - 1];\n          return true;\n        }\n      });\n\n      // Remove the active class from the other tocLinks.\n      var tocLinks = document.querySelector(options.tocSelector)\n        .querySelectorAll('.' + options.linkClass);\n      forEach.call(tocLinks, function(tocLink) {\n        tocLink.className = tocLink.className.split(SPACE_CHAR + options.activeLinkClass).join('');\n      });\n\n      // Add the active class to the active tocLink.\n      var activeTocLink = document.querySelector(options.tocSelector)\n        .querySelector('.' + options.linkClass\n          + '.node-name--' + topHeader.nodeName\n          + '[href=\"#' + topHeader.id + '\"]');\n      activeTocLink.className += SPACE_CHAR + options.activeLinkClass;\n\n      var tocLists = document.querySelector(options.tocSelector)\n        .querySelectorAll('.' + options.listClass + '.' + options.collapsibleClass);\n\n      // Collapse the other collapsible lists.\n      forEach.call(tocLists, function(list) {\n        var collapsedClass = SPACE_CHAR + options.isCollapsedClass;\n        if (list.className.indexOf(collapsedClass) === -1) {\n          list.className += SPACE_CHAR + options.isCollapsedClass;\n        }\n      });\n\n      // Expand the active link's collapsible list and its sibling if applicable.\n      if (activeTocLink.nextSibling) {\n        activeTocLink.nextSibling.className = activeTocLink.nextSibling.className.split(SPACE_CHAR + options.isCollapsedClass).join('');\n      }\n      removeCollapsedFromParents(activeTocLink.parentNode.parentNode);\n    }\n  }\n\n  /**\n   * Remove collpased class from parent elements.\n   * @param {HTMLElement} element\n   * @return {HTMLElement}\n   */\n  function removeCollapsedFromParents(element) {\n    if (element.className.indexOf(options.collapsibleClass) !== -1) {\n      element.className = element.className.split(SPACE_CHAR + options.isCollapsedClass).join('');\n      return removeCollapsedFromParents(element.parentNode.parentNode);\n    }\n    return element;\n  }\n\n  /**\n   * Disable TOC Animation when a link is clicked.\n   * @param {Event} event\n   */\n  function disableTocAnimation(event) {\n    var target = event.target || event.srcElement;\n    if (typeof target.className !== 'string' || target.className.indexOf(options.linkClass) === -1) {\n      return;\n    }\n    // Bind to tocLink clicks to temporarily disable highlighting\n    // while smoothScroll is animating.\n    currentlyHighlighting = false;\n  }\n\n  /**\n   * Enable TOC Animation.\n   */\n  function enableTocAnimation() {\n    currentlyHighlighting = true;\n  }\n\n  return {\n    enableTocAnimation: enableTocAnimation,\n    disableTocAnimation: disableTocAnimation,\n    render: render,\n    updateToc: updateToc\n  };\n};\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiMi5qcyIsInNvdXJjZXMiOlsid2VicGFjazovLy8uL3NyYy9qcy9idWlsZC1odG1sLmpzPzdkMDEiXSwic291cmNlc0NvbnRlbnQiOlsiLyoqXG4gKiBUaGlzIGZpbGUgaXMgcmVzcG9uc2libGUgZm9yIGJ1aWxkaW5nIHRoZSBET00gYW5kIHVwZGF0aW5nIERPTSBzdGF0ZS5cbiAqXG4gKiBAYXV0aG9yIFRpbSBTY2FubGluXG4gKi9cblxubW9kdWxlLmV4cG9ydHMgPSBmdW5jdGlvbihvcHRpb25zKSB7XG4gIHZhciBmb3JFYWNoID0gW10uZm9yRWFjaDtcbiAgdmFyIHNvbWUgPSBbXS5zb21lO1xuICB2YXIgYm9keSA9IGRvY3VtZW50LmJvZHk7XG4gIHZhciBjdXJyZW50bHlIaWdobGlnaHRpbmcgPSB0cnVlO1xuICB2YXIgU1BBQ0VfQ0hBUiA9ICcgJztcblxuICAvKipcbiAgICogQ3JlYXRlIGxpbmsgYW5kIGxpc3QgZWxlbWVudHMuXG4gICAqIEBwYXJhbSB7T2JqZWN0fSBkXG4gICAqIEBwYXJhbSB7SFRNTEVsZW1lbnR9IGNvbnRhaW5lclxuICAgKiBAcmV0dXJuIHtIVE1MRWxlbWVudH1cbiAgICovXG4gIGZ1bmN0aW9uIGNyZWF0ZUVsKGQsIGNvbnRhaW5lcikge1xuICAgIHZhciBsaW5rID0gY29udGFpbmVyLmFwcGVuZENoaWxkKGNyZWF0ZUxpbmsoZCkpO1xuICAgIGlmIChkLmNoaWxkcmVuLmxlbmd0aCkge1xuICAgICAgdmFyIGxpc3QgPSBjcmVhdGVMaXN0KGQuaXNDb2xsYXBzZWQpO1xuICAgICAgZC5jaGlsZHJlbi5mb3JFYWNoKGZ1bmN0aW9uKGNoaWxkKSB7XG4gICAgICAgIGNyZWF0ZUVsKGNoaWxkLCBsaXN0KTtcbiAgICAgIH0pO1xuICAgICAgbGluay5hcHBlbmRDaGlsZChsaXN0KTtcbiAgICB9XG4gIH1cblxuICAvKipcbiAgICogUmVuZGVyIG5lc3RlZCBoZWFkaW5nIGFycmF5IGRhdGEgaW50byBhIGdpdmVuIHNlbGVjdG9yLlxuICAgKiBAcGFyYW0ge1N0cmluZ30gc2VsZWN0b3JcbiAgICogQHBhcmFtIHtBcnJheX0gZGF0YVxuICAgKiBAcmV0dXJuIHtIVE1MRWxlbWVudH1cbiAgICovXG4gIGZ1bmN0aW9uIHJlbmRlcihzZWxlY3RvciwgZGF0YSkge1xuICAgIHZhciBzZWxmID0gdGhpcztcbiAgICB2YXIgY29sbGFwc2VkID0gZmFsc2U7XG4gICAgdmFyIGNvbnRhaW5lciA9IGNyZWF0ZUxpc3QoY29sbGFwc2VkKTtcblxuICAgIGRhdGEuZm9yRWFjaChmdW5jdGlvbihkKSB7XG4gICAgICBjcmVhdGVFbChkLCBjb250YWluZXIpO1xuICAgIH0pO1xuXG4gICAgdmFyIHBhcmVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3Ioc2VsZWN0b3IpO1xuXG4gICAgLy8gUmV0dXJuIGlmIG5vIHBhcmVudCBpcyBmb3VuZC5cbiAgICBpZiAocGFyZW50ID09PSBudWxsKSB7XG4gICAgICByZXR1cm47XG4gICAgfVxuXG4gICAgLy8gUmVtb3ZlIGV4aXN0aW5nIGNoaWxkIGlmIGl0IGV4aXN0cy5cbiAgICBpZiAocGFyZW50LmZpcnN0Q2hpbGQpIHtcbiAgICAgIHBhcmVudC5yZW1vdmVDaGlsZChwYXJlbnQuZmlyc3RDaGlsZCk7XG4gICAgfVxuXG4gICAgLy8gQXBwZW5kIHRoZSBFbGVtZW50cyB0aGF0IGhhdmUgYmVlbiBjcmVhdGVkO1xuICAgIHJldHVybiBwYXJlbnQuYXBwZW5kQ2hpbGQoY29udGFpbmVyKTtcbiAgfVxuXG4gIC8qKlxuICAgKiBDcmVhdGUgbGluayBlbGVtZW50LlxuICAgKiBAcGFyYW0ge09iamVjdH0gZGF0YVxuICAgKiBAcmV0dXJuIHtIVE1MRWxlbWVudH1cbiAgICovXG4gIGZ1bmN0aW9uIGNyZWF0ZUxpbmsoZGF0YSkge1xuICAgIHZhciBpdGVtID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnbGknKTtcbiAgICB2YXIgYSA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2EnKTtcbiAgICBpZiAob3B0aW9ucy5saXN0SXRlbUNsYXNzKSB7XG4gICAgICBpdGVtLnNldEF0dHJpYnV0ZSgnY2xhc3MnLCBvcHRpb25zLmxpc3RJdGVtQ2xhc3MpO1xuICAgIH1cbiAgICBpZiAob3B0aW9ucy5pbmNsdWRlSHRtbCAmJiBkYXRhLmNoaWxkTm9kZXMubGVuZ3RoKSB7XG4gICAgICBmb3JFYWNoLmNhbGwoZGF0YS5jaGlsZE5vZGVzLCBmdW5jdGlvbihub2RlKSB7XG4gICAgICAgIGEuYXBwZW5kQ2hpbGQobm9kZS5jbG9uZU5vZGUodHJ1ZSkpO1xuICAgICAgfSk7XG4gICAgfSBlbHNlIHtcbiAgICAgIC8vIERlZmF1bHQgYmVoYXZpb3IuXG4gICAgICBhLnRleHRDb250ZW50ID0gZGF0YS50ZXh0Q29udGVudDtcbiAgICB9XG4gICAgLy8gUHJvcGVydHkgZm9yIHNtb290aC1zY3JvbGwuXG4gICAgYS5zZXRBdHRyaWJ1dGUoJ2RhdGEtc2Nyb2xsJywgJycpO1xuICAgIGEuc2V0QXR0cmlidXRlKCdocmVmJywgJyMnICsgZGF0YS5pZCk7XG4gICAgYS5zZXRBdHRyaWJ1dGUoJ2NsYXNzJywgb3B0aW9ucy5saW5rQ2xhc3NcbiAgICAgICsgU1BBQ0VfQ0hBUiArICdub2RlLW5hbWUtLScgKyBkYXRhLm5vZGVOYW1lXG4gICAgICArIFNQQUNFX0NIQVIgKyBvcHRpb25zLmV4dHJhTGlua0NsYXNzZXMpO1xuICAgIGl0ZW0uYXBwZW5kQ2hpbGQoYSk7XG4gICAgcmV0dXJuIGl0ZW07XG4gIH1cblxuICAvKipcbiAgICogQ3JlYXRlIGxpc3QgZWxlbWVudC5cbiAgICogQHBhcmFtIHtCb29sZWFufSBpc0NvbGxhcHNlZFxuICAgKiBAcmV0dXJuIHtIVE1MRWxlbWVudH1cbiAgICovXG4gIGZ1bmN0aW9uIGNyZWF0ZUxpc3QoaXNDb2xsYXBzZWQpIHtcbiAgICB2YXIgbGlzdCA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ3VsJyk7XG4gICAgdmFyIGNsYXNzZXMgPSAgb3B0aW9ucy5saXN0Q2xhc3NcbiAgICAgICsgU1BBQ0VfQ0hBUiArIG9wdGlvbnMuZXh0cmFMaXN0Q2xhc3NlcztcbiAgICBpZiAoaXNDb2xsYXBzZWQpIHtcbiAgICAgIGNsYXNzZXMgKz0gU1BBQ0VfQ0hBUiArIG9wdGlvbnMuY29sbGFwc2libGVDbGFzcztcbiAgICAgIGNsYXNzZXMgKz0gU1BBQ0VfQ0hBUiArIG9wdGlvbnMuaXNDb2xsYXBzZWRDbGFzcztcbiAgICB9XG4gICAgbGlzdC5zZXRBdHRyaWJ1dGUoJ2NsYXNzJywgY2xhc3Nlcyk7XG4gICAgcmV0dXJuIGxpc3Q7XG4gIH1cblxuICAvKipcbiAgICogVXBkYXRlIGZpeGVkIHNpZGViYXIgY2xhc3MuXG4gICAqIEByZXR1cm4ge0hUTUxFbGVtZW50fVxuICAgKi9cbiAgZnVuY3Rpb24gdXBkYXRlRml4ZWRTaWRlYmFyQ2xhc3MoKSB7XG4gICAgdmFyIHRvcCA9IGRvY3VtZW50LmRvY3VtZW50RWxlbWVudC5zY3JvbGxUb3AgfHwgYm9keS5zY3JvbGxUb3A7XG4gICAgdmFyIHBvc0ZpeGVkRWwgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKG9wdGlvbnMucG9zaXRpb25GaXhlZFNlbGVjdG9yKTtcblxuICAgIGlmIChvcHRpb25zLmZpeGVkU2lkZWJhck9mZnNldCA9PT0gJ2F1dG8nKSB7XG4gICAgICBvcHRpb25zLmZpeGVkU2lkZWJhck9mZnNldCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3Iob3B0aW9ucy50b2NTZWxlY3Rvcikub2Zmc2V0VG9wO1xuICAgIH1cblxuICAgIGlmICh0b3AgPiBvcHRpb25zLmZpeGVkU2lkZWJhck9mZnNldCkge1xuICAgICAgaWYgKHBvc0ZpeGVkRWwuY2xhc3NOYW1lLmluZGV4T2Yob3B0aW9ucy5wb3NpdGlvbkZpeGVkQ2xhc3MpID09PSAtMSkge1xuICAgICAgICBwb3NGaXhlZEVsLmNsYXNzTmFtZSArPSBTUEFDRV9DSEFSICsgb3B0aW9ucy5wb3NpdGlvbkZpeGVkQ2xhc3M7XG4gICAgICB9XG4gICAgfSBlbHNlIHtcbiAgICAgIHBvc0ZpeGVkRWwuY2xhc3NOYW1lID0gcG9zRml4ZWRFbC5jbGFzc05hbWUuc3BsaXQoU1BBQ0VfQ0hBUiArIG9wdGlvbnMucG9zaXRpb25GaXhlZENsYXNzKS5qb2luKCcnKTtcbiAgICB9XG4gIH1cblxuICAvKipcbiAgICogVXBkYXRlIFRPQyBoaWdobGlnaHRpbmcgYW5kIGNvbGxwYXNlZCBncm91cGluZ3MuXG4gICAqL1xuICBmdW5jdGlvbiB1cGRhdGVUb2MoaGVhZGluZ3NBcnJheSkge1xuICAgIHZhciB0b3AgPSBkb2N1bWVudC5kb2N1bWVudEVsZW1lbnQuc2Nyb2xsVG9wIHx8IGJvZHkuc2Nyb2xsVG9wO1xuXG4gICAgLy8gQWRkIGZpeGVkIGNsYXNzIGF0IG9mZnNldDtcbiAgICBpZiAob3B0aW9ucy5wb3NpdGlvbkZpeGVkU2VsZWN0b3IpIHtcbiAgICAgIHVwZGF0ZUZpeGVkU2lkZWJhckNsYXNzKCk7XG4gICAgfVxuXG4gICAgLy8gR2V0IHRoZSB0b3AgbW9zdCBoZWFkaW5nIGN1cnJlbnRseSB2aXNpYmxlIG9uIHRoZSBwYWdlIHNvIHdlIGtub3cgd2hhdCB0byBoaWdobGlnaHQuXG4gICAgdmFyIGhlYWRpbmdzID0gaGVhZGluZ3NBcnJheTtcbiAgICB2YXIgdG9wSGVhZGVyO1xuICAgIC8vIFVzaW5nIHNvbWUgaW5zdGVhZCBvZiBlYWNoIHNvIHRoYXQgd2UgY2FuIGVzY2FwZSBlYXJseS5cbiAgICBpZiAoY3VycmVudGx5SGlnaGxpZ2h0aW5nXG4gICAgICAmJiBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKG9wdGlvbnMudG9jU2VsZWN0b3IpICE9PSBudWxsXG4gICAgICAmJiBoZWFkaW5ncy5sZW5ndGggPiAwKSB7XG4gICAgICBzb21lLmNhbGwoaGVhZGluZ3MsIGZ1bmN0aW9uKGhlYWRpbmcsIGkpIHtcbiAgICAgICAgaWYgKGhlYWRpbmcub2Zmc2V0VG9wID4gdG9wICsgb3B0aW9ucy5oZWFkaW5nc09mZnNldCArIDEpIHtcbiAgICAgICAgICAvLyBEb24ndCBhbGxvdyBuZWdhdGl2ZSBpbmRleCB2YWx1ZS5cbiAgICAgICAgICB2YXIgaW5kZXggPSAoaSA9PT0gMCkgPyBpIDogaSAtIDE7XG4gICAgICAgICAgdG9wSGVhZGVyID0gaGVhZGluZ3NbaW5kZXhdO1xuICAgICAgICAgIHJldHVybiB0cnVlO1xuICAgICAgICB9IGVsc2UgaWYgKGkgPT09IGhlYWRpbmdzLmxlbmd0aCAtIDEpIHtcbiAgICAgICAgICAvLyBUaGlzIGFsbG93cyBzY3JvbGxpbmcgZm9yIHRoZSBsYXN0IGhlYWRpbmcgb24gdGhlIHBhZ2UuXG4gICAgICAgICAgdG9wSGVhZGVyID0gaGVhZGluZ3NbaGVhZGluZ3MubGVuZ3RoIC0gMV07XG4gICAgICAgICAgcmV0dXJuIHRydWU7XG4gICAgICAgIH1cbiAgICAgIH0pO1xuXG4gICAgICAvLyBSZW1vdmUgdGhlIGFjdGl2ZSBjbGFzcyBmcm9tIHRoZSBvdGhlciB0b2NMaW5rcy5cbiAgICAgIHZhciB0b2NMaW5rcyA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3Iob3B0aW9ucy50b2NTZWxlY3RvcilcbiAgICAgICAgLnF1ZXJ5U2VsZWN0b3JBbGwoJy4nICsgb3B0aW9ucy5saW5rQ2xhc3MpO1xuICAgICAgZm9yRWFjaC5jYWxsKHRvY0xpbmtzLCBmdW5jdGlvbih0b2NMaW5rKSB7XG4gICAgICAgIHRvY0xpbmsuY2xhc3NOYW1lID0gdG9jTGluay5jbGFzc05hbWUuc3BsaXQoU1BBQ0VfQ0hBUiArIG9wdGlvbnMuYWN0aXZlTGlua0NsYXNzKS5qb2luKCcnKTtcbiAgICAgIH0pO1xuXG4gICAgICAvLyBBZGQgdGhlIGFjdGl2ZSBjbGFzcyB0byB0aGUgYWN0aXZlIHRvY0xpbmsuXG4gICAgICB2YXIgYWN0aXZlVG9jTGluayA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3Iob3B0aW9ucy50b2NTZWxlY3RvcilcbiAgICAgICAgLnF1ZXJ5U2VsZWN0b3IoJy4nICsgb3B0aW9ucy5saW5rQ2xhc3NcbiAgICAgICAgICArICcubm9kZS1uYW1lLS0nICsgdG9wSGVhZGVyLm5vZGVOYW1lXG4gICAgICAgICAgKyAnW2hyZWY9XCIjJyArIHRvcEhlYWRlci5pZCArICdcIl0nKTtcbiAgICAgIGFjdGl2ZVRvY0xpbmsuY2xhc3NOYW1lICs9IFNQQUNFX0NIQVIgKyBvcHRpb25zLmFjdGl2ZUxpbmtDbGFzcztcblxuICAgICAgdmFyIHRvY0xpc3RzID0gZG9jdW1lbnQucXVlcnlTZWxlY3RvcihvcHRpb25zLnRvY1NlbGVjdG9yKVxuICAgICAgICAucXVlcnlTZWxlY3RvckFsbCgnLicgKyBvcHRpb25zLmxpc3RDbGFzcyArICcuJyArIG9wdGlvbnMuY29sbGFwc2libGVDbGFzcyk7XG5cbiAgICAgIC8vIENvbGxhcHNlIHRoZSBvdGhlciBjb2xsYXBzaWJsZSBsaXN0cy5cbiAgICAgIGZvckVhY2guY2FsbCh0b2NMaXN0cywgZnVuY3Rpb24obGlzdCkge1xuICAgICAgICB2YXIgY29sbGFwc2VkQ2xhc3MgPSBTUEFDRV9DSEFSICsgb3B0aW9ucy5pc0NvbGxhcHNlZENsYXNzO1xuICAgICAgICBpZiAobGlzdC5jbGFzc05hbWUuaW5kZXhPZihjb2xsYXBzZWRDbGFzcykgPT09IC0xKSB7XG4gICAgICAgICAgbGlzdC5jbGFzc05hbWUgKz0gU1BBQ0VfQ0hBUiArIG9wdGlvbnMuaXNDb2xsYXBzZWRDbGFzcztcbiAgICAgICAgfVxuICAgICAgfSk7XG5cbiAgICAgIC8vIEV4cGFuZCB0aGUgYWN0aXZlIGxpbmsncyBjb2xsYXBzaWJsZSBsaXN0IGFuZCBpdHMgc2libGluZyBpZiBhcHBsaWNhYmxlLlxuICAgICAgaWYgKGFjdGl2ZVRvY0xpbmsubmV4dFNpYmxpbmcpIHtcbiAgICAgICAgYWN0aXZlVG9jTGluay5uZXh0U2libGluZy5jbGFzc05hbWUgPSBhY3RpdmVUb2NMaW5rLm5leHRTaWJsaW5nLmNsYXNzTmFtZS5zcGxpdChTUEFDRV9DSEFSICsgb3B0aW9ucy5pc0NvbGxhcHNlZENsYXNzKS5qb2luKCcnKTtcbiAgICAgIH1cbiAgICAgIHJlbW92ZUNvbGxhcHNlZEZyb21QYXJlbnRzKGFjdGl2ZVRvY0xpbmsucGFyZW50Tm9kZS5wYXJlbnROb2RlKTtcbiAgICB9XG4gIH1cblxuICAvKipcbiAgICogUmVtb3ZlIGNvbGxwYXNlZCBjbGFzcyBmcm9tIHBhcmVudCBlbGVtZW50cy5cbiAgICogQHBhcmFtIHtIVE1MRWxlbWVudH0gZWxlbWVudFxuICAgKiBAcmV0dXJuIHtIVE1MRWxlbWVudH1cbiAgICovXG4gIGZ1bmN0aW9uIHJlbW92ZUNvbGxhcHNlZEZyb21QYXJlbnRzKGVsZW1lbnQpIHtcbiAgICBpZiAoZWxlbWVudC5jbGFzc05hbWUuaW5kZXhPZihvcHRpb25zLmNvbGxhcHNpYmxlQ2xhc3MpICE9PSAtMSkge1xuICAgICAgZWxlbWVudC5jbGFzc05hbWUgPSBlbGVtZW50LmNsYXNzTmFtZS5zcGxpdChTUEFDRV9DSEFSICsgb3B0aW9ucy5pc0NvbGxhcHNlZENsYXNzKS5qb2luKCcnKTtcbiAgICAgIHJldHVybiByZW1vdmVDb2xsYXBzZWRGcm9tUGFyZW50cyhlbGVtZW50LnBhcmVudE5vZGUucGFyZW50Tm9kZSk7XG4gICAgfVxuICAgIHJldHVybiBlbGVtZW50O1xuICB9XG5cbiAgLyoqXG4gICAqIERpc2FibGUgVE9DIEFuaW1hdGlvbiB3aGVuIGEgbGluayBpcyBjbGlja2VkLlxuICAgKiBAcGFyYW0ge0V2ZW50fSBldmVudFxuICAgKi9cbiAgZnVuY3Rpb24gZGlzYWJsZVRvY0FuaW1hdGlvbihldmVudCkge1xuICAgIHZhciB0YXJnZXQgPSBldmVudC50YXJnZXQgfHwgZXZlbnQuc3JjRWxlbWVudDtcbiAgICBpZiAodHlwZW9mIHRhcmdldC5jbGFzc05hbWUgIT09ICdzdHJpbmcnIHx8IHRhcmdldC5jbGFzc05hbWUuaW5kZXhPZihvcHRpb25zLmxpbmtDbGFzcykgPT09IC0xKSB7XG4gICAgICByZXR1cm47XG4gICAgfVxuICAgIC8vIEJpbmQgdG8gdG9jTGluayBjbGlja3MgdG8gdGVtcG9yYXJpbHkgZGlzYWJsZSBoaWdobGlnaHRpbmdcbiAgICAvLyB3aGlsZSBzbW9vdGhTY3JvbGwgaXMgYW5pbWF0aW5nLlxuICAgIGN1cnJlbnRseUhpZ2hsaWdodGluZyA9IGZhbHNlO1xuICB9XG5cbiAgLyoqXG4gICAqIEVuYWJsZSBUT0MgQW5pbWF0aW9uLlxuICAgKi9cbiAgZnVuY3Rpb24gZW5hYmxlVG9jQW5pbWF0aW9uKCkge1xuICAgIGN1cnJlbnRseUhpZ2hsaWdodGluZyA9IHRydWU7XG4gIH1cblxuICByZXR1cm4ge1xuICAgIGVuYWJsZVRvY0FuaW1hdGlvbjogZW5hYmxlVG9jQW5pbWF0aW9uLFxuICAgIGRpc2FibGVUb2NBbmltYXRpb246IGRpc2FibGVUb2NBbmltYXRpb24sXG4gICAgcmVuZGVyOiByZW5kZXIsXG4gICAgdXBkYXRlVG9jOiB1cGRhdGVUb2NcbiAgfTtcbn07XG5cblxuXG4vLy8vLy8vLy8vLy8vLy8vLy9cbi8vIFdFQlBBQ0sgRk9PVEVSXG4vLyAuL3NyYy9qcy9idWlsZC1odG1sLmpzXG4vLyBtb2R1bGUgaWQgPSAyXG4vLyBtb2R1bGUgY2h1bmtzID0gMCJdLCJtYXBwaW5ncyI6IkFBQUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTsiLCJzb3VyY2VSb290IjoiIn0=");
 
+/***/ }),
+/* 3 */
+/* unknown exports provided */
+/* all exports used */
+/*!***********************************!*\
+  !*** ./src/js/default-options.js ***!
+  \***********************************/
+/***/ (function(module, exports) {
+
+eval("/**\n * Tocbot default options should all live in this file.\n *\n * @author Tim Scanlin\n */\n\nmodule.exports = {\n  // Where to render the table of contents.\n  tocSelector: '.js-toc',\n  // Where to grab the headings to build the table of contents.\n  contentSelector: '.js-toc-content',\n  // Which headings to grab inside of the contentSelector element.\n  headingSelector: 'h1, h2, h3',\n\n  // Headings that match the ignoreSelector will be skipped.\n  ignoreSelector: '.js-toc-ignore',\n  // Main class to add to links.\n  linkClass: 'toc-link',\n  // Extra classes to add to links.\n  extraLinkClasses: '',\n  // Class to add to active links,\n  // the link corresponding to the top most heading on the page.\n  activeLinkClass: 'is-active-link',\n  // Main class to add to lists.\n  listClass: 'toc-list',\n  // Extra classes to add to lists.\n  extraListClasses: '',\n  // Class that gets added when a list should be collapsed.\n  isCollapsedClass: 'is-collapsed',\n  // Class that gets added when a list should be able\n  // to be collapsed but isn't necessarily collpased.\n  collapsibleClass: 'is-collapsible',\n  // Class to add to list items.\n  listItemClass: 'toc-list-item',\n  // How many heading levels should not be collpased.\n  // For example, number 6 will show everything since\n  // there are only 6 heading levels and number 0 will collpase them all.\n  // The sections that are hidden will open\n  // and close as you scroll to headings within them.\n  collapseDepth: 0,\n  // smooth-scroll options object, see docs at:\n  // https://github.com/cferdinandi/smooth-scroll\n  smoothScrollOptions: {\n    easing: 'easeInOutCubic',\n    offset: 0,\n    speed: 300, // animation duration.\n    callback: function(anchor, toggle) { } // callback after link is scrolled to.\n  },\n  // Headings offset between the headings and the top of the document.\n  headingsOffset: 0,\n  // Timeout between events firing to make sure it's\n  // not too rapid (for performance reasons).\n  throttleTimeout: 50,\n  // Element to add the positionFixedClass to.\n  positionFixedSelector: null,\n  // Fixed position class to add to make sidebar fixed after scrolling\n  // down past the fixedSidebarOffset.\n  positionFixedClass: 'is-position-fixed',\n  // fixedSidebarOffset can be any number but by default is set\n  // to auto which sets the fixedSidebarOffset to the sidebar\n  // element's offsetTop from the top of the document on init.\n  fixedSidebarOffset: 'auto',\n  // includeHtml can be set to true to include the HTML markup from the\n  // heading node instead of just including the textContent.\n  includeHtml: false\n};\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiMy5qcyIsInNvdXJjZXMiOlsid2VicGFjazovLy8uL3NyYy9qcy9kZWZhdWx0LW9wdGlvbnMuanM/MTg1MSJdLCJzb3VyY2VzQ29udGVudCI6WyIvKipcbiAqIFRvY2JvdCBkZWZhdWx0IG9wdGlvbnMgc2hvdWxkIGFsbCBsaXZlIGluIHRoaXMgZmlsZS5cbiAqXG4gKiBAYXV0aG9yIFRpbSBTY2FubGluXG4gKi9cblxubW9kdWxlLmV4cG9ydHMgPSB7XG4gIC8vIFdoZXJlIHRvIHJlbmRlciB0aGUgdGFibGUgb2YgY29udGVudHMuXG4gIHRvY1NlbGVjdG9yOiAnLmpzLXRvYycsXG4gIC8vIFdoZXJlIHRvIGdyYWIgdGhlIGhlYWRpbmdzIHRvIGJ1aWxkIHRoZSB0YWJsZSBvZiBjb250ZW50cy5cbiAgY29udGVudFNlbGVjdG9yOiAnLmpzLXRvYy1jb250ZW50JyxcbiAgLy8gV2hpY2ggaGVhZGluZ3MgdG8gZ3JhYiBpbnNpZGUgb2YgdGhlIGNvbnRlbnRTZWxlY3RvciBlbGVtZW50LlxuICBoZWFkaW5nU2VsZWN0b3I6ICdoMSwgaDIsIGgzJyxcblxuICAvLyBIZWFkaW5ncyB0aGF0IG1hdGNoIHRoZSBpZ25vcmVTZWxlY3RvciB3aWxsIGJlIHNraXBwZWQuXG4gIGlnbm9yZVNlbGVjdG9yOiAnLmpzLXRvYy1pZ25vcmUnLFxuICAvLyBNYWluIGNsYXNzIHRvIGFkZCB0byBsaW5rcy5cbiAgbGlua0NsYXNzOiAndG9jLWxpbmsnLFxuICAvLyBFeHRyYSBjbGFzc2VzIHRvIGFkZCB0byBsaW5rcy5cbiAgZXh0cmFMaW5rQ2xhc3NlczogJycsXG4gIC8vIENsYXNzIHRvIGFkZCB0byBhY3RpdmUgbGlua3MsXG4gIC8vIHRoZSBsaW5rIGNvcnJlc3BvbmRpbmcgdG8gdGhlIHRvcCBtb3N0IGhlYWRpbmcgb24gdGhlIHBhZ2UuXG4gIGFjdGl2ZUxpbmtDbGFzczogJ2lzLWFjdGl2ZS1saW5rJyxcbiAgLy8gTWFpbiBjbGFzcyB0byBhZGQgdG8gbGlzdHMuXG4gIGxpc3RDbGFzczogJ3RvYy1saXN0JyxcbiAgLy8gRXh0cmEgY2xhc3NlcyB0byBhZGQgdG8gbGlzdHMuXG4gIGV4dHJhTGlzdENsYXNzZXM6ICcnLFxuICAvLyBDbGFzcyB0aGF0IGdldHMgYWRkZWQgd2hlbiBhIGxpc3Qgc2hvdWxkIGJlIGNvbGxhcHNlZC5cbiAgaXNDb2xsYXBzZWRDbGFzczogJ2lzLWNvbGxhcHNlZCcsXG4gIC8vIENsYXNzIHRoYXQgZ2V0cyBhZGRlZCB3aGVuIGEgbGlzdCBzaG91bGQgYmUgYWJsZVxuICAvLyB0byBiZSBjb2xsYXBzZWQgYnV0IGlzbid0IG5lY2Vzc2FyaWx5IGNvbGxwYXNlZC5cbiAgY29sbGFwc2libGVDbGFzczogJ2lzLWNvbGxhcHNpYmxlJyxcbiAgLy8gQ2xhc3MgdG8gYWRkIHRvIGxpc3QgaXRlbXMuXG4gIGxpc3RJdGVtQ2xhc3M6ICd0b2MtbGlzdC1pdGVtJyxcbiAgLy8gSG93IG1hbnkgaGVhZGluZyBsZXZlbHMgc2hvdWxkIG5vdCBiZSBjb2xscGFzZWQuXG4gIC8vIEZvciBleGFtcGxlLCBudW1iZXIgNiB3aWxsIHNob3cgZXZlcnl0aGluZyBzaW5jZVxuICAvLyB0aGVyZSBhcmUgb25seSA2IGhlYWRpbmcgbGV2ZWxzIGFuZCBudW1iZXIgMCB3aWxsIGNvbGxwYXNlIHRoZW0gYWxsLlxuICAvLyBUaGUgc2VjdGlvbnMgdGhhdCBhcmUgaGlkZGVuIHdpbGwgb3BlblxuICAvLyBhbmQgY2xvc2UgYXMgeW91IHNjcm9sbCB0byBoZWFkaW5ncyB3aXRoaW4gdGhlbS5cbiAgY29sbGFwc2VEZXB0aDogMCxcbiAgLy8gc21vb3RoLXNjcm9sbCBvcHRpb25zIG9iamVjdCwgc2VlIGRvY3MgYXQ6XG4gIC8vIGh0dHBzOi8vZ2l0aHViLmNvbS9jZmVyZGluYW5kaS9zbW9vdGgtc2Nyb2xsXG4gIHNtb290aFNjcm9sbE9wdGlvbnM6IHtcbiAgICBlYXNpbmc6ICdlYXNlSW5PdXRDdWJpYycsXG4gICAgb2Zmc2V0OiAwLFxuICAgIHNwZWVkOiAzMDAsIC8vIGFuaW1hdGlvbiBkdXJhdGlvbi5cbiAgICBjYWxsYmFjazogZnVuY3Rpb24oYW5jaG9yLCB0b2dnbGUpIHsgfSAvLyBjYWxsYmFjayBhZnRlciBsaW5rIGlzIHNjcm9sbGVkIHRvLlxuICB9LFxuICAvLyBIZWFkaW5ncyBvZmZzZXQgYmV0d2VlbiB0aGUgaGVhZGluZ3MgYW5kIHRoZSB0b3Agb2YgdGhlIGRvY3VtZW50LlxuICBoZWFkaW5nc09mZnNldDogMCxcbiAgLy8gVGltZW91dCBiZXR3ZWVuIGV2ZW50cyBmaXJpbmcgdG8gbWFrZSBzdXJlIGl0J3NcbiAgLy8gbm90IHRvbyByYXBpZCAoZm9yIHBlcmZvcm1hbmNlIHJlYXNvbnMpLlxuICB0aHJvdHRsZVRpbWVvdXQ6IDUwLFxuICAvLyBFbGVtZW50IHRvIGFkZCB0aGUgcG9zaXRpb25GaXhlZENsYXNzIHRvLlxuICBwb3NpdGlvbkZpeGVkU2VsZWN0b3I6IG51bGwsXG4gIC8vIEZpeGVkIHBvc2l0aW9uIGNsYXNzIHRvIGFkZCB0byBtYWtlIHNpZGViYXIgZml4ZWQgYWZ0ZXIgc2Nyb2xsaW5nXG4gIC8vIGRvd24gcGFzdCB0aGUgZml4ZWRTaWRlYmFyT2Zmc2V0LlxuICBwb3NpdGlvbkZpeGVkQ2xhc3M6ICdpcy1wb3NpdGlvbi1maXhlZCcsXG4gIC8vIGZpeGVkU2lkZWJhck9mZnNldCBjYW4gYmUgYW55IG51bWJlciBidXQgYnkgZGVmYXVsdCBpcyBzZXRcbiAgLy8gdG8gYXV0byB3aGljaCBzZXRzIHRoZSBmaXhlZFNpZGViYXJPZmZzZXQgdG8gdGhlIHNpZGViYXJcbiAgLy8gZWxlbWVudCdzIG9mZnNldFRvcCBmcm9tIHRoZSB0b3Agb2YgdGhlIGRvY3VtZW50IG9uIGluaXQuXG4gIGZpeGVkU2lkZWJhck9mZnNldDogJ2F1dG8nLFxuICAvLyBpbmNsdWRlSHRtbCBjYW4gYmUgc2V0IHRvIHRydWUgdG8gaW5jbHVkZSB0aGUgSFRNTCBtYXJrdXAgZnJvbSB0aGVcbiAgLy8gaGVhZGluZyBub2RlIGluc3RlYWQgb2YganVzdCBpbmNsdWRpbmcgdGhlIHRleHRDb250ZW50LlxuICBpbmNsdWRlSHRtbDogZmFsc2Vcbn07XG5cblxuXG4vLy8vLy8vLy8vLy8vLy8vLy9cbi8vIFdFQlBBQ0sgRk9PVEVSXG4vLyAuL3NyYy9qcy9kZWZhdWx0LW9wdGlvbnMuanNcbi8vIG1vZHVsZSBpZCA9IDNcbi8vIG1vZHVsZSBjaHVua3MgPSAwIl0sIm1hcHBpbmdzIjoiQUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7Iiwic291cmNlUm9vdCI6IiJ9");
 
 /***/ }),
 /* 4 */
+/* unknown exports provided */
+/* all exports used */
 /*!*********************************!*\
   !*** ./src/js/parse-content.js ***!
   \*********************************/
 /***/ (function(module, exports) {
 
-	/**
-	 * This file is responsible for parsing the content from the DOM and making
-	 * sure data is nested properly.
-	 *
-	 * @author Tim Scanlin
-	 */
-	
-	module.exports = function parseContent(options) {
-	  var reduce = [].reduce;
-	
-	  /**
-	   * Get the last item in an array and return a reference to it.
-	   * @param {Array} array
-	   * @return {Object}
-	   */
-	  function getLastItem(array) {
-	    return array[array.length - 1];
-	  }
-	
-	  /**
-	   * Get heading level for a heading dom node.
-	   * @param {HTMLElement} heading
-	   * @return {Number}
-	   */
-	  function getHeadingLevel(heading) {
-	    return +heading.nodeName.split('H').join('');
-	  }
-	
-	  /**
-	   * Get important properties from a heading element and store in a plain object.
-	   * @param {HTMLElement} heading
-	   * @return {Object}
-	   */
-	  function getHeadingObject(heading) {
-	    var obj = {
-	      id: heading.id,
-	      children: [],
-	      nodeName: heading.nodeName,
-	      headingLevel: getHeadingLevel(heading),
-	      textContent: heading.textContent.trim()
-	    };
-	
-	    if (options.includeHtml) {
-	      obj.childNodes = heading.childNodes;
-	    }
-	
-	    return obj;
-	  }
-	
-	  /**
-	   * Add a node to the nested array.
-	   * @param {Object} node
-	   * @param {Array} nest
-	   * @return {Array}
-	   */
-	  function addNode(node, nest) {
-	    var obj = getHeadingObject(node);
-	    var level = getHeadingLevel(node);
-	    var array = nest;
-	    var lastItem = getLastItem(array);
-	    var lastItemLevel = lastItem
-	      ? lastItem.headingLevel
-	      : 0;
-	    var counter = level - lastItemLevel;
-	
-	    while (counter > 0) {
-	      lastItem = getLastItem(array);
-	      if (lastItem && lastItem.children !== undefined) {
-	        array = lastItem.children;
-	      }
-	      counter--;
-	    }
-	
-	    if (level >= options.collapseDepth) {
-	      obj.isCollapsed = true;
-	    }
-	
-	    array.push(obj);
-	    return array;
-	  }
-	
-	  /**
-	   * Select headings in content area, exclude any selector in options.ignoreSelector
-	   * @param {String} contentSelector
-	   * @param {Array} headingSelector
-	   * @return {Array}
-	   */
-	  function selectHeadings(contentSelector, headingSelector) {
-	    var selectors = headingSelector;
-	    if (options.ignoreSelector) {
-	      selectors = headingSelector.split(',')
-	        .map(function mapSelectors(selector) {
-	          return selector.trim() + ':not(' + options.ignoreSelector + ')';
-	        });
-	    }
-	    try {
-	      return document.querySelector(contentSelector)
-	        .querySelectorAll(selectors);
-	    } catch (e) {
-	      console.warn('Element not found: ' + contentSelector); // eslint-disable-line
-	      return null;
-	    }
-	  }
-	
-	  /**
-	   * Nest headings array into nested arrays with 'children' property.
-	   * @param {Array} headingsArray
-	   * @return {Object}
-	   */
-	  function nestHeadingsArray(headingsArray) {
-	    return reduce.call(headingsArray, function reducer(prev, curr) {
-	      var currentHeading = getHeadingObject(curr);
-	
-	      addNode(currentHeading, prev.nest);
-	      return prev;
-	    }, {
-	      nest: []
-	    });
-	  }
-	
-	  return {
-	    nestHeadingsArray: nestHeadingsArray,
-	    selectHeadings: selectHeadings
-	  };
-	};
+eval("/**\n * This file is responsible for parsing the content from the DOM and making\n * sure data is nested properly.\n *\n * @author Tim Scanlin\n */\n\nmodule.exports = function parseContent(options) {\n  var reduce = [].reduce;\n\n  /**\n   * Get the last item in an array and return a reference to it.\n   * @param {Array} array\n   * @return {Object}\n   */\n  function getLastItem(array) {\n    return array[array.length - 1];\n  }\n\n  /**\n   * Get heading level for a heading dom node.\n   * @param {HTMLElement} heading\n   * @return {Number}\n   */\n  function getHeadingLevel(heading) {\n    return +heading.nodeName.split('H').join('');\n  }\n\n  /**\n   * Get important properties from a heading element and store in a plain object.\n   * @param {HTMLElement} heading\n   * @return {Object}\n   */\n  function getHeadingObject(heading) {\n    var obj = {\n      id: heading.id,\n      children: [],\n      nodeName: heading.nodeName,\n      headingLevel: getHeadingLevel(heading),\n      textContent: heading.textContent.trim()\n    };\n\n    if (options.includeHtml) {\n      obj.childNodes = heading.childNodes;\n    }\n\n    return obj;\n  }\n\n  /**\n   * Add a node to the nested array.\n   * @param {Object} node\n   * @param {Array} nest\n   * @return {Array}\n   */\n  function addNode(node, nest) {\n    var obj = getHeadingObject(node);\n    var level = getHeadingLevel(node);\n    var array = nest;\n    var lastItem = getLastItem(array);\n    var lastItemLevel = lastItem\n      ? lastItem.headingLevel\n      : 0;\n    var counter = level - lastItemLevel;\n\n    while (counter > 0) {\n      lastItem = getLastItem(array);\n      if (lastItem && lastItem.children !== undefined) {\n        array = lastItem.children;\n      }\n      counter--;\n    }\n\n    if (level >= options.collapseDepth) {\n      obj.isCollapsed = true;\n    }\n\n    array.push(obj);\n    return array;\n  }\n\n  /**\n   * Select headings in content area, exclude any selector in options.ignoreSelector\n   * @param {String} contentSelector\n   * @param {Array} headingSelector\n   * @return {Array}\n   */\n  function selectHeadings(contentSelector, headingSelector) {\n    var selectors = headingSelector;\n    if (options.ignoreSelector) {\n      selectors = headingSelector.split(',')\n        .map(function mapSelectors(selector) {\n          return selector.trim() + ':not(' + options.ignoreSelector + ')';\n        });\n    }\n    try {\n      return document.querySelector(contentSelector)\n        .querySelectorAll(selectors);\n    } catch (e) {\n      console.warn('Element not found: ' + contentSelector); // eslint-disable-line\n      return null;\n    }\n  }\n\n  /**\n   * Nest headings array into nested arrays with 'children' property.\n   * @param {Array} headingsArray\n   * @return {Object}\n   */\n  function nestHeadingsArray(headingsArray) {\n    return reduce.call(headingsArray, function reducer(prev, curr) {\n      var currentHeading = getHeadingObject(curr);\n\n      addNode(currentHeading, prev.nest);\n      return prev;\n    }, {\n      nest: []\n    });\n  }\n\n  return {\n    nestHeadingsArray: nestHeadingsArray,\n    selectHeadings: selectHeadings\n  };\n};\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiNC5qcyIsInNvdXJjZXMiOlsid2VicGFjazovLy8uL3NyYy9qcy9wYXJzZS1jb250ZW50LmpzPzg3ZjAiXSwic291cmNlc0NvbnRlbnQiOlsiLyoqXG4gKiBUaGlzIGZpbGUgaXMgcmVzcG9uc2libGUgZm9yIHBhcnNpbmcgdGhlIGNvbnRlbnQgZnJvbSB0aGUgRE9NIGFuZCBtYWtpbmdcbiAqIHN1cmUgZGF0YSBpcyBuZXN0ZWQgcHJvcGVybHkuXG4gKlxuICogQGF1dGhvciBUaW0gU2NhbmxpblxuICovXG5cbm1vZHVsZS5leHBvcnRzID0gZnVuY3Rpb24gcGFyc2VDb250ZW50KG9wdGlvbnMpIHtcbiAgdmFyIHJlZHVjZSA9IFtdLnJlZHVjZTtcblxuICAvKipcbiAgICogR2V0IHRoZSBsYXN0IGl0ZW0gaW4gYW4gYXJyYXkgYW5kIHJldHVybiBhIHJlZmVyZW5jZSB0byBpdC5cbiAgICogQHBhcmFtIHtBcnJheX0gYXJyYXlcbiAgICogQHJldHVybiB7T2JqZWN0fVxuICAgKi9cbiAgZnVuY3Rpb24gZ2V0TGFzdEl0ZW0oYXJyYXkpIHtcbiAgICByZXR1cm4gYXJyYXlbYXJyYXkubGVuZ3RoIC0gMV07XG4gIH1cblxuICAvKipcbiAgICogR2V0IGhlYWRpbmcgbGV2ZWwgZm9yIGEgaGVhZGluZyBkb20gbm9kZS5cbiAgICogQHBhcmFtIHtIVE1MRWxlbWVudH0gaGVhZGluZ1xuICAgKiBAcmV0dXJuIHtOdW1iZXJ9XG4gICAqL1xuICBmdW5jdGlvbiBnZXRIZWFkaW5nTGV2ZWwoaGVhZGluZykge1xuICAgIHJldHVybiAraGVhZGluZy5ub2RlTmFtZS5zcGxpdCgnSCcpLmpvaW4oJycpO1xuICB9XG5cbiAgLyoqXG4gICAqIEdldCBpbXBvcnRhbnQgcHJvcGVydGllcyBmcm9tIGEgaGVhZGluZyBlbGVtZW50IGFuZCBzdG9yZSBpbiBhIHBsYWluIG9iamVjdC5cbiAgICogQHBhcmFtIHtIVE1MRWxlbWVudH0gaGVhZGluZ1xuICAgKiBAcmV0dXJuIHtPYmplY3R9XG4gICAqL1xuICBmdW5jdGlvbiBnZXRIZWFkaW5nT2JqZWN0KGhlYWRpbmcpIHtcbiAgICB2YXIgb2JqID0ge1xuICAgICAgaWQ6IGhlYWRpbmcuaWQsXG4gICAgICBjaGlsZHJlbjogW10sXG4gICAgICBub2RlTmFtZTogaGVhZGluZy5ub2RlTmFtZSxcbiAgICAgIGhlYWRpbmdMZXZlbDogZ2V0SGVhZGluZ0xldmVsKGhlYWRpbmcpLFxuICAgICAgdGV4dENvbnRlbnQ6IGhlYWRpbmcudGV4dENvbnRlbnQudHJpbSgpXG4gICAgfTtcblxuICAgIGlmIChvcHRpb25zLmluY2x1ZGVIdG1sKSB7XG4gICAgICBvYmouY2hpbGROb2RlcyA9IGhlYWRpbmcuY2hpbGROb2RlcztcbiAgICB9XG5cbiAgICByZXR1cm4gb2JqO1xuICB9XG5cbiAgLyoqXG4gICAqIEFkZCBhIG5vZGUgdG8gdGhlIG5lc3RlZCBhcnJheS5cbiAgICogQHBhcmFtIHtPYmplY3R9IG5vZGVcbiAgICogQHBhcmFtIHtBcnJheX0gbmVzdFxuICAgKiBAcmV0dXJuIHtBcnJheX1cbiAgICovXG4gIGZ1bmN0aW9uIGFkZE5vZGUobm9kZSwgbmVzdCkge1xuICAgIHZhciBvYmogPSBnZXRIZWFkaW5nT2JqZWN0KG5vZGUpO1xuICAgIHZhciBsZXZlbCA9IGdldEhlYWRpbmdMZXZlbChub2RlKTtcbiAgICB2YXIgYXJyYXkgPSBuZXN0O1xuICAgIHZhciBsYXN0SXRlbSA9IGdldExhc3RJdGVtKGFycmF5KTtcbiAgICB2YXIgbGFzdEl0ZW1MZXZlbCA9IGxhc3RJdGVtXG4gICAgICA/IGxhc3RJdGVtLmhlYWRpbmdMZXZlbFxuICAgICAgOiAwO1xuICAgIHZhciBjb3VudGVyID0gbGV2ZWwgLSBsYXN0SXRlbUxldmVsO1xuXG4gICAgd2hpbGUgKGNvdW50ZXIgPiAwKSB7XG4gICAgICBsYXN0SXRlbSA9IGdldExhc3RJdGVtKGFycmF5KTtcbiAgICAgIGlmIChsYXN0SXRlbSAmJiBsYXN0SXRlbS5jaGlsZHJlbiAhPT0gdW5kZWZpbmVkKSB7XG4gICAgICAgIGFycmF5ID0gbGFzdEl0ZW0uY2hpbGRyZW47XG4gICAgICB9XG4gICAgICBjb3VudGVyLS07XG4gICAgfVxuXG4gICAgaWYgKGxldmVsID49IG9wdGlvbnMuY29sbGFwc2VEZXB0aCkge1xuICAgICAgb2JqLmlzQ29sbGFwc2VkID0gdHJ1ZTtcbiAgICB9XG5cbiAgICBhcnJheS5wdXNoKG9iaik7XG4gICAgcmV0dXJuIGFycmF5O1xuICB9XG5cbiAgLyoqXG4gICAqIFNlbGVjdCBoZWFkaW5ncyBpbiBjb250ZW50IGFyZWEsIGV4Y2x1ZGUgYW55IHNlbGVjdG9yIGluIG9wdGlvbnMuaWdub3JlU2VsZWN0b3JcbiAgICogQHBhcmFtIHtTdHJpbmd9IGNvbnRlbnRTZWxlY3RvclxuICAgKiBAcGFyYW0ge0FycmF5fSBoZWFkaW5nU2VsZWN0b3JcbiAgICogQHJldHVybiB7QXJyYXl9XG4gICAqL1xuICBmdW5jdGlvbiBzZWxlY3RIZWFkaW5ncyhjb250ZW50U2VsZWN0b3IsIGhlYWRpbmdTZWxlY3Rvcikge1xuICAgIHZhciBzZWxlY3RvcnMgPSBoZWFkaW5nU2VsZWN0b3I7XG4gICAgaWYgKG9wdGlvbnMuaWdub3JlU2VsZWN0b3IpIHtcbiAgICAgIHNlbGVjdG9ycyA9IGhlYWRpbmdTZWxlY3Rvci5zcGxpdCgnLCcpXG4gICAgICAgIC5tYXAoZnVuY3Rpb24gbWFwU2VsZWN0b3JzKHNlbGVjdG9yKSB7XG4gICAgICAgICAgcmV0dXJuIHNlbGVjdG9yLnRyaW0oKSArICc6bm90KCcgKyBvcHRpb25zLmlnbm9yZVNlbGVjdG9yICsgJyknO1xuICAgICAgICB9KTtcbiAgICB9XG4gICAgdHJ5IHtcbiAgICAgIHJldHVybiBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGNvbnRlbnRTZWxlY3RvcilcbiAgICAgICAgLnF1ZXJ5U2VsZWN0b3JBbGwoc2VsZWN0b3JzKTtcbiAgICB9IGNhdGNoIChlKSB7XG4gICAgICBjb25zb2xlLndhcm4oJ0VsZW1lbnQgbm90IGZvdW5kOiAnICsgY29udGVudFNlbGVjdG9yKTsgLy8gZXNsaW50LWRpc2FibGUtbGluZVxuICAgICAgcmV0dXJuIG51bGw7XG4gICAgfVxuICB9XG5cbiAgLyoqXG4gICAqIE5lc3QgaGVhZGluZ3MgYXJyYXkgaW50byBuZXN0ZWQgYXJyYXlzIHdpdGggJ2NoaWxkcmVuJyBwcm9wZXJ0eS5cbiAgICogQHBhcmFtIHtBcnJheX0gaGVhZGluZ3NBcnJheVxuICAgKiBAcmV0dXJuIHtPYmplY3R9XG4gICAqL1xuICBmdW5jdGlvbiBuZXN0SGVhZGluZ3NBcnJheShoZWFkaW5nc0FycmF5KSB7XG4gICAgcmV0dXJuIHJlZHVjZS5jYWxsKGhlYWRpbmdzQXJyYXksIGZ1bmN0aW9uIHJlZHVjZXIocHJldiwgY3Vycikge1xuICAgICAgdmFyIGN1cnJlbnRIZWFkaW5nID0gZ2V0SGVhZGluZ09iamVjdChjdXJyKTtcblxuICAgICAgYWRkTm9kZShjdXJyZW50SGVhZGluZywgcHJldi5uZXN0KTtcbiAgICAgIHJldHVybiBwcmV2O1xuICAgIH0sIHtcbiAgICAgIG5lc3Q6IFtdXG4gICAgfSk7XG4gIH1cblxuICByZXR1cm4ge1xuICAgIG5lc3RIZWFkaW5nc0FycmF5OiBuZXN0SGVhZGluZ3NBcnJheSxcbiAgICBzZWxlY3RIZWFkaW5nczogc2VsZWN0SGVhZGluZ3NcbiAgfTtcbn07XG5cblxuXG4vLy8vLy8vLy8vLy8vLy8vLy9cbi8vIFdFQlBBQ0sgRk9PVEVSXG4vLyAuL3NyYy9qcy9wYXJzZS1jb250ZW50LmpzXG4vLyBtb2R1bGUgaWQgPSA0XG4vLyBtb2R1bGUgY2h1bmtzID0gMCJdLCJtYXBwaW5ncyI6IkFBQUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTsiLCJzb3VyY2VSb290IjoiIn0=");
 
+/***/ }),
+/* 5 */
+/* unknown exports provided */
+/* all exports used */
+/*!*************************!*\
+  !*** ./src/js/index.js ***!
+  \*************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("/* WEBPACK VAR INJECTION */(function(global) {var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**\n * Tocbot\n * Tocbot creates a toble of contents based on HTML headings on a page,\n * this allows users to easily jump to different sections of the document.\n * Tocbot was inspired by tocify (http://gregfranko.com/jquery.tocify.js/).\n * The main differences are that it works natively without any need for jquery or jquery UI).\n *\n * @author Tim Scanlin\n */\n\n/* globals define */\n\n(function(root, factory) {\n  if (true) {\n    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory(root)),\n\t\t\t\t__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?\n\t\t\t\t(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),\n\t\t\t\t__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));\n\t} else if (typeof exports === 'object') {\n    module.exports = factory(root);\n\t} else {\n    root.tocbot = factory(root);\n\t}\n})(typeof global !== 'undefined' ? global : this.window || this.global, function(root) {\n\n  'use strict';\n\n  // Require smooth-scroll by default.\n  var smoothScroll = __webpack_require__(/*! smooth-scroll */ 1);\n\n  // Default options.\n  var defaultOptions = __webpack_require__(/*! ./default-options.js */ 3);\n  // Object to store current options.\n  var options = {};\n  // Object for public APIs.\n  var tocbot = {};\n\n  var BuildHtml = __webpack_require__(/*! ./build-html.js */ 2);\n  var ParseContent = __webpack_require__(/*! ./parse-content.js */ 4);\n  // Keep these variables at top scope once options are passed in.\n  var buildHtml;\n  var parseContent;\n\n  var doc = root.document;\n  var body = document.body;\n  var supports = !!root.document.querySelector && !!root.addEventListener; // Feature test\n  var headingsArray;\n\n  // From: https://github.com/Raynos/xtend\n  var hasOwnProperty = Object.prototype.hasOwnProperty;\n  function extend() {\n    var target = {};\n    for (var i = 0; i < arguments.length; i++) {\n      var source = arguments[i];\n      for (var key in source) {\n        if (hasOwnProperty.call(source, key)) {\n          target[key] = source[key];\n        }\n      }\n    }\n    return target;\n  }\n\n  // From: https://remysharp.com/2010/07/21/throttling-function-calls\n  function throttle(fn, threshhold, scope) {\n    threshhold || (threshhold = 250);\n    var last;\n    var deferTimer;\n    return function() {\n      var context = scope || this;\n      var now = +new Date;\n      var args = arguments;\n      if (last && now < last + threshhold) {\n        // hold on to it\n        clearTimeout(deferTimer);\n        deferTimer = setTimeout(function() {\n          last = now;\n          fn.apply(context, args);\n        }, threshhold);\n      } else {\n        last = now;\n        fn.apply(context, args);\n      }\n    };\n  }\n\n  function updateTocListener(headings) {\n    return function updateToc() {\n      return buildHtml.updateToc(headings);\n    };\n  }\n\n  /**\n\t * Destroy tocbot.\n\t */\n  tocbot.destroy = function() {\n    // Clear HTML.\n    try {\n      document.querySelector(options.tocSelector).innerHTML = '';\n    } catch (e) {\n      console.warn('Element not found: ' + options.tocSelector); // eslint-disable-line\n    }\n\n\t\t// Remove event listeners.\n    document.removeEventListener('scroll', this._scrollListener, false);\n    document.removeEventListener('resize', this._scrollListener, false);\n    if (buildHtml) {\n      document.removeEventListener('click', this._clickListener, false);\n    }\n\n    // Destroy smoothScroll if it exists.\n    if (smoothScroll) {\n      smoothScroll.destroy();\n    }\n  };\n\n  /**\n\t * Initialize tocbot.\n\t * @param {object} customOptions\n\t */\n  tocbot.init = function(customOptions) {\n    // feature test\n    if (!supports) {\n      return;\n    }\n\n    // Merge defaults with user options.\n    // Set to options variable at the top.\n    options = extend(defaultOptions, customOptions || {});\n    this.options = options;\n    this.state = {};\n\n    // Pass options to these modules.\n    buildHtml = BuildHtml(options);\n    parseContent = ParseContent(options);\n\n    // For testing purposes.\n    this._buildHtml = buildHtml;\n    this._parseContent = parseContent;\n\n    // Destroy it if it exists first.\n    tocbot.destroy();\n\n    // Get headings array.\n    headingsArray = parseContent.selectHeadings(options.contentSelector, options.headingSelector);\n    // Return if no headings are found.\n    if (headingsArray === null) {\n      return;\n    }\n\n    // Build nested headings array.\n    var nestedHeadingsObj = parseContent.nestHeadingsArray(headingsArray);\n    var nestedHeadings = nestedHeadingsObj.nest;\n\n    // Render.\n    buildHtml.render(options.tocSelector, nestedHeadings);\n\n    // Update Sidebar and bind listeners.\n    // buildHtml.updateToc(headingsArray);\n    this._scrollListener = throttle(function() {\n      buildHtml.updateToc(headingsArray);\n    }, options.throttleTimeout);\n    this._scrollListener();\n    document.addEventListener('scroll', this._scrollListener, false);\n    document.addEventListener('resize', this._scrollListener, false);\n\n    // Bind click listeners to disable animation.\n    this._clickListener = throttle(function(event) {\n      buildHtml.disableTocAnimation(event); // Save reference so event is created / removed properly.\n      buildHtml.updateToc(headingsArray);\n    }, options.throttleTimeout);\n    document.addEventListener('click', this._clickListener, false);\n\n    // Initialize smoothscroll if it exists.\n    if (smoothScroll) {\n      this.smoothScroll = smoothScroll.init(extend(options.smoothScrollOptions, {\n        callback: function(anchor, toggle) {\n          buildHtml.enableTocAnimation();\n          if (typeof options.smoothScrollOptions.callback === 'function') {\n            options.smoothScrollOptions.callback(anchor, toggle);\n          }\n        }\n      }));\n    }\n\n    return this;\n  };\n\n  /**\n   * Refresh tocbot.\n   */\n  tocbot.refresh = function(customOptions) {\n    tocbot.destroy();\n    tocbot.init(customOptions || this.options);\n  };\n\n  // Make tocbot available globally.\n  root.tocbot = tocbot;\n\n  return tocbot;\n});\n\n/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../~/webpack/buildin/global.js */ 0)))//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiNS5qcyIsInNvdXJjZXMiOlsid2VicGFjazovLy8uL3NyYy9qcy9pbmRleC5qcz9iYzY2Il0sInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogVG9jYm90XG4gKiBUb2Nib3QgY3JlYXRlcyBhIHRvYmxlIG9mIGNvbnRlbnRzIGJhc2VkIG9uIEhUTUwgaGVhZGluZ3Mgb24gYSBwYWdlLFxuICogdGhpcyBhbGxvd3MgdXNlcnMgdG8gZWFzaWx5IGp1bXAgdG8gZGlmZmVyZW50IHNlY3Rpb25zIG9mIHRoZSBkb2N1bWVudC5cbiAqIFRvY2JvdCB3YXMgaW5zcGlyZWQgYnkgdG9jaWZ5IChodHRwOi8vZ3JlZ2ZyYW5rby5jb20vanF1ZXJ5LnRvY2lmeS5qcy8pLlxuICogVGhlIG1haW4gZGlmZmVyZW5jZXMgYXJlIHRoYXQgaXQgd29ya3MgbmF0aXZlbHkgd2l0aG91dCBhbnkgbmVlZCBmb3IganF1ZXJ5IG9yIGpxdWVyeSBVSSkuXG4gKlxuICogQGF1dGhvciBUaW0gU2NhbmxpblxuICovXG5cbi8qIGdsb2JhbHMgZGVmaW5lICovXG5cbihmdW5jdGlvbihyb290LCBmYWN0b3J5KSB7XG4gIGlmICh0eXBlb2YgZGVmaW5lID09PSAnZnVuY3Rpb24nICYmIGRlZmluZS5hbWQpIHtcbiAgICBkZWZpbmUoW10sIGZhY3Rvcnkocm9vdCkpO1xuXHR9IGVsc2UgaWYgKHR5cGVvZiBleHBvcnRzID09PSAnb2JqZWN0Jykge1xuICAgIG1vZHVsZS5leHBvcnRzID0gZmFjdG9yeShyb290KTtcblx0fSBlbHNlIHtcbiAgICByb290LnRvY2JvdCA9IGZhY3Rvcnkocm9vdCk7XG5cdH1cbn0pKHR5cGVvZiBnbG9iYWwgIT09ICd1bmRlZmluZWQnID8gZ2xvYmFsIDogdGhpcy53aW5kb3cgfHwgdGhpcy5nbG9iYWwsIGZ1bmN0aW9uKHJvb3QpIHtcblxuICAndXNlIHN0cmljdCc7XG5cbiAgLy8gUmVxdWlyZSBzbW9vdGgtc2Nyb2xsIGJ5IGRlZmF1bHQuXG4gIHZhciBzbW9vdGhTY3JvbGwgPSByZXF1aXJlKCdzbW9vdGgtc2Nyb2xsJyk7XG5cbiAgLy8gRGVmYXVsdCBvcHRpb25zLlxuICB2YXIgZGVmYXVsdE9wdGlvbnMgPSByZXF1aXJlKCcuL2RlZmF1bHQtb3B0aW9ucy5qcycpO1xuICAvLyBPYmplY3QgdG8gc3RvcmUgY3VycmVudCBvcHRpb25zLlxuICB2YXIgb3B0aW9ucyA9IHt9O1xuICAvLyBPYmplY3QgZm9yIHB1YmxpYyBBUElzLlxuICB2YXIgdG9jYm90ID0ge307XG5cbiAgdmFyIEJ1aWxkSHRtbCA9IHJlcXVpcmUoJy4vYnVpbGQtaHRtbC5qcycpO1xuICB2YXIgUGFyc2VDb250ZW50ID0gcmVxdWlyZSgnLi9wYXJzZS1jb250ZW50LmpzJyk7XG4gIC8vIEtlZXAgdGhlc2UgdmFyaWFibGVzIGF0IHRvcCBzY29wZSBvbmNlIG9wdGlvbnMgYXJlIHBhc3NlZCBpbi5cbiAgdmFyIGJ1aWxkSHRtbDtcbiAgdmFyIHBhcnNlQ29udGVudDtcblxuICB2YXIgZG9jID0gcm9vdC5kb2N1bWVudDtcbiAgdmFyIGJvZHkgPSBkb2N1bWVudC5ib2R5O1xuICB2YXIgc3VwcG9ydHMgPSAhIXJvb3QuZG9jdW1lbnQucXVlcnlTZWxlY3RvciAmJiAhIXJvb3QuYWRkRXZlbnRMaXN0ZW5lcjsgLy8gRmVhdHVyZSB0ZXN0XG4gIHZhciBoZWFkaW5nc0FycmF5O1xuXG4gIC8vIEZyb206IGh0dHBzOi8vZ2l0aHViLmNvbS9SYXlub3MveHRlbmRcbiAgdmFyIGhhc093blByb3BlcnR5ID0gT2JqZWN0LnByb3RvdHlwZS5oYXNPd25Qcm9wZXJ0eTtcbiAgZnVuY3Rpb24gZXh0ZW5kKCkge1xuICAgIHZhciB0YXJnZXQgPSB7fTtcbiAgICBmb3IgKHZhciBpID0gMDsgaSA8IGFyZ3VtZW50cy5sZW5ndGg7IGkrKykge1xuICAgICAgdmFyIHNvdXJjZSA9IGFyZ3VtZW50c1tpXTtcbiAgICAgIGZvciAodmFyIGtleSBpbiBzb3VyY2UpIHtcbiAgICAgICAgaWYgKGhhc093blByb3BlcnR5LmNhbGwoc291cmNlLCBrZXkpKSB7XG4gICAgICAgICAgdGFyZ2V0W2tleV0gPSBzb3VyY2Vba2V5XTtcbiAgICAgICAgfVxuICAgICAgfVxuICAgIH1cbiAgICByZXR1cm4gdGFyZ2V0O1xuICB9XG5cbiAgLy8gRnJvbTogaHR0cHM6Ly9yZW15c2hhcnAuY29tLzIwMTAvMDcvMjEvdGhyb3R0bGluZy1mdW5jdGlvbi1jYWxsc1xuICBmdW5jdGlvbiB0aHJvdHRsZShmbiwgdGhyZXNoaG9sZCwgc2NvcGUpIHtcbiAgICB0aHJlc2hob2xkIHx8ICh0aHJlc2hob2xkID0gMjUwKTtcbiAgICB2YXIgbGFzdDtcbiAgICB2YXIgZGVmZXJUaW1lcjtcbiAgICByZXR1cm4gZnVuY3Rpb24oKSB7XG4gICAgICB2YXIgY29udGV4dCA9IHNjb3BlIHx8IHRoaXM7XG4gICAgICB2YXIgbm93ID0gK25ldyBEYXRlO1xuICAgICAgdmFyIGFyZ3MgPSBhcmd1bWVudHM7XG4gICAgICBpZiAobGFzdCAmJiBub3cgPCBsYXN0ICsgdGhyZXNoaG9sZCkge1xuICAgICAgICAvLyBob2xkIG9uIHRvIGl0XG4gICAgICAgIGNsZWFyVGltZW91dChkZWZlclRpbWVyKTtcbiAgICAgICAgZGVmZXJUaW1lciA9IHNldFRpbWVvdXQoZnVuY3Rpb24oKSB7XG4gICAgICAgICAgbGFzdCA9IG5vdztcbiAgICAgICAgICBmbi5hcHBseShjb250ZXh0LCBhcmdzKTtcbiAgICAgICAgfSwgdGhyZXNoaG9sZCk7XG4gICAgICB9IGVsc2Uge1xuICAgICAgICBsYXN0ID0gbm93O1xuICAgICAgICBmbi5hcHBseShjb250ZXh0LCBhcmdzKTtcbiAgICAgIH1cbiAgICB9O1xuICB9XG5cbiAgZnVuY3Rpb24gdXBkYXRlVG9jTGlzdGVuZXIoaGVhZGluZ3MpIHtcbiAgICByZXR1cm4gZnVuY3Rpb24gdXBkYXRlVG9jKCkge1xuICAgICAgcmV0dXJuIGJ1aWxkSHRtbC51cGRhdGVUb2MoaGVhZGluZ3MpO1xuICAgIH07XG4gIH1cblxuICAvKipcblx0ICogRGVzdHJveSB0b2Nib3QuXG5cdCAqL1xuICB0b2Nib3QuZGVzdHJveSA9IGZ1bmN0aW9uKCkge1xuICAgIC8vIENsZWFyIEhUTUwuXG4gICAgdHJ5IHtcbiAgICAgIGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3Iob3B0aW9ucy50b2NTZWxlY3RvcikuaW5uZXJIVE1MID0gJyc7XG4gICAgfSBjYXRjaCAoZSkge1xuICAgICAgY29uc29sZS53YXJuKCdFbGVtZW50IG5vdCBmb3VuZDogJyArIG9wdGlvbnMudG9jU2VsZWN0b3IpOyAvLyBlc2xpbnQtZGlzYWJsZS1saW5lXG4gICAgfVxuXG5cdFx0Ly8gUmVtb3ZlIGV2ZW50IGxpc3RlbmVycy5cbiAgICBkb2N1bWVudC5yZW1vdmVFdmVudExpc3RlbmVyKCdzY3JvbGwnLCB0aGlzLl9zY3JvbGxMaXN0ZW5lciwgZmFsc2UpO1xuICAgIGRvY3VtZW50LnJlbW92ZUV2ZW50TGlzdGVuZXIoJ3Jlc2l6ZScsIHRoaXMuX3Njcm9sbExpc3RlbmVyLCBmYWxzZSk7XG4gICAgaWYgKGJ1aWxkSHRtbCkge1xuICAgICAgZG9jdW1lbnQucmVtb3ZlRXZlbnRMaXN0ZW5lcignY2xpY2snLCB0aGlzLl9jbGlja0xpc3RlbmVyLCBmYWxzZSk7XG4gICAgfVxuXG4gICAgLy8gRGVzdHJveSBzbW9vdGhTY3JvbGwgaWYgaXQgZXhpc3RzLlxuICAgIGlmIChzbW9vdGhTY3JvbGwpIHtcbiAgICAgIHNtb290aFNjcm9sbC5kZXN0cm95KCk7XG4gICAgfVxuICB9O1xuXG4gIC8qKlxuXHQgKiBJbml0aWFsaXplIHRvY2JvdC5cblx0ICogQHBhcmFtIHtvYmplY3R9IGN1c3RvbU9wdGlvbnNcblx0ICovXG4gIHRvY2JvdC5pbml0ID0gZnVuY3Rpb24oY3VzdG9tT3B0aW9ucykge1xuICAgIC8vIGZlYXR1cmUgdGVzdFxuICAgIGlmICghc3VwcG9ydHMpIHtcbiAgICAgIHJldHVybjtcbiAgICB9XG5cbiAgICAvLyBNZXJnZSBkZWZhdWx0cyB3aXRoIHVzZXIgb3B0aW9ucy5cbiAgICAvLyBTZXQgdG8gb3B0aW9ucyB2YXJpYWJsZSBhdCB0aGUgdG9wLlxuICAgIG9wdGlvbnMgPSBleHRlbmQoZGVmYXVsdE9wdGlvbnMsIGN1c3RvbU9wdGlvbnMgfHwge30pO1xuICAgIHRoaXMub3B0aW9ucyA9IG9wdGlvbnM7XG4gICAgdGhpcy5zdGF0ZSA9IHt9O1xuXG4gICAgLy8gUGFzcyBvcHRpb25zIHRvIHRoZXNlIG1vZHVsZXMuXG4gICAgYnVpbGRIdG1sID0gQnVpbGRIdG1sKG9wdGlvbnMpO1xuICAgIHBhcnNlQ29udGVudCA9IFBhcnNlQ29udGVudChvcHRpb25zKTtcblxuICAgIC8vIEZvciB0ZXN0aW5nIHB1cnBvc2VzLlxuICAgIHRoaXMuX2J1aWxkSHRtbCA9IGJ1aWxkSHRtbDtcbiAgICB0aGlzLl9wYXJzZUNvbnRlbnQgPSBwYXJzZUNvbnRlbnQ7XG5cbiAgICAvLyBEZXN0cm95IGl0IGlmIGl0IGV4aXN0cyBmaXJzdC5cbiAgICB0b2Nib3QuZGVzdHJveSgpO1xuXG4gICAgLy8gR2V0IGhlYWRpbmdzIGFycmF5LlxuICAgIGhlYWRpbmdzQXJyYXkgPSBwYXJzZUNvbnRlbnQuc2VsZWN0SGVhZGluZ3Mob3B0aW9ucy5jb250ZW50U2VsZWN0b3IsIG9wdGlvbnMuaGVhZGluZ1NlbGVjdG9yKTtcbiAgICAvLyBSZXR1cm4gaWYgbm8gaGVhZGluZ3MgYXJlIGZvdW5kLlxuICAgIGlmIChoZWFkaW5nc0FycmF5ID09PSBudWxsKSB7XG4gICAgICByZXR1cm47XG4gICAgfVxuXG4gICAgLy8gQnVpbGQgbmVzdGVkIGhlYWRpbmdzIGFycmF5LlxuICAgIHZhciBuZXN0ZWRIZWFkaW5nc09iaiA9IHBhcnNlQ29udGVudC5uZXN0SGVhZGluZ3NBcnJheShoZWFkaW5nc0FycmF5KTtcbiAgICB2YXIgbmVzdGVkSGVhZGluZ3MgPSBuZXN0ZWRIZWFkaW5nc09iai5uZXN0O1xuXG4gICAgLy8gUmVuZGVyLlxuICAgIGJ1aWxkSHRtbC5yZW5kZXIob3B0aW9ucy50b2NTZWxlY3RvciwgbmVzdGVkSGVhZGluZ3MpO1xuXG4gICAgLy8gVXBkYXRlIFNpZGViYXIgYW5kIGJpbmQgbGlzdGVuZXJzLlxuICAgIC8vIGJ1aWxkSHRtbC51cGRhdGVUb2MoaGVhZGluZ3NBcnJheSk7XG4gICAgdGhpcy5fc2Nyb2xsTGlzdGVuZXIgPSB0aHJvdHRsZShmdW5jdGlvbigpIHtcbiAgICAgIGJ1aWxkSHRtbC51cGRhdGVUb2MoaGVhZGluZ3NBcnJheSk7XG4gICAgfSwgb3B0aW9ucy50aHJvdHRsZVRpbWVvdXQpO1xuICAgIHRoaXMuX3Njcm9sbExpc3RlbmVyKCk7XG4gICAgZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignc2Nyb2xsJywgdGhpcy5fc2Nyb2xsTGlzdGVuZXIsIGZhbHNlKTtcbiAgICBkb2N1bWVudC5hZGRFdmVudExpc3RlbmVyKCdyZXNpemUnLCB0aGlzLl9zY3JvbGxMaXN0ZW5lciwgZmFsc2UpO1xuXG4gICAgLy8gQmluZCBjbGljayBsaXN0ZW5lcnMgdG8gZGlzYWJsZSBhbmltYXRpb24uXG4gICAgdGhpcy5fY2xpY2tMaXN0ZW5lciA9IHRocm90dGxlKGZ1bmN0aW9uKGV2ZW50KSB7XG4gICAgICBidWlsZEh0bWwuZGlzYWJsZVRvY0FuaW1hdGlvbihldmVudCk7IC8vIFNhdmUgcmVmZXJlbmNlIHNvIGV2ZW50IGlzIGNyZWF0ZWQgLyByZW1vdmVkIHByb3Blcmx5LlxuICAgICAgYnVpbGRIdG1sLnVwZGF0ZVRvYyhoZWFkaW5nc0FycmF5KTtcbiAgICB9LCBvcHRpb25zLnRocm90dGxlVGltZW91dCk7XG4gICAgZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignY2xpY2snLCB0aGlzLl9jbGlja0xpc3RlbmVyLCBmYWxzZSk7XG5cbiAgICAvLyBJbml0aWFsaXplIHNtb290aHNjcm9sbCBpZiBpdCBleGlzdHMuXG4gICAgaWYgKHNtb290aFNjcm9sbCkge1xuICAgICAgdGhpcy5zbW9vdGhTY3JvbGwgPSBzbW9vdGhTY3JvbGwuaW5pdChleHRlbmQob3B0aW9ucy5zbW9vdGhTY3JvbGxPcHRpb25zLCB7XG4gICAgICAgIGNhbGxiYWNrOiBmdW5jdGlvbihhbmNob3IsIHRvZ2dsZSkge1xuICAgICAgICAgIGJ1aWxkSHRtbC5lbmFibGVUb2NBbmltYXRpb24oKTtcbiAgICAgICAgICBpZiAodHlwZW9mIG9wdGlvbnMuc21vb3RoU2Nyb2xsT3B0aW9ucy5jYWxsYmFjayA9PT0gJ2Z1bmN0aW9uJykge1xuICAgICAgICAgICAgb3B0aW9ucy5zbW9vdGhTY3JvbGxPcHRpb25zLmNhbGxiYWNrKGFuY2hvciwgdG9nZ2xlKTtcbiAgICAgICAgICB9XG4gICAgICAgIH1cbiAgICAgIH0pKTtcbiAgICB9XG5cbiAgICByZXR1cm4gdGhpcztcbiAgfTtcblxuICAvKipcbiAgICogUmVmcmVzaCB0b2Nib3QuXG4gICAqL1xuICB0b2Nib3QucmVmcmVzaCA9IGZ1bmN0aW9uKGN1c3RvbU9wdGlvbnMpIHtcbiAgICB0b2Nib3QuZGVzdHJveSgpO1xuICAgIHRvY2JvdC5pbml0KGN1c3RvbU9wdGlvbnMgfHwgdGhpcy5vcHRpb25zKTtcbiAgfTtcblxuICAvLyBNYWtlIHRvY2JvdCBhdmFpbGFibGUgZ2xvYmFsbHkuXG4gIHJvb3QudG9jYm90ID0gdG9jYm90O1xuXG4gIHJldHVybiB0b2Nib3Q7XG59KTtcblxuXG5cbi8vLy8vLy8vLy8vLy8vLy8vL1xuLy8gV0VCUEFDSyBGT09URVJcbi8vIC4vc3JjL2pzL2luZGV4LmpzXG4vLyBtb2R1bGUgaWQgPSA1XG4vLyBtb2R1bGUgY2h1bmtzID0gMCJdLCJtYXBwaW5ncyI6IkFBQUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQUE7QUFBQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBOztBIiwic291cmNlUm9vdCI6IiJ9");
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=tocbot.js.map
