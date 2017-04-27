@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Link from 'next/link'
 import Head from 'next/head'
 
-import HTMLC from './README.json'
+import HTMLC from './_README.json'
 console.log(HTMLC);
 
 const buttonClasses = 'f6 link dim br1 ph3 pv2 mb2 dib white bg-dark-gray'

@@ -7,3 +7,4 @@ static/js/*
 static/css/*
 node_modules/
 npm-debug.*
+pages/_*.json
