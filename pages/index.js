@@ -48,7 +48,7 @@ const Index = (props) => {
           </label>
           <nav className="toc js-toc relative z-1 transition--300 absolute pa3"></nav>
           <div className="content js-toc-content pa3"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(HTMLC) }}>
+            dangerouslySetInnerHTML={{ __html: HTMLC.bodyHtml }}>
           </div>
 
 

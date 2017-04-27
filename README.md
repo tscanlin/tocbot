@@ -53,7 +53,7 @@ If you installed it with npm and use sass / postcss you might try importing the 
 
 Initialize the script
 
-```javascript
+```js
 tocbot.init({
   // Where to render the table of contents.
   tocSelector: '.js-toc',

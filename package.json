@@ -76,7 +76,7 @@
     "mocha": "^3.2.0",
     "next": "^2.1.1",
     "node-sass": "^4.5.2",
-    "processto": "^1.4.1",
+    "processto": "^1.5.0",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "style-loader": "^0.16.1"
