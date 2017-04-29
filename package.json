@@ -48,7 +48,7 @@
   "bugs": {
     "url": "https://github.com/tscanlin/tocbot/issues"
   },
-  "homepage": "https://github.com/tscanlin/tocbot#readme",
+  "homepage": "https://github.com/tscanlin/tocbot",
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
