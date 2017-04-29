@@ -2,16 +2,21 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Link from 'next/link'
 import Head from 'next/head'
+import ScriptAdder from './ScriptAdder/index'
 
 import HTMLC from './_README.json'
-console.log(HTMLC);
+// console.log(HTMLC);
 
 const buttonClasses = 'f6 link dim br1 ph3 pv2 mb2 dib white bg-dark-gray'
 
 const Index = (props) => {
+  // console.log(props);
   return (
     <div>
       <Head>
+        <title>Tocbot</title>
+        <meta name="description" content="" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" href="https://unpkg.com/tachyons@4.7.0/css/tachyons.min.css" />
         <link rel="stylesheet" href="/static/css/tocbot.css" />
         <link rel="stylesheet" href="/static/css/styles.css" />
@@ -69,6 +74,7 @@ const Index = (props) => {
             <textarea id="try-it-markdown" className="textarea"></textarea>
           </div>
         </div>
+        <ScriptAdder />
       </main>
     </div>
   )
