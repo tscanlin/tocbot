@@ -2,7 +2,7 @@
 .publish
 .next
 .DS_Store
--script/
+site/
 static/js/*
 static/css/*
 node_modules/
