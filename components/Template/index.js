@@ -1,30 +1,35 @@
-/**
- * The main template component for documentation in this repository.
- *
- * @author Tim Scanlin
- */
+import React from 'react'
+import PropTypes from 'prop-types'
+import Link from 'next/link'
+import Head from 'next/head'
+import ScriptAdder from '../ScriptAdder'
 
-var React = require('react');
-var ReactDOM = require('react-dom');
+const buttonClasses = 'f6 link dim br1 ph3 pv2 mb2 dib white bg-dark-gray'
 
-var buttonClasses = 'f6 link dim br1 ph3 pv2 mb2 dib white bg-dark-gray';
-
-module.exports = React.createClass({
-  propTypes: {
-    json: React.PropTypes.object.isRequired
-  },
-
-  render: function() {
-    var json = this.props.json;
-    var TemplateComponent = require('./' + json.component);
-
-    return (
+function Template(props) {
+  return (
+    <div>
+      <Head>
+        <title>Tocbot</title>
+        <meta name="description" content="" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="https://unpkg.com/tachyons@4.7.0/css/tachyons.min.css" />
+        <link rel="stylesheet" href="/static/css/tocbot.css" />
+        <link rel="stylesheet" href="/static/css/styles.css" />
+      </Head>
       <main>
         <div className="hero relative overflow-hidden tc z-3">
           <div className="hero-inner relative mw7 center white pv4">
             <div className="absolute top-0 right-0">
-              <a className="dib f6 white pa1 ma1" href="#">About</a>
-              <a className="dib f6 white pa1 ma1" href="https://github.com/tscanlin/tocbot">Github</a>
+              <a className="dib f6 white no-underline pa1 ma1" href="/">
+                About
+              </a>
+              <a className="dib f6 white no-underline pa1 ma1" href="/changelog">
+                Changelog
+              </a>
+              <a className="dib f6 white no-underline pa1 ma1" href="https://github.com/tscanlin/tocbot">
+                Github
+              </a>
             </div>
             <div className="pv4">
               <h1 className="title normal ma0 pa0">
@@ -42,10 +47,12 @@ module.exports = React.createClass({
 
         <div className="mw7 center dark-gray lh-copy">
           <input id="toc" type="checkbox" className="dn" />
-          <label className="toc-icon relative z-2 f6 lh-solid bg-near-white b--silver pa1 ma1 ba br1" htmlFor="toc">Menu</label>
-          <nav className="toc js-toc relative z-1 transition--300 absolute pa3"></nav>
-          <div className="content js-toc-content pa3">
-              <TemplateComponent {...this.props.json} />
+          <label className="toc-icon relative z-2 f6 lh-solid bg-near-white b--silver pa1 ma1 ba br1" htmlFor="toc">
+            Menu
+          </label>
+          <nav className="toc js-toc relative z-1 transition--300 absolute pa4"></nav>
+          <div className="content js-toc-content pa4"
+            dangerouslySetInnerHTML={{ __html: props.bodyHtml }}>
           </div>
 
 
@@ -66,7 +73,14 @@ module.exports = React.createClass({
             <textarea id="try-it-markdown" className="textarea"></textarea>
           </div>
         </div>
+        <ScriptAdder />
       </main>
-    );
-  }
-});
+    </div>
+  )
+}
+
+Template.propTypes = {
+  bodyHtml: PropTypes.string.isRequired
+}
+
+export default Template
