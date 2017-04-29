@@ -1,18 +1,3 @@
-
-var scripts = []
-
-function addScriptToPage(window, scriptObj) {
-  if (typeof window !== 'undefined' && window.document) {
-    const s = window.document.createElement('SCRIPT')
-    if (scriptObj.src) {
-      s.src = scriptObj.src
-    } else if (scriptObj.html) {
-      s.innerHTML = scriptObj.html
-    }
-
-  }
-}
-
 function addScriptsToPage(window, arr) {
   if (typeof window === 'undefined') {
     return
@@ -56,5 +41,4 @@ function addScriptsToPage(window, arr) {
   }
 }
 
-export { addScriptToPage }
 export { addScriptsToPage }
