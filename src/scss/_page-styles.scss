@@ -12,7 +12,7 @@
 
 .content {
   // margin-right: 280px;
-  h1, h2 {
+  h1:first-child, h2:first-child {
     padding-top: 0;
     margin-top: 0;
   }
