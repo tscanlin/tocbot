@@ -203,12 +203,6 @@ If you want to open a pull request just fork the repo but please make sure all t
 npm run test
 ```
 
-#### Specific tests
-To filter tests by `describe` or `it` description:
-```bash
-TEST_NAME="some string that appears in the test description" npm run test
-```
-
 #### With debugger
 You can run tests through [node-inspector](https://github.com/node-inspector/node-inspector).
 
@@ -224,7 +218,7 @@ npm install node-inspector
 
 Now that node-inspector is installed, you can run the tests!
 ```
-TEST_NAME="whatever, this is optional" npm run test:debug
+npm run test:debug
 ```
 
 ## Steps to publish
