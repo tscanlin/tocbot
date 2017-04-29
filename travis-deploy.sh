@@ -34,7 +34,7 @@ COMMIT_MESSAGE=$(git log -1 --pretty=%B)
 # git log
 
 # Add dist files.
-cp build/assets/js/tocbot.min.js ./dist/ && cp build/assets/css/tocbot.css ./dist/
+cp static/js/tocbot.min.js ./dist/ && cp static/css/tocbot.css ./dist/
 git add --force ./dist
 git commit -am "Adding dist files: $COMMIT_MESSAGE"
 git push --quiet "https://${GITHUB_TOKEN}@github.com/${GITHUB_REPO}.git" HEAD:master > /dev/null 2>&1

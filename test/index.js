@@ -28,7 +28,7 @@ before(function(done) {
   jsdom.env(
     markup,
     [
-      './build/assets/js/tocbot.js'
+      './static/js/tocbot.js'
     ],
     function (err, window) {
       GLOBAL.window = window;
