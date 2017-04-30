@@ -3,7 +3,7 @@ function addScriptsToPage(window, arr) {
     return
   }
   const loadedScripts = []
-  const queue = []
+  let queue = []
   arr.forEach((scriptObj, i) => {
     const s = window.document.createElement('SCRIPT')
     if (scriptObj.src) {
@@ -30,14 +30,31 @@ function addScriptsToPage(window, arr) {
   })
 
   function loadCallback(e) {
-    queue.forEach((q) => {
-      const resolved = q.obj.dependencies.every((d) => {
+    // let remaining = queue
+    // queue.forEach((q, i) => {
+    //   const resolved = q.obj.dependencies.every((d) => {
+    //     return loadedScripts.indexOf(d.src) !== -1
+    //   })
+    //   if (resolved) {
+    //     q.run()
+    //   }
+    // })
+
+    let i = 0
+    while (i < queue.length && i < 10) {
+      console.log(queue[i], i);
+      const resolved = queue[i].obj.dependencies.every((d) => {
         return loadedScripts.indexOf(d.src) !== -1
       })
       if (resolved) {
-        q.run()
+        queue[i].run()
+        queue = queue.splice(i, 1)
+        i--
+        break
       }
-    })
+      i++
+    }
+
   }
 }
 
