@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Link from 'next/link'
 import Head from 'next/head'
 import Hero from './Hero'
 import TryIt from './TryIt'
@@ -10,7 +9,7 @@ function Template(props) {
   return (
     <div>
       <Head>
-        <title>Tocbot</title>
+        <title>{props.title}</title>
         <meta name="description" content="" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" href="https://unpkg.com/tachyons@4.7.0/css/tachyons.min.css" />
@@ -18,7 +17,7 @@ function Template(props) {
         <link rel="stylesheet" href="/static/css/styles.css" />
       </Head>
       <main>
-        <Hero />
+        <Hero title={props.title} />
 
         <div className="mw7 center dark-gray lh-copy">
           <input id="toc" type="checkbox" className="dn" />

@@ -22,7 +22,7 @@ export default (props) => {
         </div>
         <div className="pv4">
           <h1 className="title normal ma0 pa0">
-            Tocbot
+            {props.title}
           </h1>
           <h4 className="subtitle normal ma0 pa3">
             Generate a table of contents based on the heading structure of an html document.
