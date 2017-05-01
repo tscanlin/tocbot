@@ -1,4 +1,5 @@
 module.exports = {
+  assetPath: 'https://github.com/tscanlin/tocbot/',
   webpack: (webpackConfig) => {
     // console.log(webpackConfig);
     const newConfig = Object.assign({}, webpackConfig);

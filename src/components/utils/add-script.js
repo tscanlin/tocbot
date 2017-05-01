@@ -1,5 +1,16 @@
+const CONTAINER_ID = 'add-script-container'
+
 function addScriptsToPage(window, arr) {
   if (typeof window === 'undefined') {
+    return
+  }
+  let container
+  if (!window.document.querySelector('#' + CONTAINER_ID)) {
+    container = window.document.createElement('DIV')
+    container.id = CONTAINER_ID
+    window.document.body.appendChild(container)
+  } else {
+    // Exit if the scripts have already been loaded.
     return
   }
   const loadedScripts = []
@@ -12,19 +23,19 @@ function addScriptsToPage(window, arr) {
         loadCallback()
       }
       s.src = scriptObj.src
-      window.document.body.appendChild(s)
+      container.appendChild(s)
     } else if (scriptObj.html) {
       if (scriptObj.dependencies && scriptObj.dependencies.length > 0) {
         queue.push({
           obj: scriptObj,
           run: function() {
             s.innerHTML = scriptObj.html
-            window.document.body.appendChild(s)
+            container.appendChild(s)
           }
         })
       } else {
         s.innerHTML = scriptObj.html
-        window.document.body.appendChild(s)
+        container.appendChild(s)
       }
     }
   })
