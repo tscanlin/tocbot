@@ -17,7 +17,10 @@ function Template(props) {
         <link rel="stylesheet" href="/static/css/styles.css" />
       </Head>
       <main>
-        <Hero title={props.title} />
+        <Hero
+          title={props.title}
+          subtitle={props.subtitle}
+        />
 
         <div className="mw7 center dark-gray lh-copy">
           <input id="toc" type="checkbox" className="dn" />
@@ -37,7 +40,13 @@ function Template(props) {
   )
 }
 
+Template.defaultProps = {
+  title: ''
+}
+
 Template.propTypes = {
+  title: PropTypes.string.isRequired,
+  subtitle: PropTypes.string.isRequired,
   bodyHtml: PropTypes.string.isRequired
 }
 

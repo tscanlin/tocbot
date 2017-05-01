@@ -15,12 +15,13 @@ class ScriptAdder extends React.Component {
     ]
 
     const scriptsToAdd = scripts.map(s => SCRIPTS[s])
-    // console.log(scriptsToAdd);
-    if (typeof window !== 'undefined') {
-      // window.tocbot.init()
-    }
 
     addScriptsToPage(window, scriptsToAdd)
+
+    if (typeof window !== 'undefined' && window.tocbot) {
+      const options = window.__TOCBOT_OPTIONS__
+      window.tocbot.init(options)
+    }
   }
 
   componentWillUnmount() {

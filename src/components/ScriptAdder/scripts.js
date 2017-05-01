@@ -5,7 +5,7 @@ export const TOCBOT_SCRIPT = {
 export const TOCBOT_INIT = {
   dependencies: [TOCBOT_SCRIPT],
   html: `
-  tocbot.init({
+  window.__TOCBOT_OPTIONS__ = {
     tocSelector: '.js-toc',
     contentSelector: '.js-toc-content',
     headingSelector: 'h1, h2, h3, h4',
@@ -16,7 +16,8 @@ export const TOCBOT_INIT = {
       callback: function(anchor, toggle) { console.log(anchor, toggle) },
       speed: 300 // animation duration.
     },
-  });
+  }
+  tocbot.init(window.__TOCBOT_OPTIONS__);
   `
 }
 

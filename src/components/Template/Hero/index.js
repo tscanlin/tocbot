@@ -24,8 +24,8 @@ export default (props) => {
           <h1 className="title normal ma0 pa0">
             {props.title}
           </h1>
-          <h4 className="subtitle normal ma0 pa3">
-            Generate a table of contents based on the heading structure of an html document.
+          <h4 className="subtitle normal o-90 ma0 pa3">
+            {props.subtitle}
           </h4>
           <div className="mv2 ml4">
             <iframe src="https://ghbtns.com/github-btn.html?user=tscanlin&repo=tocbot&type=star&count=true&size=large" frameBorder="0" scrolling="0" width="160px" height="30px"></iframe>
