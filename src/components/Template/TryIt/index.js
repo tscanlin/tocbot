@@ -15,7 +15,6 @@ export default class TryIt extends React.Component {
   }
 
   onChange(e) {
-    console.log(e);
     const contentEl = document.querySelector('.js-toc-content')
     const markdown = e.target.value;
     contentEl.innerHTML = marked(markdown);

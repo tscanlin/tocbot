@@ -8,7 +8,7 @@ const TOCBOT_OPTIONS = {
   smoothScrollOptions: {
     easing: 'easeInOutCubic',
     offset: 0,
-    callback: function(anchor, toggle) { console.log(anchor, toggle) },
+    // callback: function(anchor, toggle) { console.log(anchor, toggle) },
     speed: 300 // animation duration.
   },
 }
