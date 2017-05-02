@@ -6,19 +6,17 @@ export default (props) => {
     <div className="hero relative overflow-hidden tc z-3">
       <div className="hero-inner relative mw7 center white pv4">
         <div className="absolute top-0 right-0">
-          <Link href='/'>
-            <a className="dib f6 white no-underline pa1 ma1">
-              About
-            </a>
-          </Link>
-          <Link href='/changelog'>
-            <a className="dib f6 white no-underline pa1 ma1">
-              Changelog
-            </a>
-          </Link>
-          <a className="dib f6 white no-underline pa1 ma1" href="https://github.com/tscanlin/tocbot">
-            Github
-          </a>
+          {props.topLinks && props.topLinks.length > 0 && (
+            props.topLinks.map((link, i) => {
+              return (
+                <Link prefetch href={link.href} key={i}>
+                  <a className="dib f6 white no-underline pa1 ma1">
+                    {link.text}
+                  </a>
+                </Link>
+              )
+            })
+          )}
         </div>
         <div className="pv4">
           <h1 className="title normal ma0 pa0">

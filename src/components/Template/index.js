@@ -2,8 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Head from 'next/head'
 import Hero from './Hero'
+import Tocbot from './Tocbot'
 import TryIt from './TryIt'
-import ScriptAdder from '../ScriptAdder'
+import Tracking from './Tracking'
 
 function Template(props) {
   return (
@@ -20,6 +21,7 @@ function Template(props) {
         <Hero
           title={props.title}
           subtitle={props.subtitle}
+          topLinks={props.topLinks}
         />
 
         <div className="mw7 center dark-gray lh-copy">
@@ -32,9 +34,10 @@ function Template(props) {
             dangerouslySetInnerHTML={{ __html: props.bodyHtml }}>
           </div>
 
-          <TryIt />
+          <Tocbot />
         </div>
-        <ScriptAdder />
+        <TryIt />
+        <Tracking />
       </main>
     </div>
   )

@@ -49,3 +49,11 @@
 a.toc-link {
   text-decoration: none;
 }
+
+.try-it-container {
+  transform: translateY(84%);
+
+  &.is-open {
+    transform: translateY(0%);
+  }
+}
