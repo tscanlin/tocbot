@@ -21,6 +21,8 @@ function Template(props) {
         <Hero
           title={props.title}
           subtitle={props.subtitle}
+          user={props.user}
+          repo={props.repo}
           topLinks={props.topLinks}
         />
 

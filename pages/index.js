@@ -12,6 +12,8 @@ const Index = (props) => {
       subtitle="Generate a table of contents based on the heading structure of an html document"
       topLinks={CONFIG.topLinks}
       bodyHtml={PAGE_JSON.bodyHtml}
+      repo={CONFIG.repo}
+      user={CONFIG.user}
     />
   )
 }

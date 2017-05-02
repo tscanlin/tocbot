@@ -12,6 +12,8 @@ const Index = (props) => {
       subtitle="Changelog"
       topLinks={CONFIG.topLinks}
       bodyHtml={PAGE_JSON.bodyHtml}
+      repo={CONFIG.repo}
+      user={CONFIG.user}
     />
   )
 }

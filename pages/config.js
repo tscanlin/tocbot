@@ -12,5 +12,7 @@ export default {
       text: 'Github',
       href: 'https://github.com/tscanlin/tocbot'
     },
-  ]
+  ],
+  user: 'tscanlin',
+  repo: 'tocbot'
 }
