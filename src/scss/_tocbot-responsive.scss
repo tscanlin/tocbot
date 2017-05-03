@@ -1,5 +1,8 @@
 /* Responsive Styles */
 
+// By default the toc will be left of the content.
+// You can add the `.toc-right` class to move it to the right side.
+
 .toc-icon {
   position: fixed;
   top: 0;
@@ -14,15 +17,23 @@
 // Responsive overrides.
 .toc {
   background-color: hsla(200, 100%, 100%, 0.9);
-  transform: translateX(100%);
-  right: 0;
+  transform: translateX(-100%);
+
+  &.toc-right {
+    transform: translateX(100%);
+    right: 0;
+  }
 }
 
 // 52em
 @media (min-width: 52em) {
   .toc {
     transform: translateX(0);
-    right: calc((100% - 48rem - 4rem) / 2);
+
+    &.toc-right {
+      transform: translateX(0);
+      right: calc((100% - 48rem - 4rem) / 2);
+    }
   }
 
   .toc-icon {
@@ -34,6 +45,10 @@
   }
 
   .content {
+    margin-left: 280px;
+  }
+  .toc-right ~ .content {
+    margin-left: 0;
     margin-right: 280px;
   }
 }

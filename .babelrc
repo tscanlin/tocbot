@@ -3,8 +3,5 @@
     "es2015",
     "react",
   ],
-  "ignore": [
-    "foo.js",
-    "bar/**/*.js"
-  ]
+  "ignore": []
 }

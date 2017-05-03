@@ -4,6 +4,21 @@
 
 ### 2.X.X
 
+#### 2.4.0
+
+
+##### Changed
+- Moved TOC on the project page to the right side. Added `.toc-right` class for this.
+- Switched to using [next.js](https://github.com/zeit/next.js) for the website.
+
+##### Added
+- Added `src/components` with the template used for the website. This can now be more easily reused by other projects.
+
+##### Fixed
+
+
+
+
 #### 2.3.2
 
 ##### Fixed
