@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import Head from 'next/head'
 import Hero from './Hero'
 import Tocbot from './Tocbot'
-import TryIt from './TryIt'
 import Tracking from './Tracking'
 
 function Template(props) {
@@ -38,8 +37,9 @@ function Template(props) {
 
           <Tocbot />
         </div>
-        <TryIt />
-        <Tracking />
+        {props.extraElements}
+
+        <Tracking siteId={props.siteId} />
       </main>
     </div>
   )
@@ -47,7 +47,8 @@ function Template(props) {
 
 Template.defaultProps = {
   title: '',
-  description: ''
+  description: '',
+  extraElements: null,
 }
 
 Template.propTypes = {
@@ -55,7 +56,9 @@ Template.propTypes = {
   subtitle: PropTypes.string,
   description: PropTypes.string.isRequired,
   topLinks: PropTypes.array,
-  bodyHtml: PropTypes.string.isRequired
+  bodyHtml: PropTypes.string.isRequired,
+  siteId: PropTypes.string.isRequired,
+  extraElements: PropTypes.node,
 }
 
 export default Template
