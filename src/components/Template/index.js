@@ -11,11 +11,11 @@ function Template(props) {
     <div>
       <Head>
         <title>{props.title}</title>
-        <meta name="description" content="" />
+        <meta name="description" content={props.description} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="stylesheet" href="https://unpkg.com/tachyons@4.7.0/css/tachyons.min.css" />
-        <link rel="stylesheet" href="/static/css/tocbot.css" />
-        <link rel="stylesheet" href="/static/css/styles.css" />
+        {props.stylesheets && props.stylesheets.length > 0 && props.stylesheets.map((stylesheet, i) => {
+          return <link key={i} rel="stylesheet" href={stylesheet} />
+        })}
       </Head>
       <main>
         <Hero
@@ -46,12 +46,15 @@ function Template(props) {
 }
 
 Template.defaultProps = {
-  title: ''
+  title: '',
+  description: ''
 }
 
 Template.propTypes = {
   title: PropTypes.string.isRequired,
-  subtitle: PropTypes.string.isRequired,
+  subtitle: PropTypes.string,
+  description: PropTypes.string.isRequired,
+  topLinks: PropTypes.array,
   bodyHtml: PropTypes.string.isRequired
 }
 

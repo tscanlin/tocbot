@@ -9,6 +9,7 @@ const Index = (props) => {
     <Template
       title="Tocbot"
       subtitle="Generate a table of contents based on the heading structure of an html document"
+      stylesheets={CONFIG.stylesheets}
       topLinks={CONFIG.topLinks}
       bodyHtml={PAGE_JSON.bodyHtml}
       repo={CONFIG.repo}

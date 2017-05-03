@@ -9,6 +9,7 @@ const Index = (props) => {
     <Template
       title="Tocbot"
       subtitle="Changelog"
+      stylesheets={CONFIG.stylesheets}
       topLinks={CONFIG.topLinks}
       bodyHtml={PAGE_JSON.bodyHtml}
       repo={CONFIG.repo}

@@ -6,17 +6,17 @@
 
 #### 2.4.0
 
-
-##### Changed
-- Moved TOC on the project page to the right side. Added `.toc-right` class for this.
-- Switched to using [next.js](https://github.com/zeit/next.js) for the website.
+##### Docs
+- Moved toc on the project page to the right side. Added `.toc-right` class for this.
+- Switched to using [next.js](https://github.com/zeit/next.js) with [processto](https://github.com/tscanlin/processto) for the website and removed old build scripts.
+- Moved changelog into it's own markdown file.
+- Build to `\static` instead of `\build`
 
 ##### Added
 - Added `src/components` with the template used for the website. This can now be more easily reused by other projects.
 
 ##### Fixed
-
-
+- Fix test commands to work better
 
 
 #### 2.3.2
