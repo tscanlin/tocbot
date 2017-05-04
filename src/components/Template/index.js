@@ -47,7 +47,11 @@ function Template(props) {
 
 Template.defaultProps = {
   title: '',
+  subtitle: '',
   description: '',
+  stylesheets: [
+    'https://unpkg.com/tachyons@4.7.0/css/tachyons.min.css'
+  ],
   extraElements: null,
 }
 
@@ -55,9 +59,12 @@ Template.propTypes = {
   title: PropTypes.string.isRequired,
   subtitle: PropTypes.string,
   description: PropTypes.string.isRequired,
+  stylesheets: PropTypes.array,
   topLinks: PropTypes.array,
   bodyHtml: PropTypes.string.isRequired,
   siteId: PropTypes.string.isRequired,
+  user: PropTypes.string,
+  repo: PropTypes.string,
   extraElements: PropTypes.node,
 }
 

@@ -8,14 +8,15 @@ import PAGE_JSON from './_CHANGELOG.json'
 const Index = (props) => {
   return (
     <Template
-      title="Tocbot"
+      title={CONFIG.title}
       subtitle="Changelog"
-      siteId={CONFIG.siteId}
+      description={CONFIG.description}
       stylesheets={CONFIG.stylesheets}
       topLinks={CONFIG.topLinks}
       bodyHtml={PAGE_JSON.bodyHtml}
       repo={CONFIG.repo}
       user={CONFIG.user}
+      siteId={CONFIG.siteId}
       extraElements={<TryIt />}
     />
   )

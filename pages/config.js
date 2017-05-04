@@ -1,5 +1,7 @@
 export default {
-  siteId: 'UA-76620957-1',
+  title: 'Tocbot',
+  subtitle: 'Generate a table of contents based on the heading structure of an html document',
+  description: 'Tocbot - Generate a table of contents based on the heading structure of an html document',
   stylesheets: [
     'https://unpkg.com/tachyons@4.7.0/css/tachyons.min.css',
     '/static/css/tocbot.css',
@@ -20,5 +22,6 @@ export default {
     },
   ],
   user: 'tscanlin',
-  repo: 'tocbot'
+  repo: 'tocbot',
+  siteId: 'UA-76620957-1',
 }

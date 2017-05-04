@@ -8,14 +8,15 @@ import PAGE_JSON from './_README.json'
 const Index = (props) => {
   return (
     <Template
-      title="Tocbot"
-      subtitle="Generate a table of contents based on the heading structure of an html document"
-      siteId={CONFIG.siteId}
+      title={CONFIG.title}
+      subtitle={CONFIG.subtitle}
+      description={CONFIG.description}
       stylesheets={CONFIG.stylesheets}
       topLinks={CONFIG.topLinks}
       bodyHtml={PAGE_JSON.bodyHtml}
       repo={CONFIG.repo}
       user={CONFIG.user}
+      siteId={CONFIG.siteId}
       extraElements={<TryIt />}
     />
   )
