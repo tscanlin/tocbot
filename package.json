@@ -73,7 +73,7 @@
     "marked": "^0.3.6",
     "mkdirp": "^0.5.1",
     "mocha": "^3.2.0",
-    "next": "git+ssh://git@github.com/tscanlin/next.js.git",
+    "next": "git+https://git@github.com/tscanlin/next.js.git",
     "node-sass": "^4.5.2",
     "processto": "^1.4.2",
     "react": "^15.5.4",
