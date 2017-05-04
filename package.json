@@ -56,6 +56,7 @@
     "babel-core": "^6.24.1",
     "babel-eslint": "^7.2.3",
     "babel-loader": "^7.0.0",
+    "babel-plugin-wrap-in-js": "^1.1.1",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-register": "^6.24.1",
@@ -66,19 +67,19 @@
     "gh-pages": "^0.12.0",
     "glob": "^7.1.1",
     "globby": "^6.1.0",
-    "highlight.js": "^9.11.0",
-    "html-loader": "^0.4.5",
     "js-yaml": "^3.8.3",
     "jsdom": "^9.12.0",
-    "markdown-loader": "^2.0.0",
     "marked": "^0.3.6",
     "mkdirp": "^0.5.1",
     "mocha": "^3.2.0",
     "next": "git+https://git@github.com/tscanlin/next.js.git",
     "node-sass": "^4.5.2",
+    "parallelshell": "^2.0.0",
     "processto": "^1.4.2",
+    "raw-loader": "^0.5.1",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
+    "sass-loader": "^6.0.3",
     "style-loader": "^0.16.1"
   },
   "dependencies": {
@@ -92,5 +93,17 @@
         "**/*"
       ]
     }
-  ]
+  ],
+  "babel": {
+    "presets": [
+      "es2015",
+      "react"
+    ],
+    "ignore": [],
+    "plugins": [
+          ["wrap-in-js", {
+              "extensions": ["css$"]
+          }]
+      ]
+  }
 }

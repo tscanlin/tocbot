@@ -1,9 +1,8 @@
 /* Styles */
 
-// Third Party
-@import 'highlight.js/styles/github-gist'; // atelier-dune-light
 // Page
 @import 'page-styles';
+@import 'code-styles';
 @import 'tocbot-responsive';
 
 * {
