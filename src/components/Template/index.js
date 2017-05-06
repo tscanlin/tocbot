@@ -6,12 +6,6 @@ import Hero from './Hero'
 import Tocbot from './Tocbot'
 import Tracking from './Tracking'
 
-if (isNode()) {
-  var stylesStyles = require('../../../static/css/styles.css')
-  var tocbotStyles = require('../../../static/css/tocbot.css')
-  console.log(stylesStyles, tocbotStyles);
-}
-
 function isLive() {
   return !isNode()
       && window.location.hostname.indexOf('github.io') !== -1

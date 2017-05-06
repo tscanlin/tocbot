@@ -3,10 +3,5 @@
     "es2015",
     "react"
   ],
-  "ignore": [],
-  "plugins": [
-        ["wrap-in-js", {
-            "extensions": ["css$"]
-        }]
-    ]
+  "ignore": []
 }
