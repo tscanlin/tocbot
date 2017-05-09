@@ -38,14 +38,10 @@ module.exports = {
   // The sections that are hidden will open
   // and close as you scroll to headings within them.
   collapseDepth: 0,
-  // smooth-scroll options object, see docs at:
-  // https://github.com/cferdinandi/smooth-scroll
-  smoothScrollOptions: {
-    easing: 'easeInOutCubic',
-    offset: 0,
-    speed: 300, // animation duration.
-    callback: function(anchor, toggle) { } // callback after link is scrolled to.
-  },
+  // Smooth scrolling enabled.
+  smoothScroll: true,
+  // Callback for scroll end (requires: smoothScroll).
+  scrollEndCallback: function(e) {},
   // Headings offset between the headings and the top of the document.
   headingsOffset: 0,
   // Timeout between events firing to make sure it's

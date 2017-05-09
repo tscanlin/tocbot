@@ -19,11 +19,11 @@
     "fix-export": "bash ./script/fix-export.sh",
     "estimate-js-size": "gzip -9 -c dist/tocbot.min.js | wc -c",
     "estimate-css-size": "gzip -9 -c dist/tocbot.css | wc -c",
-    "lint": "",
+    "lint": "standard",
     "dev": "npm run build-css && parallelshell \"npm run next\" \"npm run build-js-watch\" \"npm run build-css-watch\" \"npm run build-content-watch\"",
     "start": "npm run dev",
     "deploy": "npm run build && gh-pages -d site",
-    "test": "mocha test/index.js",
+    "test": "npm run lint && mocha test/index.js",
     "test:debug": "node-debug _mocha --timeout 0 test/index.js",
     "test:watch": "mocha --watch test/index.js",
     "next": "next",
@@ -76,7 +76,8 @@
     "parallelshell": "^2.0.0",
     "processto": "^1.6.0",
     "react": "^15.5.4",
-    "react-dom": "^15.5.4"
+    "react-dom": "^15.5.4",
+    "standard": "^10.0.2"
   },
   "dependencies": {
     "zenscroll": "^4.0.0"

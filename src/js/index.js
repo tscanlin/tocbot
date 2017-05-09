@@ -22,9 +22,6 @@
 
   'use strict';
 
-  // Require zenscroll by default.
-  var zenscroll = require('zenscroll');
-
   // Default options.
   var defaultOptions = require('./default-options.js');
   // Object to store current options.
@@ -122,6 +119,12 @@
     this.options = options;
     this.state = {};
 
+    // Init smooth scroll if enabled (default).
+    var zenscroll = false
+    if (options.smoothScroll) {
+      zenscroll = require('zenscroll');
+    }
+
     // Pass options to these modules.
     buildHtml = BuildHtml(options);
     parseContent = ParseContent(options);
@@ -150,11 +153,13 @@
     // Update Sidebar and bind listeners.
     this._scrollListener = throttle(function(e) {
       buildHtml.updateToc(headingsArray);
-      console.log(e);
-      var isTop = e && e.target && e.target.body && e.target.body.scrollTop === 0
+      var isTop = e && e.target && e.target.scrollingElement && e.target.scrollingElement.scrollTop === 0
       if (e && e.eventPhase === 0 || isTop) {
         buildHtml.enableTocAnimation();
         buildHtml.updateToc(headingsArray);
+        if (options.scrollEndCallback) {
+          options.scrollEndCallback(e)
+        }
       }
     }, options.throttleTimeout);
     this._scrollListener();
@@ -163,7 +168,9 @@
 
     // Bind click listeners to disable animation.
     this._clickListener = throttle(function(event) {
-      buildHtml.disableTocAnimation(event);
+      if (options.smoothScroll) {
+        buildHtml.disableTocAnimation(event);
+      }
       buildHtml.updateToc(headingsArray);
     }, options.throttleTimeout);
     document.addEventListener('click', this._clickListener, false);
