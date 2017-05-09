@@ -1,49 +1,49 @@
 import React from 'react'
 import Link from 'next/link'
 
-function makeGithubCounter({ user, repo }) {
-  return <iframe src={`https://ghbtns.com/github-btn.html?user=${user}&repo=${repo}&type=star&count=true&size=large`} frameBorder="0" scrolling="0" width="160px" height="30px"></iframe>
+function makeGithubCounter ({ user, repo }) {
+  return <iframe src={`https://ghbtns.com/github-btn.html?user=${user}&repo=${repo}&type=star&count=true&size=large`} frameBorder='0' scrolling='0' width='160px' height='30px' />
 }
 
-function Hero(props) {
+function Hero (props) {
   return (
-    <div className="hero relative overflow-hidden tc z-3" style={{ backgroundColor: props.backgroundColor }}>
-      <div className="hero-inner relative mw7 center white pv4">
-        <div className="absolute top-0 right-0">
+    <div className='hero relative overflow-hidden tc z-3' style={{ backgroundColor: props.backgroundColor }}>
+      <div className='hero-inner relative mw7 center white pv4'>
+        <div className='absolute top-0 right-0'>
           {props.topLinks && props.topLinks.length > 0 && (
             props.topLinks.map((link, i) => {
               return props.isLive()
                 ? (
-                  <a className="dib f6 white no-underline pa1 ma1"
+                  <a className='dib f6 white no-underline pa1 ma1'
                     href={props.getPathPrefix(link.href)} key={i}>
                     {link.text}
                   </a>
                 ) : (
                   <Link prefetch href={link.href} key={i}>
-                    <a className="dib f6 white no-underline pa1 ma1"
-                    href={link.href} key={i}>
-                    {link.text}
+                    <a className='dib f6 white no-underline pa1 ma1'
+                      href={link.href} key={i}>
+                      {link.text}
                     </a>
                   </Link>
                 )
             })
           )}
         </div>
-        <div className="pv4">
-          <h1 className="title normal ma0 pa0">
+        <div className='pv4'>
+          <h1 className='title normal ma0 pa0'>
             {props.title}
           </h1>
-          <h4 className="subtitle normal o-90 ma0 pa3">
+          <h4 className='subtitle normal o-90 ma0 pa3'>
             {props.subtitle}
           </h4>
-          <div className="mv2 ml4">
+          <div className='mv2 ml4'>
             {props.cta
               ? (
                 props.cta
               ) : (
                 makeGithubCounter({
                   repo: props.repo,
-                  user: props.user,
+                  user: props.user
                 })
               )}
           </div>

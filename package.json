@@ -19,7 +19,7 @@
     "fix-export": "bash ./script/fix-export.sh",
     "estimate-js-size": "gzip -9 -c dist/tocbot.min.js | wc -c",
     "estimate-css-size": "gzip -9 -c dist/tocbot.css | wc -c",
-    "lint": "standard",
+    "lint": "standard --fix",
     "dev": "npm run build-css && parallelshell \"npm run next\" \"npm run build-js-watch\" \"npm run build-css-watch\" \"npm run build-content-watch\"",
     "start": "npm run dev",
     "deploy": "npm run build && gh-pages -d site",
@@ -90,5 +90,18 @@
         "**/*"
       ]
     }
-  ]
+  ],
+  "standard": {
+    "ignore": [
+      "dist/"
+    ],
+    "globals": [
+      "it",
+      "describe",
+      "before",
+      "after",
+      "beforeEach",
+      "afterEach"
+    ]
+  }
 }

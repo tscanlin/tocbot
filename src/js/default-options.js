@@ -41,7 +41,7 @@ module.exports = {
   // Smooth scrolling enabled.
   smoothScroll: true,
   // Callback for scroll end (requires: smoothScroll).
-  scrollEndCallback: function(e) {},
+  scrollEndCallback: function (e) {},
   // Headings offset between the headings and the top of the document.
   headingsOffset: 0,
   // Timeout between events firing to make sure it's
@@ -59,4 +59,4 @@ module.exports = {
   // includeHtml can be set to true to include the HTML markup from the
   // heading node instead of just including the textContent.
   includeHtml: false
-};
+}

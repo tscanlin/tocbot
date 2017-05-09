@@ -10,7 +10,7 @@ const TOCBOT_OPTIONS = {
     offset: 0,
     // callback: function(anchor, toggle) { console.log(anchor, toggle) },
     speed: 300 // animation duration.
-  },
+  }
 }
 
 // Only require tocbot if in browser.
@@ -19,19 +19,15 @@ const tocbot = (typeof window !== 'undefined')
   : null
 
 export default class Tocbot extends React.Component {
-  constructor() {
-    super()
-  }
-
-  componentDidMount() {
+  componentDidMount () {
     if (tocbot) {
-      tocbot.init(TOCBOT_OPTIONS);
+      tocbot.init(TOCBOT_OPTIONS)
     }
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     if (tocbot) {
-      tocbot.destroy();
+      tocbot.destroy()
     }
   }
 

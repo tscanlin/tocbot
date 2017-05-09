@@ -9,7 +9,7 @@ const Index = (props) => {
   return (
     <Template
       title={CONFIG.title}
-      subtitle="Changelog"
+      subtitle='Changelog'
       description={CONFIG.description}
       stylesheets={CONFIG.stylesheets}
       topLinks={CONFIG.topLinks}
