@@ -246,6 +246,6 @@ describe('Build HTML', function () {
       'isCollapsed': true,
       'childNodes': nodes
     }])
-    expect(tocEl.innerHTML).to.contain('<li><a data-scroll="" href="#Whatsup" class="toc-link node-name--H2 ">Whatsup</a></li>')
+    expect(tocEl.innerHTML).to.contain('<li><a href="#Whatsup" class="toc-link node-name--H2 ">Whatsup</a></li>')
   })
 })

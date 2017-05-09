@@ -87,9 +87,9 @@ If you'd like to add your page to this list open a pull request.
 
 ## Requirements
 
-This library uses **vanilla JavaScript**. It is less than 400 bytes of CSS and about 4Kb of JavaScript (minified and gzipped). The only dependency this script has is [Smooth Scroll](https://github.com/cferdinandi/smooth-scroll) (which has no dependencies).
+This library uses **vanilla JavaScript**. It is less than 350 bytes of CSS and about 3.6Kb of JavaScript (minified and gzipped). The only dependency this script has is [zenscroll](https://github.com/zengabor/zenscroll) (which is small and has no dependencies).
 
-This script works in **all modern browsers and IE 7+**.
+This script works in **all modern browsers and IE 9+**.
 
 Make sure rendered headings have id attributes, some markdown libraries (like [marked](https://github.com/chjj/marked)) already do this.
 
@@ -105,7 +105,6 @@ tocSelector: '.js-toc',
 contentSelector: '.js-toc-content',
 // Which headings to grab inside of the contentSelector element.
 headingSelector: 'h1, h2, h3',
-
 // Headings that match the ignoreSelector will be skipped.
 ignoreSelector: '.js-toc-ignore',
 // Main class to add to links.
@@ -132,6 +131,12 @@ listItemClass: 'toc-list-item',
 // The sections that are hidden will open
 // and close as you scroll to headings within them.
 collapseDepth: 0,
+// Smooth scrolling enabled.
+smoothScroll: true,
+// Smooth scroll duration.
+smoothScrollDuration: 420,
+// Callback for scroll end (requires: smoothScroll).
+scrollEndCallback: function (e) {},
 // Headings offset between the headings and the top of the document.
 headingsOffset: 0,
 // Timeout between events firing to make sure it's

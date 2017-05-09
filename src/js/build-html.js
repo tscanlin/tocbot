@@ -77,8 +77,6 @@ module.exports = function (options) {
       // Default behavior.
       a.textContent = data.textContent
     }
-    // Property for smooth-scroll.
-    a.setAttribute('data-scroll', '')
     a.setAttribute('href', '#' + data.id)
     a.setAttribute('class', options.linkClass +
       SPACE_CHAR + 'node-name--' + data.nodeName +

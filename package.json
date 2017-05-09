@@ -26,7 +26,7 @@
     "test": "npm run lint && mocha test/index.js",
     "test:debug": "node-debug _mocha --timeout 0 test/index.js",
     "test:watch": "mocha --watch test/index.js",
-    "next": "next",
+    "next": "next -p 3001",
     "next-build": "next build",
     "next-export": "next export",
     "next-start": "next start"
