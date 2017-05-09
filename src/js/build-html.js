@@ -145,7 +145,7 @@ module.exports = function(options) {
       && document.querySelector(options.tocSelector) !== null
       && headings.length > 0) {
       some.call(headings, function(heading, i) {
-        if (heading.offsetTop > top + options.headingsOffset + 1) {
+        if (heading.offsetTop > top + options.headingsOffset + 10) {
           // Don't allow negative index value.
           var index = (i === 0) ? i : i - 1;
           topHeader = headings[index];

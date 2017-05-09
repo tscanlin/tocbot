@@ -48,6 +48,12 @@ If you installed it with npm and use sass / postcss you might try importing the 
 @import 'tocbot/src/scss/tocbot-default-theme';
 ```
 
+**NOTE:** With version 3.X.X+ the following CSS is included in tocbot.css which uses native browser smooth-scrolling when available (currently available in Firefox 36+ and Chrome 49+):
+
+```css
+body, .smooth-container { scroll-behavior: smooth }
+```
+
 
 ### Usage
 
@@ -126,14 +132,6 @@ listItemClass: 'toc-list-item',
 // The sections that are hidden will open
 // and close as you scroll to headings within them.
 collapseDepth: 0,
-// smooth-scroll options object, see docs at:
-// https://github.com/cferdinandi/smooth-scroll
-smoothScrollOptions: {
-  easing: 'easeInOutCubic',
-  offset: 0,
-  speed: 300, // animation duration.
-  callback: function(anchor, toggle) { } // callback after link is scrolled to.
-},
 // Headings offset between the headings and the top of the document.
 headingsOffset: 0,
 // Timeout between events firing to make sure it's

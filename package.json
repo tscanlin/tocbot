@@ -15,11 +15,12 @@
     "build-js-watch": "webpack src/js/index.js static/js/tocbot.js -d --watch",
     "build-js-uglify": "webpack src/js/index.js static/js/tocbot.min.js -p",
     "build-content": "processto \"*.md\" --outputDir pages --filenamePrefix _",
+    "build-content-watch": "processto \"*.md\" --outputDir pages --filenamePrefix _ --watch",
     "fix-export": "bash ./script/fix-export.sh",
     "estimate-js-size": "gzip -9 -c dist/tocbot.min.js | wc -c",
     "estimate-css-size": "gzip -9 -c dist/tocbot.css | wc -c",
     "lint": "",
-    "dev": "parallelshell \"npm run next\" \"npm run build-js-watch\" \"npm run build-css-watch\"",
+    "dev": "npm run build-css && parallelshell \"npm run next\" \"npm run build-js-watch\" \"npm run build-css-watch\" \"npm run build-content-watch\"",
     "start": "npm run dev",
     "deploy": "npm run build && gh-pages -d site",
     "test": "mocha test/index.js",
@@ -73,12 +74,12 @@
     "next": "git+https://git@github.com/tscanlin/next.js.git",
     "node-sass": "^4.5.2",
     "parallelshell": "^2.0.0",
-    "processto": "^1.4.2",
+    "processto": "^1.6.0",
     "react": "^15.5.4",
     "react-dom": "^15.5.4"
   },
   "dependencies": {
-    "smooth-scroll": "github:cferdinandi/smooth-scroll"
+    "zenscroll": "^4.0.0"
   },
   "npmName": "tocbot",
   "npmFileMap": [

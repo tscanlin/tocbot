@@ -22,8 +22,8 @@
 
   'use strict';
 
-  // Require smooth-scroll by default.
-  var smoothScroll = require('smooth-scroll');
+  // Require zenscroll by default.
+  var zenscroll = require('zenscroll');
 
   // Default options.
   var defaultOptions = require('./default-options.js');
@@ -104,11 +104,6 @@
     if (buildHtml) {
       document.removeEventListener('click', this._clickListener, false);
     }
-
-    // Destroy smoothScroll if it exists.
-    if (smoothScroll) {
-      smoothScroll.destroy();
-    }
   };
 
   /**
@@ -153,9 +148,14 @@
     buildHtml.render(options.tocSelector, nestedHeadings);
 
     // Update Sidebar and bind listeners.
-    // buildHtml.updateToc(headingsArray);
-    this._scrollListener = throttle(function() {
+    this._scrollListener = throttle(function(e) {
       buildHtml.updateToc(headingsArray);
+      console.log(e);
+      var isTop = e && e.target && e.target.body && e.target.body.scrollTop === 0
+      if (e && e.eventPhase === 0 || isTop) {
+        buildHtml.enableTocAnimation();
+        buildHtml.updateToc(headingsArray);
+      }
     }, options.throttleTimeout);
     this._scrollListener();
     document.addEventListener('scroll', this._scrollListener, false);
@@ -163,22 +163,10 @@
 
     // Bind click listeners to disable animation.
     this._clickListener = throttle(function(event) {
-      buildHtml.disableTocAnimation(event); // Save reference so event is created / removed properly.
+      buildHtml.disableTocAnimation(event);
       buildHtml.updateToc(headingsArray);
     }, options.throttleTimeout);
     document.addEventListener('click', this._clickListener, false);
-
-    // Initialize smoothscroll if it exists.
-    if (smoothScroll) {
-      this.smoothScroll = smoothScroll.init(extend(options.smoothScrollOptions, {
-        callback: function(anchor, toggle) {
-          buildHtml.enableTocAnimation();
-          if (typeof options.smoothScrollOptions.callback === 'function') {
-            options.smoothScrollOptions.callback(anchor, toggle);
-          }
-        }
-      }));
-    }
 
     return this;
   };
