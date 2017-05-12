@@ -77,7 +77,7 @@
     "next": "git+https://git@github.com/tscanlin/next.js.git",
     "node-sass": "^4.5.2",
     "parallelshell": "^2.0.0",
-    "processto": "^1.7.8",
+    "processto": "^1.8.0",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "standard": "^10.0.2"
