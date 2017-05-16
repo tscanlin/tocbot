@@ -25,7 +25,7 @@
 
 ##### Docs
 - Moved toc on the project page to the right side to emphasize content more. Added `.toc-right` class for this.
-- Switched to using [next.js](https://github.com/zeit/next.js) with [processto](https://github.com/tscanlin/processto) for the website and removed old build scripts.
+- Switched to using [next.js](https://github.com/zeit/next.js) with [processmd](https://github.com/tscanlin/processmd) for the website and removed old build scripts.
 - Removed optimizely/oui and added tachyons.
 - Moved changelog into it's own markdown file.
 - Build to `\static` instead of `\build`.
