@@ -6,5 +6,6 @@ out/
 static/js/*
 static/css/*
 node_modules/
+test-output/
 npm-debug.*
 pages/_*.json
