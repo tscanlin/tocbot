@@ -1,5 +1,7 @@
+const assetPrefix = '/tocbot'
+
 module.exports = {
-  assetPrefix: '/tocbot',
+  assetPrefix: assetPrefix,
   webpack: (webpackConfig) => {
     const newConfig = Object.assign({}, webpackConfig)
     return newConfig
@@ -7,5 +9,7 @@ module.exports = {
   exportPathMap: () => ({
     "/": { page: "/" },
     "/changelog": { page: "/changelog" },
+    [assetPrefix]: { page: "/" },
+    [assetPrefix + "/changelog"]: { page: "/changelog" },
   })
 }
