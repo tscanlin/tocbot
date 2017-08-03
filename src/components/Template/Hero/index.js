@@ -19,7 +19,7 @@ function Hero (props) {
                     {link.text}
                   </a>
                 ) : (
-                  <Link prefetch href={link.href} key={i}>
+                  <Link prefetch href={link.href.split('/tocbot').join('')} key={i}>
                     <a className='dib f6 white no-underline pa1 ma1'
                       href={link.href} key={i}>
                       {link.text}

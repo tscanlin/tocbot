@@ -1,4 +1,4 @@
-const assetPrefix = '/tocbot'
+const assetPrefix = '/tocbot/'
 
 module.exports = {
   assetPrefix: assetPrefix,
@@ -9,7 +9,5 @@ module.exports = {
   exportPathMap: () => ({
     "/": { page: "/" },
     "/changelog": { page: "/changelog" },
-    [assetPrefix]: { page: "/" },
-    [assetPrefix + "/changelog"]: { page: "/changelog" },
   })
 }
