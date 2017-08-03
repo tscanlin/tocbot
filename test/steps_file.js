@@ -2,6 +2,8 @@
 'use strict';
 // in this file you can append custom step methods to 'I' object
 
+let I;
+
 module.exports = function() {
   return actor({
 

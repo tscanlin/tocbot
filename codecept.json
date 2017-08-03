@@ -1,5 +1,5 @@
 {
-  "tests": "./*_test.js",
+  "tests": "./test/*_test.js",
   "timeout": 10000,
   "output": "./test-output",
   "helpers": {
@@ -10,7 +10,7 @@
     }
   },
   "include": {
-    "I": "./steps_file.js"
+    "I": "./test/steps_file.js"
   },
   "bootstrap": false,
   "mocha": {},
