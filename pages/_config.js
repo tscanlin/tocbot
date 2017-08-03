@@ -1,5 +1,4 @@
 import nextConfig from '../next.config.js'
-console.log(nextConfig);
 
 export default {
   title: 'Tocbot',
