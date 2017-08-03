@@ -8,7 +8,7 @@ branches:
 install:
 - npm install
 script:
-- npm run build
+- npm run build-all
 after_success:
 - bash ./travis-deploy.sh
 env:
