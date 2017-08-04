@@ -9,9 +9,30 @@ const prefix = config.assetPrefix
 globby(`out/**/page`).then((files) => {
   const folder = files[0]
   const newFolder = folder.split('/page').join(prefix)
-  console.log('Copying: ', folder, newFolder);
+  console.log('Copying: ', folder, newFolder)
   fs.copySync(folder, newFolder)
   fs.moveSync(newFolder, folder + prefix)
+  globby(folder + prefix + '/**/*.js').then((editFiles) => {
+    console.log(editFiles);
+    editFiles.forEach((file) => {
+      fs.readFile(file, 'utf8', function (err,data) {
+        if (err) {
+          return console.log(err)
+        }
+        const newString = 'window.__NEXT_REGISTER_PAGE(\'' + prefix
+        let result = data
+        if (data.indexOf(newString) === -1) {
+          result = data.replace(/window.__NEXT_REGISTER_PAGE\(\'/g, newString)
+        }
+
+        fs.writeFile(file, result, 'utf8', function (err) {
+           if (err) return console.log(err)
+        })
+      })
+    })
+  }).catch((e) => {
+    console.log(e)
+  })
   return files
 }).catch((e) => {
   console.log(e)
