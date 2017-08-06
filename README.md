@@ -230,7 +230,7 @@ npm install node-inspector
 ```
 
 Now that node-inspector is installed, you can run the tests!
-```
+```bash
 npm run test:debug
 ```
 
