@@ -19,10 +19,16 @@ globby(`out/**/page`).then((files) => {
         if (err) {
           return console.log(err)
         }
-        const newString = 'window.__NEXT_REGISTER_PAGE(\'' + prefix
+
+        const newString = "window.__NEXT_REGISTER_PAGE('" + prefix
+        const rootPathString = "window.__NEXT_REGISTER_PAGE('/'"
+
         let result = data
-        if (data.indexOf(newString) === -1) {
+        if (data.indexOf(newString) === -1 && data.indexOf(rootPathString) === -1) {
           result = data.replace(/window.__NEXT_REGISTER_PAGE\(\'/g, newString)
+        } else if (data.indexOf(rootPathString) > -1) {
+          // If it's the index page then don't leave the trailing slash.
+          result = data.replace(/window.__NEXT_REGISTER_PAGE\(\'\/\'/g, newString + "'")
         }
 
         fs.writeFile(file, result, 'utf8', function (err) {
