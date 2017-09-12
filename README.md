@@ -199,7 +199,7 @@ tocbot.refresh()
 ## Roadmap
 
 - More tests
-- React.js support
+- React.js support (make react support native without direct dom manipulation)
 
 
 ## Contributing
