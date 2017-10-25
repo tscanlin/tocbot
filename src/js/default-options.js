@@ -53,5 +53,9 @@ module.exports = {
   fixedSidebarOffset: 'auto',
   // includeHtml can be set to true to include the HTML markup from the
   // heading node instead of just including the textContent.
-  includeHtml: false
+  includeHtml: false,
+  // onclick function to apply to all links in toc. will be called with
+  // the event as the first parameter, and this can be used to stop,
+  // propagation, prevent default or perform action
+  onClick: false,
 }

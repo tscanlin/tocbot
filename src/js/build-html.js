@@ -69,6 +69,11 @@ module.exports = function (options) {
     if (options.listItemClass) {
       item.setAttribute('class', options.listItemClass)
     }
+
+    if (options.onClick) {
+      a.onclick = options.onClick;
+    }
+
     if (options.includeHtml && data.childNodes.length) {
       forEach.call(data.childNodes, function (node) {
         a.appendChild(node.cloneNode(true))
