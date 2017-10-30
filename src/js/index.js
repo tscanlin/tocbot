@@ -149,7 +149,7 @@
     this._scrollListener = throttle(function (e) {
       buildHtml.updateToc(headingsArray)
       var isTop = e && e.target && e.target.scrollingElement && e.target.scrollingElement.scrollTop === 0
-      if ((e && e.eventPhase === 0) || isTop) {
+      if ((e && (e.eventPhase === 0 || e.currentTarget === null)) || isTop) {
         buildHtml.enableTocAnimation()
         buildHtml.updateToc(headingsArray)
         if (options.scrollEndCallback) {

@@ -54,7 +54,7 @@ module.exports = function (options) {
       parent.removeChild(parent.firstChild)
     }
 
-    // Append the Elements that have been created;
+    // Append the Elements that have been created
     return parent.appendChild(container)
   }
 
@@ -71,7 +71,7 @@ module.exports = function (options) {
     }
 
     if (options.onClick) {
-      a.onclick = options.onClick;
+      a.onclick = options.onClick
     }
 
     if (options.includeHtml && data.childNodes.length) {
@@ -134,7 +134,7 @@ module.exports = function (options) {
   function updateToc (headingsArray) {
     var top = document.documentElement.scrollTop || body.scrollTop
 
-    // Add fixed class at offset;
+    // Add fixed class at offset
     if (options.positionFixedSelector) {
       updateFixedSidebarClass()
     }
