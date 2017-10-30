@@ -2,6 +2,25 @@
 
 
 
+### 3.0.6
+
+##### Fixed
+- Edge / IE 11 should work better now
+
+
+### 3.0.5
+
+##### Fixed
+- Readme updates
+- Add onclick handler option
+
+
+### 3.0.4
+
+##### Added
+- Worked on improving testing, no user facing changes
+
+
 ### 3.0.3
 
 ##### Changed

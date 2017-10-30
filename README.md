@@ -27,7 +27,7 @@ OR
 Include the script at the bottom of the page before the closing body tag.
 
 ```html
-<script src="/assets/js/tocbot.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/3.0.5/tocbot.min.js"></script>
 ```
 
 
@@ -36,7 +36,7 @@ Include the script at the bottom of the page before the closing body tag.
 CSS is used for expanding & collapsing groupings and some basic styling.
 
 ```html
-<link rel="stylesheet" href="/assets/css/tocbot.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/3.0.5/tocbot.css">
 ```
 
 OR
@@ -165,7 +165,11 @@ positionFixedClass: 'is-position-fixed',
 fixedSidebarOffset: 'auto',
 // includeHtml can be set to true to include the HTML markup from the
 // heading node instead of just including the textContent.
-includeHtml: false
+includeHtml: false,
+// onclick function to apply to all links in toc. will be called with
+// the event as the first parameter, and this can be used to stop,
+// propagation, prevent default or perform action
+onClick: false,
 ```
 
 
