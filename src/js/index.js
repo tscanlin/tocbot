@@ -116,8 +116,11 @@
 
     // Init smooth scroll if enabled (default).
     if (options.smoothScroll) {
-      tocbot.zenscroll = require('zenscroll')
-      tocbot.zenscroll.setup(options.smoothScrollDuration)
+      tocbot.scrollSmooth = require('./scroll-smooth').initSmoothScrolling({
+        callback: (e) => {}
+      })
+      // tocbot.zenscroll = require('zenscroll')
+      // tocbot.zenscroll.setup(options.smoothScrollDuration)
     }
 
     // Pass options to these modules.

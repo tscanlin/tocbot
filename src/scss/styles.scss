@@ -26,6 +26,15 @@ h6 {
   padding-top: 0.5em;
 }
 
+h1:focus,
+h2:focus,
+h3:focus,
+h4:focus,
+h5:focus,
+h6:focus {
+  outline: 0;
+}
+
 p {
   margin-top: 0.25rem;
 }
