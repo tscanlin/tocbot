@@ -7,7 +7,7 @@ module.exports = {
     return newConfig
   },
   exportPathMap: () => ({
-    "/": { page: "/" },
-    "/changelog": { page: "/changelog" },
+    '/': { page: '/' },
+    '/changelog': { page: '/changelog' }
   })
 }

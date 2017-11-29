@@ -32,10 +32,10 @@ module.exports = {
   // and close as you scroll to headings within them.
   collapseDepth: 0,
   // Smooth scrolling enabled.
-  smoothScroll: true,
+  scrollSmooth: true,
   // Smooth scroll duration.
-  smoothScrollDuration: 420,
-  // Callback for scroll end (requires: smoothScroll).
+  scrollSmoothDuration: 420,
+  // Callback for scroll end.
   scrollEndCallback: function (e) {},
   // Headings offset between the headings and the top of the document (this is meant for minor adjustments).
   headingsOffset: 1,
@@ -57,5 +57,5 @@ module.exports = {
   // onclick function to apply to all links in toc. will be called with
   // the event as the first parameter, and this can be used to stop,
   // propagation, prevent default or perform action
-  onClick: false,
+  onClick: false
 }

@@ -5,15 +5,6 @@ import Hero from './Hero'
 import Tocbot from './Tocbot'
 import Tracking from './Tracking'
 
-function isLive () {
-  return !isNode() &&
-      window.location.hostname.indexOf('github.io') !== -1
-}
-
-function isNode () {
-  return typeof window === 'undefined'
-}
-
 function Template (props) {
   return (
     <div className='page-content'>

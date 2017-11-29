@@ -13,9 +13,9 @@ globby(`out/**/page`).then((files) => {
   fs.copySync(folder, newFolder)
   fs.moveSync(newFolder, folder + prefix)
   globby(folder + prefix + '/**/*.js').then((editFiles) => {
-    console.log(editFiles);
+    console.log(editFiles)
     editFiles.forEach((file) => {
-      fs.readFile(file, 'utf8', function (err,data) {
+      fs.readFile(file, 'utf8', function (err, data) {
         if (err) {
           return console.log(err)
         }
@@ -32,7 +32,7 @@ globby(`out/**/page`).then((files) => {
         }
 
         fs.writeFile(file, result, 'utf8', function (err) {
-           if (err) return console.log(err)
+          if (err) return console.log(err)
         })
       })
     })

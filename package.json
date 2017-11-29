@@ -106,7 +106,9 @@
   ],
   "standard": {
     "ignore": [
-      "dist/"
+      "dist/",
+      "scripts/",
+      "test/"
     ],
     "globals": [
       "it",

@@ -2,26 +2,45 @@
 
 
 
-### 3.0.6
+### 4.0.0
+
+##### **BREAKING CHANGE**
+- replaced zenscroll with custom implementation (see [#67](https://github.com/tscanlin/tocbot/issues/67))
+- `smoothScroll` option is now `scrollSmooth`, still accepting a boolean
+- `smoothScrollDuration` option is now `scrollSmoothDuration`, still accepting a number
+
+##### Fixed
+- Works better with next.js and maybe other SPAs now (see [#67](https://github.com/tscanlin/tocbot/issues/67))
+
+
+### 3.X.X
+
+#### 3.0.6
+
+##### Fixed
+- Republished build
+
+
+#### 3.0.6
 
 ##### Fixed
 - Edge / IE 11 should work better now
 
 
-### 3.0.5
+#### 3.0.5
 
 ##### Fixed
 - Readme updates
 - Add onclick handler option
 
 
-### 3.0.4
+#### 3.0.4
 
 ##### Added
 - Worked on improving testing, no user facing changes
 
 
-### 3.0.3
+#### 3.0.3
 
 ##### Changed
 - Get next.js v3 working for exporting the project page

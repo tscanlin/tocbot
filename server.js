@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require('express')
 const next = require('next')
 const config = require('./next.config.js')
 

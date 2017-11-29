@@ -83,9 +83,11 @@ If you'd like to add your page to this list open a pull request.
 
 ## Requirements
 
-This library uses **vanilla JavaScript**. It is less than 350 bytes of CSS and about 3.6Kb of JavaScript (minified and gzipped). The only dependency this script has is [zenscroll](https://github.com/zengabor/zenscroll) (which is small and has no dependencies). **NOTE:** to exclude anchor elements from smooth scrolling, add the class `noZensmooth` ([source](https://github.com/zengabor/zenscroll#16-exclude-a-link-from-the-automatic-smooth-scrolling)).
+This library uses **vanilla JavaScript**. It is less than 350 bytes of CSS and about 3.6Kb of JavaScript (minified and gzipped) it also has no dependencies.
 
 This script works in **all modern browsers and IE 9+**.
+
+**NOTE:** to exclude anchor elements from smooth scrolling, add the class `no-smooth-scroll`.
 
 Make sure rendered headings have id attributes, some markdown libraries (like [marked](https://github.com/chjj/marked)) already do this.
 
@@ -144,11 +146,11 @@ listItemClass: 'toc-list-item',
 // and close as you scroll to headings within them.
 collapseDepth: 0,
 // Smooth scrolling enabled.
-smoothScroll: true,
+scrollSmooth: true,
 // Smooth scroll duration.
-smoothScrollDuration: 420,
-// Callback for scroll end (requires: smoothScroll).
-scrollEndCallback: function (e) {},
+scrollSmoothDuration: 420,
+// Callback for scroll end.
+scrollEndCallback: function (e) { },
 // Headings offset between the headings and the top of the document (this is meant for minor adjustments).
 headingsOffset: 1,
 // Timeout between events firing to make sure it's
@@ -169,7 +171,7 @@ includeHtml: false,
 // onclick function to apply to all links in toc. will be called with
 // the event as the first parameter, and this can be used to stop,
 // propagation, prevent default or perform action
-onClick: false,
+onClick: false
 ```
 
 
