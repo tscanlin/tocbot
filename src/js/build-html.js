@@ -96,7 +96,7 @@ module.exports = function (options) {
    * @return {HTMLElement}
    */
   function createList (isCollapsed) {
-    var list = document.createElement('ul')
+    var list = document.createElement('ol')
     var classes = options.listClass +
       SPACE_CHAR + options.extraListClasses
     if (isCollapsed) {
