@@ -17,7 +17,13 @@ function initSmoothScrolling (options) {
     document.body.addEventListener('click', onClick, false)
 
     function onClick (e) {
-      if (!isInPageLink(e.target) || e.target.className.indexOf('no-smooth-scroll') > -1) return
+      if (
+        !isInPageLink(e.target) ||
+        e.target.className.indexOf('no-smooth-scroll') > -1 ||
+        (e.target.href.charAt(e.target.href.length - 2) === '#' &&
+        e.target.href.charAt(e.target.href.length - 1) === '!')) {
+        return
+      }
 
       e.preventDefault()
 
@@ -69,10 +75,11 @@ function jump (target, options) {
   }
   // This makes ids that start with a number work: ('[id="' + target.split('#').join('') + '"]')
   // And this is for IE: document.body.scrollTop
+  var tgt = document.querySelector('[id="' + target.split('#').join('') + '"]')
   var distance = typeof target === 'string'
     ? opt.offset + (
       target
-      ? document.querySelector('[id="' + target.split('#').join('') + '"]').getBoundingClientRect().top
+      ? (tgt && tgt.getBoundingClientRect().top) || 0 // handle non-existent links better.
       : -(document.documentElement.scrollTop || document.body.scrollTop))
     : target
   var duration = typeof opt.duration === 'function'
