@@ -54,6 +54,11 @@ module.exports = function (options) {
       parent.removeChild(parent.firstChild)
     }
 
+    // Just return the parent and don't append the list if no links are found.
+    if (data.length === 0) {
+      return parent
+    }
+
     // Append the Elements that have been created
     return parent.appendChild(container)
   }
