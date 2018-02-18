@@ -5,6 +5,7 @@ const TOCBOT_OPTIONS = {
   contentSelector: '.js-toc-content',
   headingSelector: 'h2',
   positionFixedSelector: '.js-toc',
+  includeHtml: true,
   onClick: (e) => { console.log('you clicked a link', e) }
 }
 
