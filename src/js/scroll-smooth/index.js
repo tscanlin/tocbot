@@ -25,7 +25,8 @@ function initSmoothScrolling (options) {
         return
       }
 
-      e.preventDefault()
+      // Don't prevent default or hash doesn't change.
+      // e.preventDefault()
 
       jump(e.target.hash, {
         duration: duration,
