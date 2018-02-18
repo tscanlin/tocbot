@@ -14,8 +14,8 @@
     "build-js": "webpack src/js/index.js static/js/tocbot.js -d",
     "build-js-watch": "webpack src/js/index.js static/js/tocbot.js -d --watch",
     "build-js-uglify": "webpack src/js/index.js static/js/tocbot.min.js -p",
-    "build-content": "processmd \"*.md\" --outputDir pages --filenamePrefix _ --markdownOptions.html=true",
-    "build-content-watch": "processmd \"*.md\" --outputDir pages --filenamePrefix _ --markdownOptions.html=true --watch",
+    "build-content": "processmd \"*.md\" --outputDir pages --filenamePrefix _ --markdownOptions.html=true --headingIds",
+    "build-content-watch": "processmd \"*.md\" --outputDir pages --filenamePrefix _ --markdownOptions.html=true --headingIds --watch",
     "estimate-js-size": "gzip -9 -c dist/tocbot.min.js | wc -c",
     "estimate-css-size": "gzip -9 -c dist/tocbot.css | wc -c",
     "fix-jekyll": "cd out && touch .nojekyll",
@@ -87,13 +87,10 @@
     "node-resemble-js": "^0.2.0",
     "node-sass": "^4.7.2",
     "parallelshell": "^3.0.2",
-    "processmd": "^4.1.0",
+    "processmd": "^4.2.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "standard": "^10.0.3"
-  },
-  "dependencies": {
-    "zenscroll": "^4.0.0"
   },
   "npmName": "tocbot",
   "npmFileMap": [
