@@ -1,6 +1,11 @@
 ## Changelog
 
 
+### 4.1.2
+
+##### Fixed
+- Can't jump to nonASCII heading after click the toc item.
+
 ### 4.0.1
 
 ##### Fixed
