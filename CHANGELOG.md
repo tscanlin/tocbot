@@ -1,10 +1,25 @@
 ## Changelog
 
 
+### 4.2.0
+
+##### Fixed
+- Fixed the empty list getting added on refresh and updated dependencies.
+
 ### 4.1.2
 
 ##### Fixed
 - Can't jump to nonASCII heading after click the toc item.
+
+### 4.1.1
+
+##### Fixed
+- Fix for hashes in single page apps / next.js apps.
+
+### 4.1.0
+
+##### Fixed
+- Use `ol` instead of `ul` element since its more semantic.
 
 ### 4.0.1
 

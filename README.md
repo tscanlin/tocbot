@@ -76,6 +76,7 @@ tocbot.refresh();
 ## Examples
 
 - [Tocbot Homepage](http://tscanlin.github.io/tocbot/)
+- [Pagekit TOC](https://spqr.wtf/projects/toc)
 - [Optimizely's Developer Documentation](https://developers.optimizely.com/x/solutions/javascript/reference/index.html)
 
 If you'd like to add your page to this list open a pull request.
