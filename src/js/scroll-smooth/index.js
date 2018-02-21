@@ -21,7 +21,8 @@ function initSmoothScrolling (options) {
         !isInPageLink(e.target) ||
         e.target.className.indexOf('no-smooth-scroll') > -1 ||
         (e.target.href.charAt(e.target.href.length - 2) === '#' &&
-        e.target.href.charAt(e.target.href.length - 1) === '!')) {
+        e.target.href.charAt(e.target.href.length - 1) === '!') ||
+        e.target.className.indexOf(options.linkClass) === -1) {
         return
       }
 

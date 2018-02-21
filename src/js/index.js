@@ -116,9 +116,9 @@
 
     // Init smooth scroll if enabled (default).
     if (options.scrollSmooth) {
-      tocbot.scrollSmooth = require('./scroll-smooth').initSmoothScrolling({
+      tocbot.scrollSmooth = require('./scroll-smooth').initSmoothScrolling(Object.assign({}, options, {
         duration: options.scrollSmoothDuration
-      })
+      }))
     }
 
     // Pass options to these modules.
