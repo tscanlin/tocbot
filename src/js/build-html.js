@@ -200,7 +200,6 @@ module.exports = function (options) {
       })
 
       // Expand the active link's collapsible list and its sibling if applicable.
-      console.log(activeTocLink.nextSibling && activeTocLink.nextSibling.className.indexOf(options.isCollapsedClass))
       if (activeTocLink.nextSibling && activeTocLink.nextSibling.className.indexOf(options.isCollapsedClass) !== -1) {
         activeTocLink.nextSibling.className = activeTocLink.nextSibling.className.split(SPACE_CHAR + options.isCollapsedClass).join('')
       }
