@@ -170,27 +170,37 @@ module.exports = function (options) {
       forEach.call(tocLinks, function (tocLink) {
         tocLink.className = tocLink.className.split(SPACE_CHAR + options.activeLinkClass).join('')
       })
+      var tocLis = document.querySelector(options.tocSelector)
+        .querySelectorAll('.' + options.listItemClass)
+      forEach.call(tocLis, function (tocLi) {
+        tocLi.className = tocLi.className.split(SPACE_CHAR + options.activeListItemClass).join('')
+      })
 
       // Add the active class to the active tocLink.
       var activeTocLink = document.querySelector(options.tocSelector)
         .querySelector('.' + options.linkClass +
           '.node-name--' + topHeader.nodeName +
           '[href="#' + topHeader.id + '"]')
-      activeTocLink.className += SPACE_CHAR + options.activeLinkClass
+      if (activeTocLink.className.indexOf(options.activeLinkClass) === -1) {
+        activeTocLink.className += SPACE_CHAR + options.activeLinkClass
+      }
+      var li = activeTocLink.parentNode
+      if (li && li.className.indexOf(options.activeListItemClass) === -1) {
+        li.className += SPACE_CHAR + options.activeListItemClass
+      }
 
       var tocLists = document.querySelector(options.tocSelector)
         .querySelectorAll('.' + options.listClass + '.' + options.collapsibleClass)
 
       // Collapse the other collapsible lists.
       forEach.call(tocLists, function (list) {
-        var collapsedClass = SPACE_CHAR + options.isCollapsedClass
-        if (list.className.indexOf(collapsedClass) === -1) {
+        if (list.className.indexOf(options.isCollapsedClass) === -1) {
           list.className += SPACE_CHAR + options.isCollapsedClass
         }
       })
 
       // Expand the active link's collapsible list and its sibling if applicable.
-      if (activeTocLink.nextSibling) {
+      if (activeTocLink.nextSibling && activeTocLink.nextSibling.className.indexOf(options.isCollapsedClass) !== -1) {
         activeTocLink.nextSibling.className = activeTocLink.nextSibling.className.split(SPACE_CHAR + options.isCollapsedClass).join('')
       }
       removeCollapsedFromParents(activeTocLink.parentNode.parentNode)
@@ -203,7 +213,7 @@ module.exports = function (options) {
    * @return {HTMLElement}
    */
   function removeCollapsedFromParents (element) {
-    if (element.className.indexOf(options.collapsibleClass) !== -1) {
+    if (element.className.indexOf(options.collapsibleClass) !== -1 && element.className.indexOf(options.isCollapsedClass) !== -1) {
       element.className = element.className.split(SPACE_CHAR + options.isCollapsedClass).join('')
       return removeCollapsedFromParents(element.parentNode.parentNode)
     }
