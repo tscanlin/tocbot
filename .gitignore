@@ -10,3 +10,4 @@ test-output/
 test/__screenshots-new__
 npm-debug.*
 pages/_*.json
+package-lock.json

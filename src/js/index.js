@@ -150,7 +150,6 @@
       buildHtml.updateToc(headingsArray)
       var isTop = e && e.target && e.target.scrollingElement && e.target.scrollingElement.scrollTop === 0
       if ((e && (e.eventPhase === 0 || e.currentTarget === null)) || isTop) {
-        buildHtml.enableTocAnimation()
         buildHtml.updateToc(headingsArray)
         if (options.scrollEndCallback) {
           options.scrollEndCallback(e)
@@ -162,11 +161,17 @@
     document.addEventListener('resize', this._scrollListener, false)
 
     // Bind click listeners to disable animation.
+    var timeout = null
     this._clickListener = throttle(function (event) {
       if (options.scrollSmooth) {
         buildHtml.disableTocAnimation(event)
       }
       buildHtml.updateToc(headingsArray)
+      // Timeout to re-enable the animation.
+      timeout && clearTimeout(timeout)
+      timeout = setTimeout(function () {
+        buildHtml.enableTocAnimation()
+      }, options.scrollSmoothDuration)
     }, options.throttleTimeout)
     document.addEventListener('click', this._clickListener, false)
 
