@@ -6,6 +6,7 @@ function initSmoothScrolling (options) {
   if (isCssSmoothSCrollSupported()) { }
 
   var duration = options.duration
+  var offset = options.offset
 
   var pageUrl = location.hash
     ? stripHash(location.href)
@@ -31,6 +32,7 @@ function initSmoothScrolling (options) {
 
       jump(e.target.hash, {
         duration: duration,
+        offset: offset,
         callback: function () {
           setFocus(e.target.hash)
         }
