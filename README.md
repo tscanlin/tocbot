@@ -88,9 +88,10 @@ This library uses **vanilla JavaScript**. It is less than 350 bytes of CSS and a
 
 This script works in **all modern browsers and IE 9+**.
 
+**Make sure rendered headings have id attributes**, some markdown libraries (like [marked](https://github.com/chjj/marked)) already do this. If you need to do this client side see [this script](https://github.com/tscanlin/tocbot/blob/master/src/utils/make-ids.js).
+
 **NOTE:** to exclude anchor elements from smooth scrolling, add the class `no-smooth-scroll`.
 
-Make sure rendered headings have id attributes, some markdown libraries (like [marked](https://github.com/chjj/marked)) already do this.
 
 ### Fixed headers
 
