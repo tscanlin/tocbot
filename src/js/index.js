@@ -117,6 +117,7 @@
     // Init smooth scroll if enabled (default).
     if (options.scrollSmooth) {
       options.duration = options.scrollSmoothDuration
+      options.offset = options.scrollSmoothOffset
       tocbot.scrollSmooth = require('./scroll-smooth').initSmoothScrolling(options)
     }
 

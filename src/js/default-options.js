@@ -37,6 +37,8 @@ module.exports = {
   scrollSmooth: true,
   // Smooth scroll duration.
   scrollSmoothDuration: 420,
+  // Smooth scroll offset.
+  scrollSmoothOffset: 0,
   // Callback for scroll end.
   scrollEndCallback: function (e) {},
   // Headings offset between the headings and the top of the document (this is meant for minor adjustments).
