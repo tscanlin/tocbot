@@ -3,7 +3,7 @@ var headings = content.querySelectorAll('h1, h2, h3, h4, h5, h6, h7')
 var headingMap = {}
 
 Array.prototype.forEach.call(headings, function(heading) {
-  var id = heading.id ? heading.id : id = heading.textContent.toLowerCase()
+  var id = heading.id ? heading.id : heading.textContent.toLowerCase()
       .split(' ').join('-').split(':').join('');
   headingMap[id] = !isNaN(headingMap[id]) ? ++headingMap[id] : 0;
   if (headingMap[id]) {
