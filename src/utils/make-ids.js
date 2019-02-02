@@ -4,7 +4,7 @@ var headingMap = {}
 
 Array.prototype.forEach.call(headings, function(heading) {
   var id = heading.id ? heading.id : heading.textContent.toLowerCase()
-      .split(' ').join('-').split(':').join('');
+      .split(' ').join('-').replace(/[\!\@\#\$\%\^\&\*\(\)\:]/ig, '');
   headingMap[id] = !isNaN(headingMap[id]) ? ++headingMap[id] : 0;
   if (headingMap[id]) {
     heading.id = id + '-' + headingMap[id]
