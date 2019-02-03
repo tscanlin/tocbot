@@ -118,7 +118,11 @@ module.exports = function (options) {
    * @return {HTMLElement}
    */
   function updateFixedSidebarClass () {
-    var top = document.documentElement.scrollTop || body.scrollTop
+    if (options.positionFixedContainer) {
+      var top = document.querySelector(options.positionFixedContainer).scrollTop
+    } else {
+      var top = document.documentElement.scrollTop || body.scrollTop
+    }
     var posFixedEl = document.querySelector(options.positionFixedSelector)
 
     if (options.fixedSidebarOffset === 'auto') {
