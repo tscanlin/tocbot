@@ -64,5 +64,7 @@ module.exports = {
   onClick: false,
   // orderedList can be set to false to generate unordered lists (ul)
   // instead of ordered lists (ol)
-  orderedList: true
+  orderedList: true,
+  // If there is a fixed article container, set to calculate titles' offset
+  positionFixedContainer: null
 }
