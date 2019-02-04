@@ -158,8 +158,13 @@
       }
     }, options.throttleTimeout)
     this._scrollListener()
-    document.addEventListener('scroll', this._scrollListener, false)
-    document.addEventListener('resize', this._scrollListener, false)
+    if (options.positionFixedContainer) {
+      document.querySelector(options.positionFixedContainer).addEventListener('scroll', this._scrollListener, false)
+      document.querySelector(options.positionFixedContainer).addEventListener('resize', this._scrollListener, false)
+    } else {
+      document.addEventListener('scroll', this._scrollListener, false)
+      document.addEventListener('resize', this._scrollListener, false)
+    }
 
     // Bind click listeners to disable animation.
     var timeout = null
