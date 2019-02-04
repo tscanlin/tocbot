@@ -158,7 +158,7 @@
       }
     }, options.throttleTimeout)
     this._scrollListener()
-    if (options.positionFixedContainer) {
+    if (options.positionFixedContainer && document.querySelector(options.positionFixedContainer)) {
       document.querySelector(options.positionFixedContainer).addEventListener('scroll', this._scrollListener, false)
       document.querySelector(options.positionFixedContainer).addEventListener('resize', this._scrollListener, false)
     } else {

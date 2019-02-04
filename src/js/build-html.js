@@ -118,7 +118,7 @@ module.exports = function (options) {
    * @return {HTMLElement}
    */
   function updateFixedSidebarClass () {
-    if (options.positionFixedContainer) {
+    if (options.positionFixedContainer && document.querySelector(options.positionFixedContainer)) {
       var top = document.querySelector(options.positionFixedContainer).scrollTop
     } else {
       var top = document.documentElement.scrollTop || body.scrollTop
@@ -143,7 +143,7 @@ module.exports = function (options) {
    */
   function updateToc (headingsArray) {
     // If a fixed content container was set
-    if (options.positionFixedContainer) {
+    if (options.positionFixedContainer && document.querySelector(options.positionFixedContainer)) {
       var top = document.querySelector(options.positionFixedContainer).scrollTop
     } else {
       var top = document.documentElement.scrollTop || body.scrollTop
