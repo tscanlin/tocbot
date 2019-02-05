@@ -91,10 +91,18 @@
     }
 
     // Remove event listeners.
-    document.removeEventListener('scroll', this._scrollListener, false)
-    document.removeEventListener('resize', this._scrollListener, false)
-    if (buildHtml) {
-      document.removeEventListener('click', this._clickListener, false)
+    if (options.scrollContainer && document.querySelector(options.scrollContainer)) {
+      document.querySelector(options.scrollContainer).removeEventListener('scroll', this._scrollListener, false)
+      document.querySelector(options.scrollContainer).removeEventListener('resize', this._scrollListener, false)
+      if (buildHtml) {
+        document.querySelector(options.scrollContainer).removeEventListener('click', this._clickListener, false)
+      }
+    } else {
+      document.removeEventListener('scroll', this._scrollListener, false)
+      document.removeEventListener('resize', this._scrollListener, false)
+      if (buildHtml) {
+        document.removeEventListener('click', this._clickListener, false)
+      }
     }
   }
 
@@ -158,9 +166,9 @@
       }
     }, options.throttleTimeout)
     this._scrollListener()
-    if (options.positionFixedContainer && document.querySelector(options.positionFixedContainer)) {
-      document.querySelector(options.positionFixedContainer).addEventListener('scroll', this._scrollListener, false)
-      document.querySelector(options.positionFixedContainer).addEventListener('resize', this._scrollListener, false)
+    if (options.scrollContainer && document.querySelector(options.scrollContainer)) {
+      document.querySelector(options.scrollContainer).addEventListener('scroll', this._scrollListener, false)
+      document.querySelector(options.scrollContainer).addEventListener('resize', this._scrollListener, false)
     } else {
       document.addEventListener('scroll', this._scrollListener, false)
       document.addEventListener('resize', this._scrollListener, false)
@@ -179,7 +187,12 @@
         buildHtml.enableTocAnimation()
       }, options.scrollSmoothDuration)
     }, options.throttleTimeout)
-    document.addEventListener('click', this._clickListener, false)
+    
+    if (options.scrollContainer && document.querySelector(options.scrollContainer)) {
+      document.querySelector(options.scrollContainer).addEventListener('click', this._clickListener, false)
+    } else {
+      document.addEventListener('click', this._clickListener, false)
+    }
 
     return this
   }

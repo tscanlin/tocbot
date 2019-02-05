@@ -66,5 +66,5 @@ module.exports = {
   // instead of ordered lists (ol)
   orderedList: true,
   // If there is a fixed article container, set to calculate titles' offset
-  positionFixedContainer: null
+  scrollContainer: null
 }
