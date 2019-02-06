@@ -118,7 +118,11 @@ module.exports = function (options) {
    * @return {HTMLElement}
    */
   function updateFixedSidebarClass () {
-    var top = document.documentElement.scrollTop || body.scrollTop
+    if (options.scrollContainer && document.querySelector(options.scrollContainer)) {
+      var top = document.querySelector(options.scrollContainer).scrollTop
+    } else {
+      var top = document.documentElement.scrollTop || body.scrollTop
+    }
     var posFixedEl = document.querySelector(options.positionFixedSelector)
 
     if (options.fixedSidebarOffset === 'auto') {
@@ -138,7 +142,12 @@ module.exports = function (options) {
    * Update TOC highlighting and collpased groupings.
    */
   function updateToc (headingsArray) {
-    var top = document.documentElement.scrollTop || body.scrollTop
+    // If a fixed content container was set
+    if (options.scrollContainer && document.querySelector(options.scrollContainer)) {
+      var top = document.querySelector(options.scrollContainer).scrollTop
+    } else {
+      var top = document.documentElement.scrollTop || body.scrollTop
+    }
 
     // Add fixed class at offset
     if (options.positionFixedSelector) {
