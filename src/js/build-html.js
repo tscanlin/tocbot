@@ -143,20 +143,6 @@ module.exports = function (options) {
    * @param {HTMLElement}
    * @return {integer} position
    */
-  // function getHeadingTopPos (heading) {
-  //   var position = 0
-  //   if (options.hasInnerContainers) {
-  //     var obj = heading
-  //     do {
-  //       position += obj.offsetTop
-  //       obj = obj.offsetParent
-  //     } while ( obj != null && obj != document.querySelector(options.contentSelector))
-  //   }
-  //   else
-  //     position = heading.offsetTop
-  //   return position
-  // }
-
   function getHeadingTopPos (obj) {
     var position = 0
     if (obj != document.querySelector(options.contentSelector && obj != null)) {
