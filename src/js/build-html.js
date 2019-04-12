@@ -139,6 +139,21 @@ module.exports = function (options) {
   }
 
   /**
+   * Get top position of heading
+   * @param {HTMLElement}
+   * @return {integer} position
+   */
+  function getHeadingTopPos (obj) {
+    var position = 0
+    if (obj != document.querySelector(options.contentSelector && obj != null)) {
+      position = obj.offsetTop
+      if (options.hasInnerContainers)
+        position += getHeadingTopPos(obj.offsetParent)
+    }
+    return position
+  }
+
+  /**
    * Update TOC highlighting and collpased groupings.
    */
   function updateToc (headingsArray) {
@@ -162,7 +177,7 @@ module.exports = function (options) {
       document.querySelector(options.tocSelector) !== null &&
       headings.length > 0) {
       some.call(headings, function (heading, i) {
-        if (heading.offsetTop > top + options.headingsOffset + 10) {
+        if (getHeadingTopPos(heading) > top + options.headingsOffset + 10) {
           // Don't allow negative index value.
           var index = (i === 0) ? i : i - 1
           topHeader = headings[index]
