@@ -123,6 +123,8 @@ contentSelector: '.js-toc-content',
 headingSelector: 'h1, h2, h3',
 // Headings that match the ignoreSelector will be skipped.
 ignoreSelector: '.js-toc-ignore',
+// For headings inside relative or absolute positioned containers within content
+hasInnerContainers: false,
 // Main class to add to links.
 linkClass: 'toc-link',
 // Extra classes to add to links.
