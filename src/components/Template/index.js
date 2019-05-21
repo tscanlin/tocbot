@@ -31,11 +31,13 @@ function Template (props) {
           <label className='toc-icon relative pointer z-2 f6 lh-solid bg-near-white b--silver pa1 ma1 ba br1' htmlFor='toc'>
             Menu
           </label>
-          <nav className='toc toc-right js-toc relative z-1 transition--300 absolute pa4' />
+          <nav
+            className='toc toc-right js-toc relative z-1 transition--300 absolute pa4'
+            dangerouslySetInnerHTML={{ __html: props.tocHtml }} />
           <div className='content js-toc-content pa4'
             dangerouslySetInnerHTML={{ __html: props.bodyHtml }} />
 
-          <Tocbot />
+          <Tocbot {...props.tocbotOptions} />
         </div>
         {props.extraElements}
 

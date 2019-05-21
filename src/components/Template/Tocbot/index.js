@@ -17,7 +17,7 @@ const tocbot = (typeof window !== 'undefined')
 export default class Tocbot extends React.Component {
   componentDidMount () {
     if (tocbot) {
-      tocbot.init(TOCBOT_OPTIONS)
+      tocbot.init(Object.assign({}, this.props, TOCBOT_OPTIONS))
     }
   }
 

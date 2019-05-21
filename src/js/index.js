@@ -138,7 +138,9 @@
     this._parseContent = parseContent
 
     // Destroy it if it exists first.
-    tocbot.destroy()
+    if (options.skipRendering) {
+      tocbot.destroy()
+    }
 
     // Get headings array.
     headingsArray = parseContent.selectHeadings(options.contentSelector, options.headingSelector)
@@ -152,7 +154,9 @@
     var nestedHeadings = nestedHeadingsObj.nest
 
     // Render.
-    buildHtml.render(options.tocSelector, nestedHeadings)
+    if (options.skipRendering) {
+      buildHtml.render(options.tocSelector, nestedHeadings)
+    }
 
     // Update Sidebar and bind listeners.
     this._scrollListener = throttle(function (e) {
