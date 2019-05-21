@@ -70,5 +70,5 @@ module.exports = {
   // If there is a fixed article scroll container, set to calculate titles' offset
   scrollContainer: null,
   // prevent ToC DOM rendering if it's already rendered
-  skipRendering: true
+  skipRendering: false
 }

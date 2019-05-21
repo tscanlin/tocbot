@@ -47,7 +47,7 @@ const Index = (props) => {
       user={CONFIG.user}
       siteId={CONFIG.siteId}
       extraElements={<TryIt />}
-      tocbotOptions={{ render: false }}
+      tocbotOptions={{ skipRendering: true }}
     />
   )
 }

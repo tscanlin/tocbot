@@ -138,7 +138,7 @@
     this._parseContent = parseContent
 
     // Destroy it if it exists first.
-    if (options.skipRendering) {
+    if (!options.skipRendering) {
       tocbot.destroy()
     }
 
@@ -154,7 +154,7 @@
     var nestedHeadings = nestedHeadingsObj.nest
 
     // Render.
-    if (options.skipRendering) {
+    if (!options.skipRendering) {
       buildHtml.render(options.tocSelector, nestedHeadings)
     }
 
