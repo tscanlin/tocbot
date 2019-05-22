@@ -83,11 +83,13 @@
    * Destroy tocbot.
    */
   tocbot.destroy = function () {
-    // Clear HTML.
-    try {
-      document.querySelector(options.tocSelector).innerHTML = ''
-    } catch (e) {
-      console.warn('Element not found: ' + options.tocSelector); // eslint-disable-line
+    if (!options.skipRendering) {
+      // Clear HTML.
+      try {
+        document.querySelector(options.tocSelector).innerHTML = ''
+      } catch (e) {
+        console.warn('Element not found: ' + options.tocSelector); // eslint-disable-line
+      }
     }
 
     // Remove event listeners.
@@ -138,9 +140,7 @@
     this._parseContent = parseContent
 
     // Destroy it if it exists first.
-    if (!options.skipRendering) {
-      tocbot.destroy()
-    }
+    tocbot.destroy()
 
     // Get headings array.
     headingsArray = parseContent.selectHeadings(options.contentSelector, options.headingSelector)

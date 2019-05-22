@@ -69,6 +69,6 @@ module.exports = {
   orderedList: true,
   // If there is a fixed article scroll container, set to calculate titles' offset
   scrollContainer: null,
-  // prevent ToC DOM rendering if it's already rendered
+  // prevent ToC DOM rendering if it's already rendered by an external system
   skipRendering: false
 }
