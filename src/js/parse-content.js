@@ -111,14 +111,29 @@ module.exports = function parseContent (options) {
     return reduce.call(headingsArray, function reducer (prev, curr) {
       var currentHeading = getHeadingObject(curr)
 
-      addNode(currentHeading, prev.nest)
+      addNode(currentHeading, prev.nestedHeadings)
       return prev
     }, {
-      nest: []
+      nestedHeadings: []
     })
   }
 
+  function getHeadingsData () {
+    // Get headings array.
+    var headingsArray = selectHeadings(options.contentSelector, options.headingSelector)
+    // Return if no headings are found.
+    if (headingsArray === null) {
+      return {}
+    }
+
+    // Build nested headings array.
+    var nestedHeadingsObj = nestHeadingsArray(headingsArray)
+    nestedHeadingsObj.headingsArray = headingsArray
+    return nestedHeadingsObj
+  }
+
   return {
+    getHeadingsData: getHeadingsData,
     nestHeadingsArray: nestHeadingsArray,
     selectHeadings: selectHeadings
   }

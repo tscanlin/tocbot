@@ -138,20 +138,26 @@
     // For testing purposes.
     this._buildHtml = buildHtml
     this._parseContent = parseContent
+    this.buildHtml = buildHtml
+    this.parseContent = parseContent
 
     // Destroy it if it exists first.
     tocbot.destroy()
 
-    // Get headings array.
-    headingsArray = parseContent.selectHeadings(options.contentSelector, options.headingSelector)
-    // Return if no headings are found.
-    if (headingsArray === null) {
-      return
-    }
-
-    // Build nested headings array.
-    var nestedHeadingsObj = parseContent.nestHeadingsArray(headingsArray)
-    var nestedHeadings = nestedHeadingsObj.nest
+    var headingData = parseContent.getHeadingsData()
+    var nestedHeadings = headingData.nestedHeadings
+    headingsArray = headingData.headingsArray
+    // console.log(nestedHeadings)
+    // // Get headings array.
+    // headingsArray = parseContent.selectHeadings(options.contentSelector, options.headingSelector)
+    // // Return if no headings are found.
+    // if (headingsArray === null) {
+    //   return
+    // }
+    //
+    // // Build nested headings array.
+    // var nestedHeadingsObj = parseContent.nestHeadingsArray(headingsArray)
+    // var nestedHeadings = nestedHeadingsObj.nest
 
     // Render.
     if (!options.skipRendering) {
@@ -191,7 +197,7 @@
         buildHtml.enableTocAnimation()
       }, options.scrollSmoothDuration)
     }, options.throttleTimeout)
-    
+
     if (options.scrollContainer && document.querySelector(options.scrollContainer)) {
       document.querySelector(options.scrollContainer).addEventListener('click', this._clickListener, false)
     } else {

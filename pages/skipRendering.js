@@ -42,7 +42,7 @@ const Index = (props) => {
       stylesheets={CONFIG.stylesheets}
       topLinks={CONFIG.topLinks}
       bodyHtml={bodyHtml}
-      tocHtml={tocHtml}
+      useReactComponent={true}
       repo={CONFIG.repo}
       user={CONFIG.user}
       siteId={CONFIG.siteId}

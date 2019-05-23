@@ -2,7 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Head from 'next/head'
 import Hero from './Hero'
-import Tocbot from './Tocbot'
+import { default as TocbotJS } from './Tocbot'
+import Tocbot from '../Tocbot'
 import Tracking from './Tracking'
 
 function Template (props) {
@@ -32,12 +33,13 @@ function Template (props) {
             Menu
           </label>
           <nav
-            className='toc toc-right js-toc relative z-1 transition--300 absolute pa4'
-            dangerouslySetInnerHTML={{ __html: props.tocHtml }} />
+            className='toc toc-right js-toc relative z-1 transition--300 absolute pa4'>
+            {props.useReactComponent && <Tocbot tocbotOptions={props.tocbotOptions} />}
+          </nav>
           <div className='content js-toc-content pa4'
             dangerouslySetInnerHTML={{ __html: props.bodyHtml }} />
 
-          <Tocbot {...props.tocbotOptions} />
+          {!props.useReactComponent && <TocbotJS {...props.tocbotOptions} />}
         </div>
         {props.extraElements}
 
