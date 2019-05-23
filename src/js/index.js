@@ -83,11 +83,13 @@
    * Destroy tocbot.
    */
   tocbot.destroy = function () {
-    // Clear HTML.
-    try {
-      document.querySelector(options.tocSelector).innerHTML = ''
-    } catch (e) {
-      console.warn('Element not found: ' + options.tocSelector); // eslint-disable-line
+    if (!options.skipRendering) {
+      // Clear HTML.
+      try {
+        document.querySelector(options.tocSelector).innerHTML = ''
+      } catch (e) {
+        console.warn('Element not found: ' + options.tocSelector); // eslint-disable-line
+      }
     }
 
     // Remove event listeners.
@@ -152,7 +154,9 @@
     var nestedHeadings = nestedHeadingsObj.nest
 
     // Render.
-    buildHtml.render(options.tocSelector, nestedHeadings)
+    if (!options.skipRendering) {
+      buildHtml.render(options.tocSelector, nestedHeadings)
+    }
 
     // Update Sidebar and bind listeners.
     this._scrollListener = throttle(function (e) {
