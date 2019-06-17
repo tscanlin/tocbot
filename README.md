@@ -139,13 +139,13 @@ extraListClasses: '',
 // Class that gets added when a list should be collapsed.
 isCollapsedClass: 'is-collapsed',
 // Class that gets added when a list should be able
-// to be collapsed but isn't necessarily collpased.
+// to be collapsed but isn't necessarily collapsed.
 collapsibleClass: 'is-collapsible',
 // Class to add to list items.
 listItemClass: 'toc-list-item',
-// How many heading levels should not be collpased.
+// How many heading levels should not be collapsed.
 // For example, number 6 will show everything since
-// there are only 6 heading levels and number 0 will collpase them all.
+// there are only 6 heading levels and number 0 will collapse them all.
 // The sections that are hidden will open
 // and close as you scroll to headings within them.
 collapseDepth: 0,
