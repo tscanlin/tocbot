@@ -17,7 +17,7 @@ const TOCBOT_OPTIONS = {
 
 function List (props) {
   return (
-    <ol className={`${props.tocbotOptions.listClass}`}>
+    <ol className={`${props.tocbotOptions.listClass} ${props.className}`}>
       {props.items && props.items.map((node, i) => {
         return (
           <ListItem key={i} {...node} tocbotOptions={props.tocbotOptions} />
@@ -33,7 +33,7 @@ function ListItem (props) {
       <a href={`#${props.id}`} className={`${props.tocbotOptions.linkClass} node-name--${props.nodeName}`}>
         {props.textContent}
       </a>
-      <List items={props.children} tocbotOptions={props.tocbotOptions} />
+      <List className={props.tocbotOptions.isCollapsedClass} items={props.children} tocbotOptions={props.tocbotOptions} />
     </li>
   )
 }
