@@ -177,7 +177,7 @@ module.exports = function (options) {
       document.querySelector(options.tocSelector) !== null &&
       headings.length > 0) {
       some.call(headings, function (heading, i) {
-        if (getHeadingTopPos(heading) > top + options.headingsOffset + 10) {
+        if (getHeadingTopPos(heading) > top + options.headingsOffset - 230) {
           // Don't allow negative index value.
           var index = (i === 0) ? i : i - 1
           topHeader = headings[index]
@@ -188,7 +188,6 @@ module.exports = function (options) {
           return true
         }
       })
-
       // Remove the active class from the other tocLinks.
       var tocLinks = document.querySelector(options.tocSelector)
         .querySelectorAll('.' + options.linkClass)
