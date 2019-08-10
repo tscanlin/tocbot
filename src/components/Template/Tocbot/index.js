@@ -6,6 +6,7 @@ const TOCBOT_OPTIONS = {
   headingSelector: 'h2, h3, h4',
   positionFixedSelector: '.js-toc',
   includeHtml: true,
+  hasInnerContainers: true,
   onClick: (e) => { console.log('you clicked a link', e) }
 }
 

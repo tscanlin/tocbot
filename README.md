@@ -61,6 +61,8 @@ tocbot.init({
   contentSelector: '.js-toc-content',
   // Which headings to grab inside of the contentSelector element.
   headingSelector: 'h1, h2, h3',
+  // For headings inside relative or absolute positioned containers within content.
+  hasInnerContainers: true,
 });
 ```
 
@@ -123,7 +125,7 @@ contentSelector: '.js-toc-content',
 headingSelector: 'h1, h2, h3',
 // Headings that match the ignoreSelector will be skipped.
 ignoreSelector: '.js-toc-ignore',
-// For headings inside relative or absolute positioned containers within content
+// For headings inside relative or absolute positioned containers within content.
 hasInnerContainers: false,
 // Main class to add to links.
 linkClass: 'toc-link',
