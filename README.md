@@ -215,12 +215,6 @@ tocbot.refresh()
 ```
 
 
-## Roadmap
-
-- More tests
-- React.js support (make react support native without direct dom manipulation)
-
-
 ## Contributing
 
 Contributions and suggestions are welcome! Please feel free to open an issue if you run into a problem or have a feature request. I'll do my best to respond in a timely fashion.
@@ -230,30 +224,11 @@ If you want to open a pull request just fork the repo but please make sure all t
 
 ### Running Tests
 
-#### All tests
 ```bash
 npm run test
 ```
 
-#### With debugger
-You can run tests through [node-inspector](https://github.com/node-inspector/node-inspector).
-
-[For now, you may need to use node v6 or lower](https://github.com/node-inspector/node-inspector/issues/950#issuecomment-264289415)...
-```bash
-nvm use 6
-```
-
-Once you're on node v6 or lower:
-```bash
-npm install node-inspector
-```
-
-Now that node-inspector is installed, you can run the tests!
-```bash
-npm run test:debug
-```
-
-## Steps to publish
+### Steps to publish
 
 - Push a branch and open a pull request
 - run `npm version <patch|minor|major>`
