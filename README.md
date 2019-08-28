@@ -74,6 +74,19 @@ If content in the div has changed then trigger a refresh (optionally with new op
 tocbot.refresh();
 ```
 
+Also you can use it within typescript:
+
+```typescript
+import * as tocbot from 'tocbot';
+
+tocbot.init({
+  // Options
+});
+
+tocbot.refresh();
+
+tocbot.destroy();
+```
 
 ## Examples
 
