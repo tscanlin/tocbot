@@ -205,7 +205,7 @@ module.exports = function (options) {
       var activeTocLink = document.querySelector(options.tocSelector)
         .querySelector('.' + options.linkClass +
           '.node-name--' + topHeader.nodeName +
-          '[href="#' + topHeader.id + '"]')
+          '[href*="#' + topHeader.id + '"]')
       if (activeTocLink.className.indexOf(options.activeLinkClass) === -1) {
         activeTocLink.className += SPACE_CHAR + options.activeLinkClass
       }
