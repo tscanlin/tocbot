@@ -191,7 +191,7 @@
         buildHtml.enableTocAnimation()
       }, options.scrollSmoothDuration)
     }, options.throttleTimeout)
-    
+
     if (options.scrollContainer && document.querySelector(options.scrollContainer)) {
       document.querySelector(options.scrollContainer).addEventListener('click', this._clickListener, false)
     } else {
