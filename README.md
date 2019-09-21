@@ -51,7 +51,7 @@ If you installed it with npm and use sass / postcss you might try importing the 
 
 ### Usage
 
-Initialize the script
+Initialize the script at the bottom of the page before the closing body tag.
 
 ```js
 tocbot.init({
