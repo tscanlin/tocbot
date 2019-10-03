@@ -38,7 +38,7 @@
   if (typeof window === 'undefined') {
     return
   }
-  var supports = !!root.document.querySelector && !!root.addEventListener // Feature test
+  var supports = !!root && !!root.document && !!root.document.querySelector && !!root.addEventListener // Feature test
   var headingsArray
 
   // From: https://github.com/Raynos/xtend
