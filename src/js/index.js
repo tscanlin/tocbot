@@ -35,10 +35,10 @@
   var parseContent
 
   // Just return if its not a browser.
-  if (typeof window === 'undefined') {
+  var supports = !!root && !!root.document && !!root.document.querySelector && !!root.addEventListener // Feature test
+  if (typeof window === 'undefined' && !supports) {
     return
   }
-  var supports = !!root.document.querySelector && !!root.addEventListener // Feature test
   var headingsArray
 
   // From: https://github.com/Raynos/xtend
