@@ -46,6 +46,31 @@ module.exports = function parseContent (options) {
 
     return obj
   }
+  /**
+   * Convert heading elements to plain objects
+   * @param {Array} headingsArray
+   * @return {Array}
+   */
+  function getAllHeadingsObject (headings) {
+    var headingsObject = Array.from(headings).map(function (heading) {
+      return getHeadingObject(heading)
+    })
+
+    if (options.headingsLabelCallback) {
+      var allLabels = headingsObject.map(function (headingObject) {
+        return headingObject.textContent
+      })
+      var forcedHeadingsLabel = options.headingsLabelCallback(allLabels)
+
+      if (forcedHeadingsLabel) {
+        headingsObject.forEach(function (headingsObject, index) {
+          forcedHeadingsLabel[index] && (headingsObject.textContent = String(forcedHeadingsLabel[index]))
+        })
+      }
+    }
+
+    return headingsObject
+  }
 
   /**
    * Add a node to the nested array.
@@ -108,9 +133,9 @@ module.exports = function parseContent (options) {
    * @return {Object}
    */
   function nestHeadingsArray (headingsArray) {
-    return reduce.call(headingsArray, function reducer (prev, curr) {
-      var currentHeading = getHeadingObject(curr)
+    var headingsObject = getAllHeadingsObject(headingsArray)
 
+    return reduce.call(headingsObject, function reducer (prev, currentHeading) {
       addNode(currentHeading, prev.nest)
       return prev
     }, {
