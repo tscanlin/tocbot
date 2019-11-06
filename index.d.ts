@@ -101,11 +101,11 @@ declare namespace tocbot {
 
     // prevent ToC DOM rendering if it's already rendered by an external system
     skipRendering?: boolean;
-    
-    // Optional callback for changing header labels. 
-    // For example it can be used to cut down and put ellipses on multiline headers you deem too long.
-    // Param: array of all the parsed headers. Expects: array of string => the modified labels to display.
-    headingsLabelCallback?: (headingsLabels: string[]) => string[]
+        
+    // Optional callback to change heading labels. 
+    // For example it can be used to cut down and put ellipses on multiline headings you deem too long.
+    // Called each time a heading is parsed. Expects a string in return, the modified label to display.
+    headingLabelCallback?: (headingLabel: string) => string;
   }
 
   /**
