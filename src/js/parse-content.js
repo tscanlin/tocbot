@@ -37,7 +37,7 @@ module.exports = function parseContent (options) {
       children: [],
       nodeName: heading.nodeName,
       headingLevel: getHeadingLevel(heading),
-      textContent: heading.textContent.trim()
+      textContent: options.headingLabelCallback ? String(options.headingLabelCallback(heading.textContent)) : heading.textContent.trim()
     }
 
     if (options.includeHtml) {
