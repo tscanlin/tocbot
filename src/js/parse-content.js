@@ -37,6 +37,10 @@ module.exports = function parseContent (options) {
     // that is causing problem so I am processing only original DOM node
     if (!(heading instanceof HTMLElement)) return heading
 
+    if (options.ignoreHiddenElements && (!heading.offsetHeight || !heading.offsetParent)) {
+      return null
+    }
+
     var obj = {
       id: heading.id,
       children: [],
@@ -50,7 +54,10 @@ module.exports = function parseContent (options) {
     }
 
     if (options.headingObjectCallback) {
-      options.headingObjectCallback(obj, heading)
+      if (options.headingObjectCallback(obj, heading) === false) {
+        // ignore this element
+        obj = null
+      }
     }
 
     return obj
@@ -119,8 +126,9 @@ module.exports = function parseContent (options) {
   function nestHeadingsArray (headingsArray) {
     return reduce.call(headingsArray, function reducer (prev, curr) {
       var currentHeading = getHeadingObject(curr)
-
-      addNode(currentHeading, prev.nest)
+      if (currentHeading) {
+        addNode(currentHeading, prev.nest)
+      }
       return prev
     }, {
       nest: []
