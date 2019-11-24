@@ -201,7 +201,12 @@ skipRendering: false,
 // Optional callback to change heading labels. 
 // For example it can be used to cut down and put ellipses on multiline headings you deem too long.
 // Called each time a heading is parsed. Expects a string in return, the modified label to display.
-headingLabelCallback: function (string) => string
+headingLabelCallback: function (string) => string,
+// ignore headings that are hidden in DOM
+ignoreHiddenElements: false,
+// Optional callback to modify properties of parsed headings
+// The heading will be excluded from TOC of this callback returns FALSE
+headingObjectCallback: function (object, HTMLElement) => false | void
 ```
 
 
