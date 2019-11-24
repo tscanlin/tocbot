@@ -54,10 +54,7 @@ module.exports = function parseContent (options) {
     }
 
     if (options.headingObjectCallback) {
-      if (options.headingObjectCallback(obj, heading) === false) {
-        // ignore this element
-        obj = null
-      }
+      return options.headingObjectCallback(obj, heading)
     }
 
     return obj

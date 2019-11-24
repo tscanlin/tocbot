@@ -110,9 +110,11 @@ declare namespace tocbot {
     // ignore headings that are hidden in DOM
     ignoreHiddenElements?: boolean;
 
-    // Optional callback to modify properties of parsed headings
-    // The heading will be excluded from TOC of this callback returns FALSE
-    headingObjectCallback?: (obj: object, node: HTMLElement) => false | void;
+    // Optional callback to modify properties of parsed headings.
+    // The heading element is passed in node parameter and information parsed by default parser is provided in obj parameter.
+    // Function has to return the same or modified obj. 
+    // The heading will be excluded from TOC if nothing is returned.
+    headingObjectCallback?: (obj: object, node: HTMLElement) => object | void;
   }
 
   /**

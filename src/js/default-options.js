@@ -78,8 +78,10 @@ module.exports = {
   headingLabelCallback: false,
   // ignore headings that are hidden in DOM
   ignoreHiddenElements: false,
-  // Optional callback to modify properties of parsed headings
-  // The heading will be excluded from TOC of this callback returns FALSE
-  // function (object, HTMLElement) => Any
-  headingObjectCallback: false
+  // Optional callback to modify properties of parsed headings.
+  // The heading element is passed in node parameter and information parsed by default parser is provided in obj parameter.
+  // Function has to return the same or modified obj. 
+  // The heading will be excluded from TOC if nothing is returned.
+  // function (object, HTMLElement) => object | void
+  headingObjectCallback: null
 }
