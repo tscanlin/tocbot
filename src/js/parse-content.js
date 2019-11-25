@@ -32,6 +32,15 @@ module.exports = function parseContent (options) {
    * @return {Object}
    */
   function getHeadingObject (heading) {
+    // each node is processed twice by this method because nestHeadingsArray() and addNode() calls it
+    // first time heading is real DOM node element, second time it is obj
+    // that is causing problem so I am processing only original DOM node
+    if (!(heading instanceof HTMLElement)) return heading
+
+    if (options.ignoreHiddenElements && (!heading.offsetHeight || !heading.offsetParent)) {
+      return null
+    }
+
     var obj = {
       id: heading.id,
       children: [],
@@ -42,6 +51,10 @@ module.exports = function parseContent (options) {
 
     if (options.includeHtml) {
       obj.childNodes = heading.childNodes
+    }
+
+    if (options.headingObjectCallback) {
+      return options.headingObjectCallback(obj, heading)
     }
 
     return obj
@@ -55,7 +68,7 @@ module.exports = function parseContent (options) {
    */
   function addNode (node, nest) {
     var obj = getHeadingObject(node)
-    var level = getHeadingLevel(node)
+    var level = obj.headingLevel
     var array = nest
     var lastItem = getLastItem(array)
     var lastItemLevel = lastItem
@@ -110,8 +123,9 @@ module.exports = function parseContent (options) {
   function nestHeadingsArray (headingsArray) {
     return reduce.call(headingsArray, function reducer (prev, curr) {
       var currentHeading = getHeadingObject(curr)
-
-      addNode(currentHeading, prev.nest)
+      if (currentHeading) {
+        addNode(currentHeading, prev.nest)
+      }
       return prev
     }, {
       nest: []

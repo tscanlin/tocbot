@@ -70,5 +70,18 @@ module.exports = {
   // If there is a fixed article scroll container, set to calculate titles' offset
   scrollContainer: null,
   // prevent ToC DOM rendering if it's already rendered by an external system
-  skipRendering: false
+  skipRendering: false,
+  // Optional callback to change heading labels. 
+  // For example it can be used to cut down and put ellipses on multiline headings you deem too long.
+  // Called each time a heading is parsed. Expects a string in return, the modified label to display.
+  // function (string) => string
+  headingLabelCallback: false,
+  // ignore headings that are hidden in DOM
+  ignoreHiddenElements: false,
+  // Optional callback to modify properties of parsed headings.
+  // The heading element is passed in node parameter and information parsed by default parser is provided in obj parameter.
+  // Function has to return the same or modified obj. 
+  // The heading will be excluded from TOC if nothing is returned.
+  // function (object, HTMLElement) => object | void
+  headingObjectCallback: null
 }
