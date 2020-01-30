@@ -241,13 +241,9 @@ tocbot.refresh()
 
 ## Troubleshooting / FAQ
 
-#### My site has fixed headers, what do I do?
-
-See this [section of the readme](#fixed-headers). There is an open issue about this that discusses how to handle this situation and why the solution in the readme is recommended [#170](https://github.com/tscanlin/tocbot/issues/170).
-
 #### Tocbot scrolls to the right position onClick but highlighting doesn't seem to show the active section
 
-Try using running this from the console: `tocbot.refresh({ ...tocbot.options, hasInnerContainers: true })`. If that works then one option to handle inner containers should be all you need to change.
+Try running this from the console: `tocbot.refresh({ ...tocbot.options, hasInnerContainers: true })`. If that works then one option (`hasInnerContainers: true`) to handle inner containers should be all you need to add.
 
 
 ## Contributing
