@@ -198,7 +198,7 @@ orderedList: true,
 scrollContainer: null,
 // prevent ToC DOM rendering if it's already rendered by an external system
 skipRendering: false,
-// Optional callback to change heading labels. 
+// Optional callback to change heading labels.
 // For example it can be used to cut down and put ellipses on multiline headings you deem too long.
 // Called each time a heading is parsed. Expects a string in return, the modified label to display.
 headingLabelCallback: function (string) => string,
@@ -237,6 +237,13 @@ Refresh tocbot if the document changes and it needs to be rebuilt.
 ```javascript
 tocbot.refresh()
 ```
+
+
+## Troubleshooting / FAQ
+
+#### Tocbot scrolls to the right position onClick but highlighting doesn't seem to show the active section
+
+Try running this from the console: `tocbot.refresh({ ...tocbot.options, hasInnerContainers: true })`. If that works then one option (`hasInnerContainers: true`) to handle inner containers should be all you need to add.
 
 
 ## Contributing
