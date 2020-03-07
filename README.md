@@ -239,11 +239,10 @@ tocbot.refresh()
 ```
 
 
-## Troubleshooting / FAQ
+## Troubleshooting
 
-#### Tocbot scrolls to the right position onClick but highlighting doesn't seem to show the active section
-
-Try running this from the console: `tocbot.refresh({ ...tocbot.options, hasInnerContainers: true })`. If that works then one option (`hasInnerContainers: true`) to handle inner containers should be all you need to add.
+- Tocbot scrolls to the right position onClick but highlighting doesn't seem to show the active section
+  - Try running this from the console: `tocbot.refresh({ ...tocbot.options, hasInnerContainers: true })`. If that works then one option (`hasInnerContainers: true`) to handle inner containers should be all you need to add.
 
 
 ## Contributing
