@@ -188,9 +188,7 @@ describe('Parse content', function () {
 describe('Build HTML', function () {
   it('#render', function () {
     tocbot.destroy()
-    tocbot.init({
-      listItemClass: ''
-    })
+    tocbot.init()
     var render = tocbot._buildHtml.render
     var tocEl = render(tocbot.options.tocSelector, TEST_DATA)
     var html = TEST_HTML.split('\n').join('')
@@ -202,7 +200,6 @@ describe('Build HTML', function () {
   it('should be able to include HTML markup when `includeHtml` is true', function () {
     tocbot.destroy()
     tocbot.init({
-      listItemClass: '',
       includeHtml: true
     })
     // includeHtml
@@ -227,7 +224,6 @@ describe('Build HTML', function () {
   it('should not include HTML markup when `includeHtml` is false', function () {
     tocbot.destroy()
     tocbot.init({
-      listItemClass: '',
       includeHtml: false
     })
     // includeHtml
@@ -246,6 +242,6 @@ describe('Build HTML', function () {
       'isCollapsed': true,
       'childNodes': nodes
     }])
-    expect(tocEl.innerHTML).to.contain('<li><a href="#Whatsup" class="toc-link node-name--H2 ">Whatsup</a></li>')
+    expect(tocEl.innerHTML).to.contain('<li class="toc-list-item"><a href="#Whatsup" class="toc-link node-name--H2 ">Whatsup</a></li>')
   })
 })
