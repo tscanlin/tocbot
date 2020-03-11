@@ -119,9 +119,10 @@ module.exports = function (options) {
    */
   function updateFixedSidebarClass () {
     if (options.scrollContainer && document.querySelector(options.scrollContainer)) {
-      var top = document.querySelector(options.scrollContainer).scrollTop
+      var top
+      top = document.querySelector(options.scrollContainer).scrollTop
     } else {
-      var top = document.documentElement.scrollTop || body.scrollTop
+      top = document.documentElement.scrollTop || body.scrollTop
     }
     var posFixedEl = document.querySelector(options.positionFixedSelector)
 
@@ -145,7 +146,7 @@ module.exports = function (options) {
    */
   function getHeadingTopPos (obj) {
     var position = 0
-    if (obj != document.querySelector(options.contentSelector && obj != null)) {
+    if (obj !== document.querySelector(options.contentSelector && obj != null)) {
       position = obj.offsetTop
       if (options.hasInnerContainers) { position += getHeadingTopPos(obj.offsetParent) }
     }
@@ -158,9 +159,10 @@ module.exports = function (options) {
   function updateToc (headingsArray) {
     // If a fixed content container was set
     if (options.scrollContainer && document.querySelector(options.scrollContainer)) {
-      var top = document.querySelector(options.scrollContainer).scrollTop
+      var top
+      top = document.querySelector(options.scrollContainer).scrollTop
     } else {
-      var top = document.documentElement.scrollTop || body.scrollTop
+      top = document.documentElement.scrollTop || body.scrollTop
     }
 
     // Add fixed class at offset
