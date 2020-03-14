@@ -35,7 +35,7 @@ module.exports = function parseContent (options) {
     // each node is processed twice by this method because nestHeadingsArray() and addNode() calls it
     // first time heading is real DOM node element, second time it is obj
     // that is causing problem so I am processing only original DOM node
-    if (!(heading instanceof HTMLElement)) return heading
+    if (!(heading instanceof window.HTMLElement)) return heading
 
     if (options.ignoreHiddenElements && (!heading.offsetHeight || !heading.offsetParent)) {
       return null
