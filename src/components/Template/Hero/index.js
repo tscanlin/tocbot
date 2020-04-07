@@ -14,14 +14,18 @@ function Hero (props) {
             props.topLinks.map((link, i) => {
               return link.href.indexOf('http') === 0
                 ? (
-                  <a className='dib f6 white no-underline pa1 ma1'
-                    href={link.href} key={i}>
+                  <a
+                    className='dib f6 white no-underline pa1 ma1'
+                    href={link.href} key={i}
+                  >
                     {link.text}
                   </a>
                 ) : (
                   <Link href={link.href} key={i}>
-                    <a className='dib f6 white no-underline pa1 ma1'
-                      href={link.href}>
+                    <a
+                      className='dib f6 white no-underline pa1 ma1'
+                      href={link.href}
+                    >
                       {link.text}
                     </a>
                   </Link>

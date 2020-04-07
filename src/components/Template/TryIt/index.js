@@ -41,18 +41,22 @@ export default class TryIt extends React.Component {
     return (
       <div className={`try-it-container transition--300 fixed w-60 ma2 z-3 bottom-0 right-0 ${this.state.open ? 'is-open' : 'is-closed'}`}>
         <div className='cb pb2'>
-          <button className='button bn f6 link br1 ph3 pv2 mb2 dib white bg-dark-gray fr'
+          <button
+            className='button bn f6 link br1 ph3 pv2 mb2 dib white bg-dark-gray fr'
             onClick={(e) => {
               this.setState({
                 open: !this.state.open
               })
-            }}>
+            }}
+          >
             {this.state.open
               ? 'Hide'
               : 'Try it'}
           </button>
-          <a id='try-it-reset' href='javascript:void(0)' className='ph3 pv2 mb2 dib fr'
-            onClick={(e) => this.onReset(e)}>
+          <a
+            id='try-it-reset' href='javascript:void(0)' className='ph3 pv2 mb2 dib fr'
+            onClick={(e) => this.onReset(e)}
+          >
             Reset
           </a>
         </div>

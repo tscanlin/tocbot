@@ -15,7 +15,7 @@ function Template (props) {
         {props.stylesheets && props.stylesheets.length > 0 && props.stylesheets.map((stylesheet, i) => {
           return <link key={i} rel='stylesheet' href={stylesheet} />
         })}
-        <style>{`.page-content {display:none}`}</style>
+        <style>{'.page-content {display:none}'}</style>
       </Head>
       <main>
         <Hero
@@ -33,9 +33,12 @@ function Template (props) {
           </label>
           <nav
             className='toc toc-right js-toc relative z-1 transition--300 absolute pa4'
-            dangerouslySetInnerHTML={{ __html: props.tocHtml }} />
-          <div className='content js-toc-content pa4'
-            dangerouslySetInnerHTML={{ __html: props.bodyHtml }} />
+            dangerouslySetInnerHTML={{ __html: props.tocHtml }}
+          />
+          <div
+            className='content js-toc-content pa4'
+            dangerouslySetInnerHTML={{ __html: props.bodyHtml }}
+          />
 
           <Tocbot {...props.tocbotOptions} />
         </div>

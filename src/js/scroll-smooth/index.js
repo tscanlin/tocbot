@@ -84,8 +84,8 @@ function jump (target, options) {
   var distance = typeof target === 'string'
     ? opt.offset + (
       target
-      ? (tgt && tgt.getBoundingClientRect().top) || 0 // handle non-existent links better.
-      : -(document.documentElement.scrollTop || document.body.scrollTop))
+        ? (tgt && tgt.getBoundingClientRect().top) || 0 // handle non-existent links better.
+        : -(document.documentElement.scrollTop || document.body.scrollTop))
     : target
   var duration = typeof opt.duration === 'function'
     ? opt.duration(distance)
