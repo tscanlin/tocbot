@@ -63,7 +63,7 @@ module.exports = {
   // onclick function to apply to all links in toc. will be called with
   // the event as the first parameter, and this can be used to stop,
   // propagation, prevent default or perform action
-  onClick: false,
+  onClick: function (e) {},
   // orderedList can be set to false to generate unordered lists (ul)
   // instead of ordered lists (ol)
   orderedList: true,
@@ -85,5 +85,5 @@ module.exports = {
   // function (object, HTMLElement) => object | void
   headingObjectCallback: null,
   // Set the base path, useful if you use a `base` tag in `head`.
-  basePath: '',
+  basePath: ''
 }
