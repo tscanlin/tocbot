@@ -83,5 +83,7 @@ module.exports = {
   // Function has to return the same or modified obj.
   // The heading will be excluded from TOC if nothing is returned.
   // function (object, HTMLElement) => object | void
-  headingObjectCallback: null
+  headingObjectCallback: null,
+  // Set the base path, useful if you use a `base` tag in `head`.
+  basePath: '',
 }

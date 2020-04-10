@@ -87,7 +87,7 @@ module.exports = function (options) {
       // Default behavior.
       a.textContent = data.textContent
     }
-    a.setAttribute('href', '#' + data.id)
+    a.setAttribute('href', options.basePath + '#' + data.id)
     a.setAttribute('class', options.linkClass +
       SPACE_CHAR + 'node-name--' + data.nodeName +
       SPACE_CHAR + options.extraLinkClasses)
