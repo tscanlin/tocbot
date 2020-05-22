@@ -44,8 +44,7 @@ OR
 If you installed it with npm and use sass / postcss you might try importing the styles from 'node_modules', [see the includePath option documentation for more info](https://github.com/sass/node-sass#includepaths)
 
 ```scss
-@import 'tocbot/src/scss/tocbot-core';
-@import 'tocbot/src/scss/tocbot-default-theme';
+@import 'tocbot/src/scss/tocbot';
 ```
 
 
