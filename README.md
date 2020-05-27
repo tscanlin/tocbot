@@ -65,7 +65,7 @@ tocbot.init({
 });
 ```
 
-**NOTE:** Make sure headings have id attributes, tocbot and your browser needs these to make hashes jump to the proper heading, some markdown libraries (like [marked](https://github.com/chjj/marked)) already do this for you.
+**NOTE:** Make sure the body is scrollable and the document headings have id attributes, tocbot and your browser needs these things to make hashes jump to the proper heading, some markdown libraries (like [marked](https://github.com/chjj/marked)) already do this for you.
 
 If content in the div has changed then trigger a refresh (optionally with new options).
 
