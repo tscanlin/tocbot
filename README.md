@@ -170,6 +170,7 @@ scrollSmoothDuration: 420,
 // Callback for scroll end.
 scrollEndCallback: function (e) { },
 // Headings offset between the headings and the top of the document (this is meant for minor adjustments).
+// Can also be used to account for scroll height discrepancies from the use of css scroll-padding-top
 headingsOffset: 1,
 // Timeout between events firing to make sure it's
 // not too rapid (for performance reasons).
