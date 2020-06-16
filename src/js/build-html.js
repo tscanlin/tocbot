@@ -87,7 +87,7 @@ module.exports = function (options) {
       // Default behavior.
       a.textContent = data.textContent
     }
-    a.setAttribute('href', options.basePath + '#' + data.id)
+    a.setAttribute('href', options.basePath + '#' + data.id.replace(/\n/g,''))
     a.setAttribute('class', options.linkClass +
       SPACE_CHAR + 'node-name--' + data.nodeName +
       SPACE_CHAR + options.extraLinkClasses)
@@ -206,7 +206,7 @@ module.exports = function (options) {
       var activeTocLink = document.querySelector(options.tocSelector)
         .querySelector('.' + options.linkClass +
           '.node-name--' + topHeader.nodeName +
-          '[href="' + options.basePath + '#' + topHeader.id.replace(/([ #;&,.+*~':"!^$[\]()=>|/@])/g, '\\$1') + '"]')
+          '[href="' + options.basePath + '#' + topHeader.id.replace(/([\n #;&,.+*~':"!^$[\]()=>|/@])/g, '\\$1') + '"]')
       if (activeTocLink.className.indexOf(options.activeLinkClass) === -1) {
         activeTocLink.className += SPACE_CHAR + options.activeLinkClass
       }
