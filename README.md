@@ -106,7 +106,7 @@ This script works in **all modern browsers and IE 9+**.
 
 **NOTE:** to exclude anchor elements from smooth scrolling, add the class `no-smooth-scroll`.
 
-If you have a lot of TOC content, you can use [this script](https://github.com/tscanlin/tocbot/blob/master/src/utils/update-visible-toc.js) to keep the active item scrolled into view. Then just pass this to the scrollEndCallback option `{ scrollEndCallback: e => UpdateVisibleToc() }`.
+If you have a lot of TOC content, you can use [this script](https://github.com/tscanlin/tocbot/blob/master/src/utils/update-visible-toc.js) to keep the active item scrolled into view. Then just pass this to the scrollEndCallback option `{ scrollEndCallback: e => UpdateVisibleToc() }` and add a scroll listener `window.onscroll = e => UpdateVisibleToc()`.
 
 ### Fixed headers
 
