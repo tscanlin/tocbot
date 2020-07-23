@@ -30,6 +30,7 @@
 
   var BuildHtml = require('./build-html.js')
   var ParseContent = require('./parse-content.js')
+  var updateTocScroll = require('./update-toc-scroll.js')
   // Keep these variables at top scope once options are passed in.
   var buildHtml
   var parseContent
@@ -164,6 +165,7 @@
       var isTop = e && e.target && e.target.scrollingElement && e.target.scrollingElement.scrollTop === 0
       if ((e && (e.eventPhase === 0 || e.currentTarget === null)) || isTop) {
         buildHtml.updateToc(headingsArray)
+        !options.disableTocScrollSync && updateTocScroll(options)
         if (options.scrollEndCallback) {
           options.scrollEndCallback(e)
         }

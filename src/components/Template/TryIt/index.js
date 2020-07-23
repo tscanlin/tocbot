@@ -39,7 +39,7 @@ export default class TryIt extends React.Component {
     backupHtml = backupHtml && backupHtml.innerHTML
 
     return (
-      <div className={`try-it-container transition--300 fixed w-60 ma2 z-3 bottom-0 right-0 ${this.state.open ? 'is-open' : 'is-closed'}`}>
+      <div className={`try-it-container transition--300 fixed w-20 ma2 z-3 bottom-0 right-0 ${this.state.open ? 'is-open' : 'is-closed'}`}>
         <div className='cb pb2'>
           <button
             className='button bn f6 link br1 ph3 pv2 mb2 dib white bg-dark-gray fr'
