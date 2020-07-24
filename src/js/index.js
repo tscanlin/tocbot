@@ -162,10 +162,10 @@
     // Update Sidebar and bind listeners.
     this._scrollListener = throttle(function (e) {
       buildHtml.updateToc(headingsArray)
+      !options.disableTocScrollSync && updateTocScroll(options)
       var isTop = e && e.target && e.target.scrollingElement && e.target.scrollingElement.scrollTop === 0
       if ((e && (e.eventPhase === 0 || e.currentTarget === null)) || isTop) {
         buildHtml.updateToc(headingsArray)
-        !options.disableTocScrollSync && updateTocScroll(options)
         if (options.scrollEndCallback) {
           options.scrollEndCallback(e)
         }
