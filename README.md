@@ -212,6 +212,9 @@ ignoreHiddenElements: false,
 headingObjectCallback: null,
 // Set the base path, useful if you use a `base` tag in `head`.
 basePath: '',
+// Only takes affect when `tocSelector` is scrolling,
+// keep the toc scroll position in sync with the content.
+disableTocScrollSync: false,
 ```
 
 
