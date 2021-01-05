@@ -109,19 +109,14 @@ This script works in **all modern browsers and IE 9+**.
 
 ### Fixed headers
 
-To handle anchor links properly when you have a fixed header, I recommend using CSS similar to the following:
+To handle fixed headers with tocbot, just pass the header offsets as options to tocbot. For example, the options needed for a `40px` tall fixed header would be:
 
-```css
-h1::before, h2::before, h3::before, h4::before, h5::before, h6::before {
-    display: block;
-    content: " ";
-    height: 60px;
-    margin-top: -60px;
-    visibility: hidden;
-}
+```js
+tocbot.init({
+  headingsOffset: 40,
+  scrollSmoothOffset: -40
+})
 ```
-
-This is better than javascript solutions since it will work when javascript is disabled.
 
 
 ## API

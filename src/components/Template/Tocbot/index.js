@@ -7,7 +7,9 @@ const TOCBOT_OPTIONS = {
   positionFixedSelector: '.js-toc',
   includeHtml: true,
   hasInnerContainers: true,
-  onClick: (e) => { console.log('you clicked a link', e) }
+  onClick: (e) => { console.log('you clicked a link', e) },
+  headingsOffset: 40,
+  scrollSmoothOffset: -40
 }
 
 // Only require tocbot if in browser.
