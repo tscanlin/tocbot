@@ -4,6 +4,7 @@ import Head from 'next/head'
 import Hero from './Hero'
 import Tocbot from './Tocbot'
 import Tracking from './Tracking'
+import pkg from '../../../package.json'
 
 function Template (props) {
   return (
@@ -26,17 +27,29 @@ function Template (props) {
           topLinks={props.topLinks}
         />
 
+        {/* Fixed header component that hides behind the hero until scrolling down the page. */}
+        <div className='fixed-header fixed w-100 top-0 left-0 pv2 z-2' style={{backgroundColor: '#54BC4B'}}>
+          <div className='ph4 mw7 center white'>
+            <a className='white no-underline' href='https://github.com/tscanlin/tocbot'>
+              Tocbot
+            </a>
+            <a className='white no-underline f6 ml2' href={`https://github.com/tscanlin/tocbot/releases/tag/v${pkg.version}`}>
+              {`v${pkg.version}`}
+            </a>
+          </div>
+        </div>
+
         <div className='mw7 center dark-gray lh-copy'>
           <input id='toc' type='checkbox' className='dn' />
           <label className='toc-icon relative pointer z-2 f6 lh-solid bg-near-white b--silver pa1 ma1 ba br1' htmlFor='toc'>
             Menu
           </label>
           <nav
-            className='toc toc-right js-toc relative z-1 transition--300 absolute pa4'
+            className='toc toc-right js-toc relative z-1 transition--300 absolute pa4 pt5'
             dangerouslySetInnerHTML={{ __html: props.tocHtml }}
           />
           <div
-            className='content js-toc-content pa4'
+            className='content js-toc-content pa4 pt5'
             dangerouslySetInnerHTML={{ __html: props.bodyHtml }}
           />
 

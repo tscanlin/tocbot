@@ -11,12 +11,8 @@ export default {
   ],
   topLinks: [
     {
-      text: 'About',
+      text: 'Home',
       href: nextConfig.assetPrefix + '/'
-    },
-    {
-      text: 'Changelog',
-      href: nextConfig.assetPrefix + '/changelog'
     },
     {
       text: 'Github',
