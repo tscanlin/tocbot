@@ -5,12 +5,12 @@ function makeIds () {
 
   Array.prototype.forEach.call(headings, function (heading) {
     var id = heading.id ? heading.id : heading.textContent.trim().toLowerCase()
-    .split(' ').join('-').replace(/[!@#$%^&*():]/ig, '').replace(/\//ig, '-')
-      headingMap[id] = !isNaN(headingMap[id]) ? ++headingMap[id] : 0
-      if (headingMap[id]) {
-        heading.id = id + '-' + headingMap[id]
-      } else {
-        heading.id = id
-      }
+      .split(' ').join('-').replace(/[!@#$%^&*():]/ig, '').replace(/\//ig, '-')
+    headingMap[id] = !isNaN(headingMap[id]) ? ++headingMap[id] : 0
+    if (headingMap[id]) {
+      heading.id = id + '-' + headingMap[id]
+    } else {
+      heading.id = id
+    }
   })
 }
