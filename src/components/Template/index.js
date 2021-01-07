@@ -28,7 +28,7 @@ function Template (props) {
         />
 
         {/* Fixed header component that hides behind the hero until scrolling down the page. */}
-        <div className='fixed-header fixed w-100 top-0 left-0 pv2 z-2' style={{backgroundColor: '#54BC4B'}}>
+        <div className='fixed-header fixed w-100 top-0 left-0 pv2 z-2' style={{ backgroundColor: '#54BC4B' }}>
           <div className='ph4 mw7 center white'>
             <a className='white no-underline' href='https://github.com/tscanlin/tocbot'>
               Tocbot

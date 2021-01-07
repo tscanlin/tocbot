@@ -88,5 +88,5 @@ module.exports = {
   basePath: '',
   // Only takes affect when `tocSelector` is scrolling,
   // keep the toc scroll position in sync with the content.
-  disableTocScrollSync: false,
+  disableTocScrollSync: false
 }
