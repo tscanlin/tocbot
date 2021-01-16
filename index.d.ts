@@ -115,6 +115,13 @@ declare namespace tocbot {
     // Function has to return the same or modified obj. 
     // The heading will be excluded from TOC if nothing is returned.
     headingObjectCallback?: (obj: object, node: HTMLElement) => object | void;
+
+    // Set the base path, useful if you use a `base` tag in `head`.
+    basePath?: string,
+
+    // Only takes affect when `tocSelector` is scrolling,
+    // keep the toc scroll position in sync with the content.
+    disableTocScrollSync?: boolean
   }
 
   /**
