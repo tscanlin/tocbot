@@ -132,7 +132,7 @@ contentSelector: '.js-toc-content',
 headingSelector: 'h1, h2, h3',
 // Headings that match the ignoreSelector will be skipped.
 ignoreSelector: '.js-toc-ignore',
-// For headings inside relative or absolute positioned containers within content.
+// For headings inside relative or absolute positioned containers within content
 hasInnerContainers: false,
 // Main class to add to links.
 linkClass: 'toc-link',
@@ -152,6 +152,8 @@ isCollapsedClass: 'is-collapsed',
 collapsibleClass: 'is-collapsible',
 // Class to add to list items.
 listItemClass: 'toc-list-item',
+// Class to add to active list items.
+activeListItemClass: 'is-active-li',
 // How many heading levels should not be collapsed.
 // For example, number 6 will show everything since
 // there are only 6 heading levels and number 0 will collapse them all.
@@ -162,10 +164,11 @@ collapseDepth: 0,
 scrollSmooth: true,
 // Smooth scroll duration.
 scrollSmoothDuration: 420,
+// Smooth scroll offset.
+scrollSmoothOffset: 0,
 // Callback for scroll end.
-scrollEndCallback: function (e) { },
+scrollEndCallback: function (e) {},
 // Headings offset between the headings and the top of the document (this is meant for minor adjustments).
-// Can also be used to account for scroll height discrepancies from the use of css scroll-padding-top
 headingsOffset: 1,
 // Timeout between events firing to make sure it's
 // not too rapid (for performance reasons).
@@ -185,7 +188,7 @@ includeHtml: false,
 // onclick function to apply to all links in toc. will be called with
 // the event as the first parameter, and this can be used to stop,
 // propagation, prevent default or perform action
-onClick: false,
+onClick: function (e) {},
 // orderedList can be set to false to generate unordered lists (ul)
 // instead of ordered lists (ol)
 orderedList: true,
@@ -196,7 +199,8 @@ skipRendering: false,
 // Optional callback to change heading labels.
 // For example it can be used to cut down and put ellipses on multiline headings you deem too long.
 // Called each time a heading is parsed. Expects a string in return, the modified label to display.
-headingLabelCallback: function (string) => string,
+// function (string) => string
+headingLabelCallback: false,
 // ignore headings that are hidden in DOM
 ignoreHiddenElements: false,
 // Optional callback to modify properties of parsed headings.
@@ -209,7 +213,7 @@ headingObjectCallback: null,
 basePath: '',
 // Only takes affect when `tocSelector` is scrolling,
 // keep the toc scroll position in sync with the content.
-disableTocScrollSync: false,
+disableTocScrollSync: false
 ```
 
 
