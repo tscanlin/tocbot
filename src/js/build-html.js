@@ -29,20 +29,18 @@ module.exports = function (options) {
   }
 
   /**
-   * Render nested heading array data into a given selector.
-   * @param {String} selector
+   * Render nested heading array data into a given element.
+   * @param {HTMLElement} parent
    * @param {Array} data
    * @return {HTMLElement}
    */
-  function render (selector, data) {
+  function render (parent, data) {
     var collapsed = false
     var container = createList(collapsed)
 
     data.forEach(function (d) {
       createEl(d, container)
     })
-
-    var parent = document.querySelector(selector)
 
     // Return if no parent is found.
     if (parent === null) {
