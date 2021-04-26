@@ -60,6 +60,9 @@ declare namespace tocbot {
 
     // Smooth scroll duration.
     scrollSmoothDuration?: number;
+    
+    // Smooth scroll offset.
+    scrollSmoothOffset?: number;
 
     // Callback for scroll end.
     scrollEndCallback?(e: MouseWheelEvent): void;
