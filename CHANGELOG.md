@@ -1,7 +1,8 @@
 ## Changelog
 
-
 ### 4.2.0
+
+### 4.1.3
 - Adding the ability to include title tags on the toc headers.
 
 ##### Fixed

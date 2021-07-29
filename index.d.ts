@@ -93,7 +93,7 @@ declare namespace tocbot {
     // includeTitleTags automatically sets the html title tag of the link
     // to match the title. This can be useful for SEO purposes or
     // when truncating titles.
-    includeTitleTags?: boolean,
+    includeTitleTags?: boolean;
 
     // onclick function to apply to all links in toc. will be called with
     // the event as the first parameter; and this can be used to stop;
