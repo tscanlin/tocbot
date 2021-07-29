@@ -79,6 +79,10 @@ module.exports = function (options) {
       a.onclick = options.onClick
     }
 
+    if (options.includeTitleTags) {
+      a.setAttribute('title', data.textContent)
+    }
+
     if (options.includeHtml && data.childNodes.length) {
       forEach.call(data.childNodes, function (node) {
         a.appendChild(node.cloneNode(true))
