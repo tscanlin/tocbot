@@ -6,6 +6,7 @@
   "scripts": {
     "clean": "rm -rf dist/",
     "mkdir-dist": "mkdir dist",
+    "cleanInstall": "rm -rf node_modules package-lock.json && npm i",
     "build": "npm run build-all",
     "build-all": "npm run clean && npm run mkdir-dist && npm run build-js && npm run build-js-uglify && npm run build-css && npm run build-dist && npm run build-docs",
     "build-docs": "npm run build-content && npm run next-build && npm run next-export && npm run next-export-fix && npm run fix-jekyll",

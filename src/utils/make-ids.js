@@ -1,4 +1,4 @@
-function makeIds () {
+function makeIds () { // eslint-disable-line
   var content = document.querySelector('.js-toc-content')
   var headings = content.querySelectorAll('h1, h2, h3, h4, h5, h6, h7')
   var headingMap = {}
