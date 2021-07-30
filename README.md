@@ -185,6 +185,10 @@ fixedSidebarOffset: 'auto',
 // includeHtml can be set to true to include the HTML markup from the
 // heading node instead of just including the textContent.
 includeHtml: false,
+// includeTitleTags automatically sets the html title tag of the link
+// to match the title. This can be useful for SEO purposes or
+// when truncating titles.
+includeTitleTags: false,
 // onclick function to apply to all links in toc. will be called with
 // the event as the first parameter, and this can be used to stop,
 // propagation, prevent default or perform action
