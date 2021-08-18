@@ -80,7 +80,9 @@ function jump (target, options) {
   // This makes ids that start with a number work: ('[id="' + decodeURI(target).split('#').join('') + '"]')
   // DecodeURI for nonASCII hashes, they was encoded, but id was not encoded, it lead to not finding the tgt element by id.
   // And this is for IE: document.body.scrollTop
-  var tgt = document.querySelector('[id="' + decodeURI(target).split('#').join('') + '"]')
+  // Handle decoded and non-decoded URIs since sometimes URLs automatically transform them (support for internation chars).
+  var tgt = document.querySelector('[id="' + decodeURI(target).split('#').join('') + '"]') ||
+    document.querySelector('[id="' + (target).split('#').join('') + '"]')
   var distance = typeof target === 'string'
     ? opt.offset + (
       target
