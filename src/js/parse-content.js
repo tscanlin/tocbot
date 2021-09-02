@@ -23,7 +23,7 @@ module.exports = function parseContent (options) {
    * @return {Number}
    */
   function getHeadingLevel (heading) {
-    return +heading.nodeName.split('H').join('')
+    return +heading.nodeName.toUpperCase().replace('H', '')
   }
 
   /**
