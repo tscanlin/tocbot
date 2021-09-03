@@ -65,7 +65,7 @@ declare namespace tocbot {
     scrollSmoothOffset?: number;
 
     // Callback for scroll end.
-    scrollEndCallback?(e: MouseWheelEvent): void;
+    scrollEndCallback?(e: WheelEvent): void;
 
     // Headings offset between the headings and the top of the document (this is meant for minor adjustments).
     headingsOffset?: number;
