@@ -78,7 +78,10 @@ module.exports = function parseContent (options) {
 
     while (counter > 0) {
       lastItem = getLastItem(array)
-      if (lastItem && lastItem.children !== undefined) {
+      // Handle case where there are multiple h5+ in a row.
+      if (lastItem && level === lastItem.headingLevel) {
+        break
+      } else if (lastItem && lastItem.children !== undefined) {
         array = lastItem.children
       }
       counter--
