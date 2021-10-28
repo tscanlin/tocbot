@@ -1,3 +1,5 @@
+/* eslint no-var: off */
+
 /**
  * This file is responsible for building the DOM and updating DOM state.
  *

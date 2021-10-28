@@ -1,9 +1,10 @@
+/* eslint no-var: off */
 /* globals location, requestAnimationFrame */
 
 exports.initSmoothScrolling = initSmoothScrolling
 
 function initSmoothScrolling (options) {
-  if (isCssSmoothSCrollSupported()) { }
+  if (isCssSmoothSCrollSupported()) { return }
 
   var duration = options.duration
   var offset = options.offset
@@ -85,9 +86,9 @@ function jump (target, options) {
     document.querySelector('[id="' + (target).split('#').join('') + '"]')
   var distance = typeof target === 'string'
     ? opt.offset + (
-      target
-        ? (tgt && tgt.getBoundingClientRect().top) || 0 // handle non-existent links better.
-        : -(document.documentElement.scrollTop || document.body.scrollTop))
+        target
+          ? (tgt && tgt.getBoundingClientRect().top) || 0 // handle non-existent links better.
+          : -(document.documentElement.scrollTop || document.body.scrollTop))
     : target
   var duration = typeof opt.duration === 'function'
     ? opt.duration(distance)

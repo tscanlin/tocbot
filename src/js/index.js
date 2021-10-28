@@ -1,3 +1,4 @@
+/* eslint no-var: off */
 /**
  * Tocbot
  * Tocbot creates a toble of contents based on HTML headings on a page,
