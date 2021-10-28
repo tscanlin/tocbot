@@ -4,7 +4,7 @@
 exports.initSmoothScrolling = initSmoothScrolling
 
 function initSmoothScrolling (options) {
-  if (isCssSmoothSCrollSupported()) { return }
+  // if (isCssSmoothSCrollSupported()) { return }
 
   var duration = options.duration
   var offset = options.offset

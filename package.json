@@ -9,7 +9,7 @@
     "cleanInstall": "rm -rf node_modules package-lock.json && npm i",
     "build": "npm run build-all",
     "build-all": "npm run clean && npm run mkdir-dist && npm run build-js && npm run build-js-uglify && npm run build-css && npm run build-dist && npm run build-docs",
-    "build-docs": "npm run build-content && npm run next-build && npm run next-export && npm run next-export-fix && npm run fix-jekyll",
+    "build-docs": "npm run build-content && npm run next-build && npm run next-export && npm run fix-jekyll",
     "build-css": "node-sass --include-path ./node_modules --output-style compressed -o static/css src/scss",
     "build-css-watch": "node-sass --source-map-embed --watch --include-path ./node_modules --output-style compressed -o static/css src/scss",
     "build-dist": "cp static/js/tocbot.js ./dist/ && cp static/js/tocbot.min.js ./dist/ && cp static/css/tocbot.css ./dist/ && cp static/css/styles.css ./dist/",
@@ -36,7 +36,6 @@
     "next": "node ./server.js",
     "next-build": "next build",
     "next-export": "next export",
-    "next-export-fix": "node ./scripts/fix-export.js",
     "next-start": "next start",
     "v-patch": "npm version patch && git push --tags && npm publish && git push",
     "v-minor": "npm version minor && git push --tags && npm publish && git push",
@@ -91,7 +90,7 @@
     "react-dom": "^17.0.2",
     "standard": "^16.0.4",
     "webpack": "^5.60.0",
-    "webpack-cli": "^4.9.1"
+    "webpack-cli": "^3.3.12"
   },
   "npmName": "tocbot",
   "npmFileMap": [
