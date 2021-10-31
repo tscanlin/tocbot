@@ -2,8 +2,6 @@
 <a href="http://tscanlin.github.io/tocbot">Tocbot</a>
 </h1>
 
-<a class="no-decoration" href="https://travis-ci.org/tscanlin/tocbot" target="_blank"><img src="https://travis-ci.org/tscanlin/tocbot.svg?branch=master" alt="travis-ci" /></a>
-
 <a class="no-decoration" href="https://github.com/tscanlin/tocbot/actions" target="_blank"><img src="https://github.com/tscanlin/tocbot/actions/workflows/node.js.yml/badge.svg" alt="github-actions" /></a>
 
 
