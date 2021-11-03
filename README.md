@@ -2,8 +2,6 @@
 <a href="http://tscanlin.github.io/tocbot">Tocbot</a>
 </h1>
 
-<a class="no-decoration" href="https://travis-ci.org/tscanlin/tocbot" target="_blank"><img src="https://travis-ci.org/tscanlin/tocbot.svg?branch=master" alt="travis-ci" /></a>
-
 <a class="no-decoration" href="https://github.com/tscanlin/tocbot/actions" target="_blank"><img src="https://github.com/tscanlin/tocbot/actions/workflows/node.js.yml/badge.svg" alt="github-actions" /></a>
 
 
@@ -205,7 +203,9 @@ scrollContainer: null,
 skipRendering: false,
 // Optional callback to change heading labels.
 // For example it can be used to cut down and put ellipses on multiline headings you deem too long.
-// Called each time a heading is parsed. Expects a string in return, the modified label to display.
+// Called each time a heading is parsed. Expects a string and returns the modified label to display.
+// Additionally, the attribute `data-heading-label` may be used on a heading to specify
+// a shorter string to be used in the TOC.
 // function (string) => string
 headingLabelCallback: false,
 // ignore headings that are hidden in DOM
