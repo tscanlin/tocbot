@@ -51,9 +51,9 @@ function initSmoothScrolling (options) {
     return url.slice(0, url.lastIndexOf('#'))
   }
 
-  function isCssSmoothSCrollSupported () {
-    return 'scrollBehavior' in document.documentElement.style
-  }
+  // function isCssSmoothSCrollSupported () {
+  //   return 'scrollBehavior' in document.documentElement.style
+  // }
 
   // Adapted from:
   // https://www.nczonline.net/blog/2013/01/15/fixing-skip-to-content-links/
