@@ -1,3 +1,5 @@
+/* eslint no-var: off */
+
 module.exports = function updateTocScroll (options) {
   var toc = document.querySelector(options.tocSelector)
   if (toc && toc.scrollHeight > toc.clientHeight) {
