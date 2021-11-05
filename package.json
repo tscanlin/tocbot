@@ -1,6 +1,6 @@
 {
   "name": "tocbot",
-  "version": "4.13.5",
+  "version": "4.16.0",
   "description": "Generate a table of contents based on the heading structure of a html document.",
   "main": "src/js/index.js",
   "scripts": {
@@ -37,6 +37,7 @@
     "next-build": "next build",
     "next-export": "next export",
     "next-start": "next start",
+    "v-prerelease": "npm version prerelease && git push --tags && npm publish && git push",
     "v-patch": "npm version patch && git push --tags && npm publish && git push",
     "v-minor": "npm version minor && git push --tags && npm publish && git push",
     "v-major": "npm version major && git push --tags && npm publish && git push"

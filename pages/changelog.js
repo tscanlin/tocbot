@@ -1,6 +1,6 @@
 import React from 'react'
 import Template from '../src/components/Template'
-import TryIt from '../src/components/Template/TryIt'
+// import TryIt from '../src/components/Template/TryIt'
 
 import CONFIG from '../data/config.js'
 import PAGE_JSON from '../data/CHANGELOG.json'
@@ -17,7 +17,7 @@ const Index = (props) => {
       repo={CONFIG.repo}
       user={CONFIG.user}
       siteId={CONFIG.siteId}
-      extraElements={<TryIt />}
+      // extraElements={<TryIt />}
     />
   )
 }
