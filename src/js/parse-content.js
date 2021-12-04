@@ -42,8 +42,8 @@ module.exports = function parseContent (options) {
       return null
     }
 
-    const headingLabel = heading.getAttribute('data-heading-label')
-      || (options.headingLabelCallback ? String(options.headingLabelCallback(heading.textContent)) : heading.textContent.trim())
+    const headingLabel = heading.getAttribute('data-heading-label') ||
+      (options.headingLabelCallback ? String(options.headingLabelCallback(heading.textContent)) : heading.textContent.trim())
     var obj = {
       id: heading.id,
       children: [],

@@ -245,7 +245,7 @@ module.exports = function (options) {
    * @return {HTMLElement}
    */
   function removeCollapsedFromParents (element) {
-    if (element.className.indexOf(options.collapsibleClass) !== -1 && element.className.indexOf(options.isCollapsedClass) !== -1) {
+    if (element && element.className.indexOf(options.collapsibleClass) !== -1 && element.className.indexOf(options.isCollapsedClass) !== -1) {
       element.className = element.className.split(SPACE_CHAR + options.isCollapsedClass).join('')
       return removeCollapsedFromParents(element.parentNode.parentNode)
     }
