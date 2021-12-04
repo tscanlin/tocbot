@@ -216,7 +216,7 @@ module.exports = function (options) {
       if (activeTocLink && activeTocLink.className.indexOf(options.activeLinkClass) === -1) {
         activeTocLink.className += SPACE_CHAR + options.activeLinkClass
       }
-      var li = activeTocLink.parentNode
+      var li = activeTocLink && activeTocLink.parentNode
       if (li && li.className.indexOf(options.activeListItemClass) === -1) {
         li.className += SPACE_CHAR + options.activeListItemClass
       }
@@ -232,10 +232,10 @@ module.exports = function (options) {
       })
 
       // Expand the active link's collapsible list and its sibling if applicable.
-      if (activeTocLink.nextSibling && activeTocLink.nextSibling.className.indexOf(options.isCollapsedClass) !== -1) {
+      if (activeTocLink && activeTocLink.nextSibling && activeTocLink.nextSibling.className.indexOf(options.isCollapsedClass) !== -1) {
         activeTocLink.nextSibling.className = activeTocLink.nextSibling.className.split(SPACE_CHAR + options.isCollapsedClass).join('')
       }
-      removeCollapsedFromParents(activeTocLink.parentNode.parentNode)
+      removeCollapsedFromParents(activeTocLink && activeTocLink.parentNode.parentNode)
     }
   }
 
@@ -245,7 +245,7 @@ module.exports = function (options) {
    * @return {HTMLElement}
    */
   function removeCollapsedFromParents (element) {
-    if (element.className.indexOf(options.collapsibleClass) !== -1 && element.className.indexOf(options.isCollapsedClass) !== -1) {
+    if (element && element.className.indexOf(options.collapsibleClass) !== -1 && element.className.indexOf(options.isCollapsedClass) !== -1) {
       element.className = element.className.split(SPACE_CHAR + options.isCollapsedClass).join('')
       return removeCollapsedFromParents(element.parentNode.parentNode)
     }
