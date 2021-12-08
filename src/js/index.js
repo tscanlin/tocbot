@@ -87,10 +87,9 @@
   tocbot.destroy = function () {
     if (!options.skipRendering) {
       // Clear HTML.
-      try {
-        document.querySelector(options.tocSelector).innerHTML = ''
-      } catch (e) {
-        console.warn('Element not found: ' + options.tocSelector); // eslint-disable-line
+      var tocElement = document.querySelector(options.tocSelector)
+      if (tocElement) {
+        tocElement.innerHTML = ''
       }
     }
 
