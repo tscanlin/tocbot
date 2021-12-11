@@ -148,5 +148,5 @@ declare namespace tocbot {
    * Refresh tocbot if the document changes and it needs to be rebuilt.
    * @see https://github.com/tscanlin/tocbot#refresh
    */
-  function refresh(): void;
+  function refresh(options?: IStaticOptions): void;
 }
