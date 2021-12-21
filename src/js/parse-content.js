@@ -100,11 +100,11 @@ module.exports = function parseContent (options) {
 
   /**
    * Select headings in content area, exclude any selector in options.ignoreSelector
-   * @param {String} contentSelector
+   * @param {HTMLElement} contentElement
    * @param {Array} headingSelector
    * @return {Array}
    */
-  function selectHeadings (contentSelector, headingSelector) {
+  function selectHeadings (contentElement, headingSelector) {
     var selectors = headingSelector
     if (options.ignoreSelector) {
       selectors = headingSelector.split(',')
@@ -113,10 +113,9 @@ module.exports = function parseContent (options) {
         })
     }
     try {
-      return document.querySelector(contentSelector)
-        .querySelectorAll(selectors)
+      return contentElement.querySelectorAll(selectors)
     } catch (e) {
-      console.warn('Element not found: ' + contentSelector); // eslint-disable-line
+      console.warn('Headers not found with selector: ' + selectors); // eslint-disable-line
       return null
     }
   }

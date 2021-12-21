@@ -81,13 +81,35 @@
     }
   }
 
+  function getContentElement (options) {
+    try {
+      return options.contentElement || document.querySelector(options.contentSelector)
+    } catch (e) {
+      console.warn('Contents element not found: ' + options.contentSelector) // eslint-disable-line
+      return null
+    }
+  }
+
+  function getTocElement (options) {
+    try {
+      return options.tocElement || document.querySelector(options.tocSelector)
+    } catch (e) {
+      console.warn('TOC element not found: ' + options.tocSelector) // eslint-disable-line
+      return null
+    }
+  }
+
   /**
    * Destroy tocbot.
    */
   tocbot.destroy = function () {
+    var tocElement = getTocElement(options)
+    if (tocElement === null) {
+      return
+    }
+
     if (!options.skipRendering) {
       // Clear HTML.
-      var tocElement = document.querySelector(options.tocSelector)
       if (tocElement) {
         tocElement.innerHTML = ''
       }
@@ -143,8 +165,18 @@
     // Destroy it if it exists first.
     tocbot.destroy()
 
+    var contentElement = getContentElement(options)
+    if (contentElement === null) {
+      return
+    }
+
+    var tocElement = getTocElement(options)
+    if (tocElement === null) {
+      return
+    }
+
     // Get headings array.
-    headingsArray = parseContent.selectHeadings(options.contentSelector, options.headingSelector)
+    headingsArray = parseContent.selectHeadings(contentElement, options.headingSelector)
     // Return if no headings are found.
     if (headingsArray === null) {
       return
@@ -156,7 +188,7 @@
 
     // Render.
     if (!options.skipRendering) {
-      buildHtml.render(options.tocSelector, nestedHeadings)
+      buildHtml.render(tocElement, nestedHeadings)
     }
 
     // Update Sidebar and bind listeners.

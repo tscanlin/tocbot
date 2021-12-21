@@ -126,7 +126,8 @@ describe('Tocbot', function () {
 describe('Parse content', function () {
   it('#selectHeadings with default options', function () {
     var selectHeadings = tocbot._parseContent.selectHeadings
-    var defaultHeadings = selectHeadings(tocbot.options.contentSelector, tocbot.options.headingSelector)
+    var contentEl = GLOBAL.window.document.querySelector(tocbot.options.contentSelector)
+    var defaultHeadings = selectHeadings(contentEl, tocbot.options.headingSelector)
     defaultHeadings = [].map.call(defaultHeadings, function (node) {
       return node.textContent
     })
@@ -156,7 +157,8 @@ describe('Parse content', function () {
 
   it('#selectHeadings with custom headingSelector option', function () {
     var selectHeadings = tocbot._parseContent.selectHeadings
-    var defaultHeadings = selectHeadings(tocbot.options.contentSelector, 'h1, h2')
+    var contentEl = GLOBAL.window.document.querySelector(tocbot.options.contentSelector)
+    var defaultHeadings = selectHeadings(contentEl, 'h1, h2')
     defaultHeadings = [].map.call(defaultHeadings, function (node) {
       return node.textContent
     })
@@ -177,7 +179,8 @@ describe('Parse content', function () {
 
   it('#nestHeadingsArray', function () {
     var selectHeadings = tocbot._parseContent.selectHeadings
-    var defaultHeadings = selectHeadings(tocbot.options.contentSelector, tocbot.options.headingSelector)
+    var contentEl = GLOBAL.window.document.querySelector(tocbot.options.contentSelector)
+    var defaultHeadings = selectHeadings(contentEl, tocbot.options.headingSelector)
     var nestHeadingsData = tocbot._parseContent.nestHeadingsArray(defaultHeadings)
 
     expect(nestHeadingsData.nest).to.eql(TEST_DATA)
@@ -190,7 +193,8 @@ describe('Build HTML', function () {
     tocbot.destroy()
     tocbot.init()
     var render = tocbot._buildHtml.render
-    var tocEl = render(tocbot.options.tocSelector, TEST_DATA)
+    var tocEl = GLOBAL.window.document.querySelector(tocbot.options.tocSelector)
+    var tocEl = render(tocEl, TEST_DATA)
     var html = TEST_HTML.split('\n').join('')
       .replace(/>\s+</g, '><') // Remove spaces between all elements.
 
@@ -209,7 +213,8 @@ describe('Build HTML', function () {
       GLOBAL.window.document.createElement('SUP')
     ]
     nodes[1].textContent = 'sup'
-    var tocEl = render(tocbot.options.tocSelector, [{
+    var tocEl = GLOBAL.window.document.querySelector(tocbot.options.tocSelector)
+    var tocEl = render(tocEl, [{
       'id': 'Whatsup',
       'children': [],
       'nodeName': 'H2',
@@ -233,7 +238,8 @@ describe('Build HTML', function () {
       GLOBAL.window.document.createElement('SUP')
     ]
     nodes[1].textContent = 'sup'
-    var tocEl = render(tocbot.options.tocSelector, [{
+    var tocEl = GLOBAL.window.document.querySelector(tocbot.options.tocSelector)
+    var tocEl = render(tocEl, [{
       'id': 'Whatsup',
       'children': [],
       'nodeName': 'H2',
