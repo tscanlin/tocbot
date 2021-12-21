@@ -104,7 +104,7 @@ module.exports = function parseContent (options) {
    * @param {Array} headingSelector
    * @return {Array}
    */
-  function selectHeadings(contentElement, headingSelector) {
+  function selectHeadings (contentElement, headingSelector) {
     var selectors = headingSelector
     if (options.ignoreSelector) {
       selectors = headingSelector.split(',')
