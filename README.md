@@ -2,7 +2,8 @@
 <a href="http://tscanlin.github.io/tocbot">Tocbot</a>
 </h1>
 
-<a class="no-decoration" href="https://travis-ci.org/tscanlin/tocbot" target="_blank"><img src="https://travis-ci.org/tscanlin/tocbot.svg?branch=master" alt="travis-ci" /></a>
+<a class="no-decoration" href="https://github.com/tscanlin/tocbot/actions" target="_blank"><img src="https://github.com/tscanlin/tocbot/actions/workflows/node.js.yml/badge.svg" alt="github-actions" /></a>
+
 
 Tocbot builds a [table of contents](https://en.wikipedia.org/wiki/Table_of_contents) (TOC) from headings in an HTML document. This is useful for documentation websites or long markdown pages because it makes them easier to navigate. This library was inspired by [Tocify](http://gregfranko.com/jquery.tocify.js/), the main difference is that Tocbot uses native DOM methods and avoids the jQuery & jQuery UI dependencies.
 
@@ -189,6 +190,10 @@ fixedSidebarOffset: 'auto',
 // includeHtml can be set to true to include the HTML markup from the
 // heading node instead of just including the textContent.
 includeHtml: false,
+// includeTitleTags automatically sets the html title tag of the link
+// to match the title. This can be useful for SEO purposes or
+// when truncating titles.
+includeTitleTags: false,
 // onclick function to apply to all links in toc. will be called with
 // the event as the first parameter, and this can be used to stop,
 // propagation, prevent default or perform action
@@ -202,7 +207,9 @@ scrollContainer: null,
 skipRendering: false,
 // Optional callback to change heading labels.
 // For example it can be used to cut down and put ellipses on multiline headings you deem too long.
-// Called each time a heading is parsed. Expects a string in return, the modified label to display.
+// Called each time a heading is parsed. Expects a string and returns the modified label to display.
+// Additionally, the attribute `data-heading-label` may be used on a heading to specify
+// a shorter string to be used in the TOC.
 // function (string) => string
 headingLabelCallback: false,
 // ignore headings that are hidden in DOM

@@ -61,8 +61,11 @@ declare namespace tocbot {
     // Smooth scroll duration.
     scrollSmoothDuration?: number;
 
+    // Smooth scroll offset.
+    scrollSmoothOffset?: number;
+
     // Callback for scroll end.
-    scrollEndCallback?(e: MouseWheelEvent): void;
+    scrollEndCallback?(e: WheelEvent): void;
 
     // Headings offset between the headings and the top of the document (this is meant for minor adjustments).
     headingsOffset?: number;
@@ -87,6 +90,11 @@ declare namespace tocbot {
     // heading node instead of just including the textContent.
     includeHtml?: boolean;
 
+    // includeTitleTags automatically sets the html title tag of the link
+    // to match the title. This can be useful for SEO purposes or
+    // when truncating titles.
+    includeTitleTags?: boolean;
+
     // onclick function to apply to all links in toc. will be called with
     // the event as the first parameter; and this can be used to stop;
     // propagation; prevent default or perform action
@@ -101,8 +109,8 @@ declare namespace tocbot {
 
     // prevent ToC DOM rendering if it's already rendered by an external system
     skipRendering?: boolean;
-        
-    // Optional callback to change heading labels. 
+
+    // Optional callback to change heading labels.
     // For example it can be used to cut down and put ellipses on multiline headings you deem too long.
     // Called each time a heading is parsed. Expects a string in return, the modified label to display.
     headingLabelCallback?: (headingLabel: string) => string;
@@ -112,7 +120,7 @@ declare namespace tocbot {
 
     // Optional callback to modify properties of parsed headings.
     // The heading element is passed in node parameter and information parsed by default parser is provided in obj parameter.
-    // Function has to return the same or modified obj. 
+    // Function has to return the same or modified obj.
     // The heading will be excluded from TOC if nothing is returned.
     headingObjectCallback?: (obj: object, node: HTMLElement) => object | void;
 
@@ -140,5 +148,5 @@ declare namespace tocbot {
    * Refresh tocbot if the document changes and it needs to be rebuilt.
    * @see https://github.com/tscanlin/tocbot#refresh
    */
-  function refresh(): void;
+  function refresh(options?: IStaticOptions): void;
 }

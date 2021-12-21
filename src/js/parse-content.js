@@ -1,3 +1,4 @@
+/* eslint no-var: off */
 /**
  * This file is responsible for parsing the content from the DOM and making
  * sure data is nested properly.
@@ -23,7 +24,7 @@ module.exports = function parseContent (options) {
    * @return {Number}
    */
   function getHeadingLevel (heading) {
-    return +heading.nodeName.split('H').join('')
+    return +heading.nodeName.toUpperCase().replace('H', '')
   }
 
   /**
@@ -41,12 +42,14 @@ module.exports = function parseContent (options) {
       return null
     }
 
+    const headingLabel = heading.getAttribute('data-heading-label') ||
+      (options.headingLabelCallback ? String(options.headingLabelCallback(heading.textContent)) : heading.textContent.trim())
     var obj = {
       id: heading.id,
       children: [],
       nodeName: heading.nodeName,
       headingLevel: getHeadingLevel(heading),
-      textContent: options.headingLabelCallback ? String(options.headingLabelCallback(heading.textContent)) : heading.textContent.trim()
+      textContent: headingLabel
     }
 
     if (options.includeHtml) {
@@ -78,7 +81,10 @@ module.exports = function parseContent (options) {
 
     while (counter > 0) {
       lastItem = getLastItem(array)
-      if (lastItem && lastItem.children !== undefined) {
+      // Handle case where there are multiple h5+ in a row.
+      if (lastItem && level === lastItem.headingLevel) {
+        break
+      } else if (lastItem && lastItem.children !== undefined) {
         array = lastItem.children
       }
       counter--

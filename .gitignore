@@ -11,4 +11,3 @@ test/__screenshots-new__
 npm-debug.*
 data/README.json
 data/CHANGELOG.json
-package-lock.json

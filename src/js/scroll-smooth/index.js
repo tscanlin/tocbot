@@ -1,9 +1,10 @@
+/* eslint no-var: off */
 /* globals location, requestAnimationFrame */
 
 exports.initSmoothScrolling = initSmoothScrolling
 
 function initSmoothScrolling (options) {
-  if (isCssSmoothSCrollSupported()) { }
+  // if (isCssSmoothSCrollSupported()) { return }
 
   var duration = options.duration
   var offset = options.offset
@@ -50,9 +51,9 @@ function initSmoothScrolling (options) {
     return url.slice(0, url.lastIndexOf('#'))
   }
 
-  function isCssSmoothSCrollSupported () {
-    return 'scrollBehavior' in document.documentElement.style
-  }
+  // function isCssSmoothSCrollSupported () {
+  //   return 'scrollBehavior' in document.documentElement.style
+  // }
 
   // Adapted from:
   // https://www.nczonline.net/blog/2013/01/15/fixing-skip-to-content-links/
@@ -80,12 +81,14 @@ function jump (target, options) {
   // This makes ids that start with a number work: ('[id="' + decodeURI(target).split('#').join('') + '"]')
   // DecodeURI for nonASCII hashes, they was encoded, but id was not encoded, it lead to not finding the tgt element by id.
   // And this is for IE: document.body.scrollTop
-  var tgt = document.querySelector('[id="' + decodeURI(target).split('#').join('') + '"]')
+  // Handle decoded and non-decoded URIs since sometimes URLs automatically transform them (support for internation chars).
+  var tgt = document.querySelector('[id="' + decodeURI(target).split('#').join('') + '"]') ||
+    document.querySelector('[id="' + (target).split('#').join('') + '"]')
   var distance = typeof target === 'string'
     ? opt.offset + (
-      target
-        ? (tgt && tgt.getBoundingClientRect().top) || 0 // handle non-existent links better.
-        : -(document.documentElement.scrollTop || document.body.scrollTop))
+        target
+          ? (tgt && tgt.getBoundingClientRect().top) || 0 // handle non-existent links better.
+          : -(document.documentElement.scrollTop || document.body.scrollTop))
     : target
   var duration = typeof opt.duration === 'function'
     ? opt.duration(distance)

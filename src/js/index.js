@@ -1,3 +1,4 @@
+/* eslint no-var: off */
 /**
  * Tocbot
  * Tocbot creates a toble of contents based on HTML headings on a page,
@@ -109,7 +110,9 @@
 
     if (!options.skipRendering) {
       // Clear HTML.
-      tocElement.innerHTML = ''
+      if (tocElement) {
+        tocElement.innerHTML = ''
+      }
     }
 
     // Remove event listeners.

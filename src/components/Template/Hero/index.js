@@ -20,7 +20,8 @@ function Hero (props) {
                   >
                     {link.text}
                   </a>
-                ) : (
+                  )
+                : (
                   <Link href={link.href} key={i}>
                     <a
                       className='dib f6 white no-underline pa1 ma1'
@@ -29,7 +30,7 @@ function Hero (props) {
                       {link.text}
                     </a>
                   </Link>
-                )
+                  )
             })
           )}
         </div>
@@ -43,13 +44,14 @@ function Hero (props) {
           <div className='mv2 ml4'>
             {props.cta
               ? (
-                props.cta
-              ) : (
-                makeGithubCounter({
-                  repo: props.repo,
-                  user: props.user
-                })
-              )}
+                  props.cta
+                )
+              : (
+                  makeGithubCounter({
+                    repo: props.repo,
+                    user: props.user
+                  })
+                )}
           </div>
         </div>
       </div>

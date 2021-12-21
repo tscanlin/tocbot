@@ -3,9 +3,10 @@ import React from 'react'
 const TOCBOT_OPTIONS = {
   tocSelector: '.js-toc',
   contentSelector: '.js-toc-content',
-  headingSelector: 'h2, h3, h4',
+  headingSelector: 'h2, h3, h4, h5, h6',
   positionFixedSelector: '.js-toc',
   includeHtml: true,
+  includeTitleTags: false,
   hasInnerContainers: true,
   onClick: (e) => { console.log('you clicked a link', e) },
   headingsOffset: 40,
