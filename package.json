@@ -84,7 +84,7 @@
     "next": "^12.0.1",
     "next-export": "^0.1.7",
     "node-resemble-js": "^0.2.0",
-    "node-sass": "^6.0.1",
+    "node-sass": "^7.0.0",
     "parallelshell": "github:darkguy2008/parallelshell#8fd83e2",
     "processmd": "^4.6.1",
     "react": "^17.0.2",
