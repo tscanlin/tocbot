@@ -278,8 +278,8 @@ describe('Update TOC on scroll', function () {
     var tocEl = render(tocEl, TEST_DATA)
     GLOBAL.window.document.documentElement.scrollTop = 300
     updateToc(tocbot._headingsArray)
-    expect(tocEl.innerHTML).to.contain('is-active-li')
-    expect(tocEl.innerHTML).to.contain('is-active-link')
+    expect(tocEl.innerHTML).to.contain(tocbot.options.activeLinkClass)
+    expect(tocEl.innerHTML).to.contain(tocbot.options.activeListItemClass)
   })
 
   it('Should update TOC on scroll using tocElement with missing tocSelector', function () {
@@ -294,8 +294,8 @@ describe('Update TOC on scroll', function () {
     var tocEl = render(tocEl, TEST_DATA)
     GLOBAL.window.document.documentElement.scrollTop = 300
     updateToc(tocbot._headingsArray)
-    expect(tocEl.innerHTML).to.contain('is-active-li')
-    expect(tocEl.innerHTML).to.contain('is-active-link')
+    expect(tocEl.innerHTML).to.contain(tocbot.options.activeLinkClass)
+    expect(tocEl.innerHTML).to.contain(tocbot.options.activeListItemClass)
   })
 
 })
