@@ -161,6 +161,7 @@
     // For testing purposes.
     this._buildHtml = buildHtml
     this._parseContent = parseContent
+    this._headingsArray = headingsArray
 
     // Destroy it if it exists first.
     tocbot.destroy()
@@ -174,6 +175,7 @@
     if (tocElement === null) {
       return
     }
+    buildHtml.setElements(tocElement, contentElement)
 
     // Get headings array.
     headingsArray = parseContent.selectHeadings(contentElement, options.headingSelector)

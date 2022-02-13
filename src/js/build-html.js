@@ -10,8 +10,20 @@ module.exports = function (options) {
   var forEach = [].forEach
   var some = [].some
   var body = document.body
+  var tocElement
+  var contentElement
   var currentlyHighlighting = true
   var SPACE_CHAR = ' '
+
+  /**
+   * Sets the TOC and the Content elements to be used
+   * @param {HTMLElement} tocEl
+   * @param {HTMLElement} contentEl
+   */
+  function setElements (tocEl, contentEl) {
+    tocElement = tocEl
+    contentElement = contentEl
+  }
 
   /**
    * Create link and list elements.
@@ -32,7 +44,7 @@ module.exports = function (options) {
 
   /**
    * Render nested heading array data into a given element.
-   * @param {HTMLElement} parent
+   * @param {HTMLElement} parent Optional. If provided updates the {@see tocElement} to match.
    * @param {Array} data
    * @return {HTMLElement}
    */
@@ -44,23 +56,24 @@ module.exports = function (options) {
       createEl(d, container)
     })
 
-    // Return if no parent is found.
-    if (parent === null) {
+    // Return if no TOC element is provided or known.
+    tocElement = parent || tocElement
+    if (tocElement === null) {
       return
     }
 
     // Remove existing child if it exists.
-    if (parent.firstChild) {
-      parent.removeChild(parent.firstChild)
+    if (tocElement.firstChild) {
+      tocElement.removeChild(tocElement.firstChild)
     }
 
     // Just return the parent and don't append the list if no links are found.
     if (data.length === 0) {
-      return parent
+      return tocElement
     }
 
     // Append the Elements that have been created
-    return parent.appendChild(container)
+    return tocElement.appendChild(container)
   }
 
   /**
@@ -131,7 +144,7 @@ module.exports = function (options) {
     var posFixedEl = document.querySelector(options.positionFixedSelector)
 
     if (options.fixedSidebarOffset === 'auto') {
-      options.fixedSidebarOffset = document.querySelector(options.tocSelector).offsetTop
+      options.fixedSidebarOffset = tocElement.offsetTop
     }
 
     if (top > options.fixedSidebarOffset) {
@@ -145,12 +158,12 @@ module.exports = function (options) {
 
   /**
    * Get top position of heading
-   * @param {HTMLElement}
-   * @return {integer} position
+   * @param {HTMLElement} obj
+   * @return {int} position
    */
   function getHeadingTopPos (obj) {
     var position = 0
-    if (obj !== document.querySelector(options.contentSelector && obj != null)) {
+    if (obj !== contentElement && obj != null) {
       position = obj.offsetTop
       if (options.hasInnerContainers) { position += getHeadingTopPos(obj.offsetParent) }
     }
@@ -179,7 +192,7 @@ module.exports = function (options) {
     var topHeader
     // Using some instead of each so that we can escape early.
     if (currentlyHighlighting &&
-      document.querySelector(options.tocSelector) !== null &&
+      tocElement !== null &&
       headings.length > 0) {
       some.call(headings, function (heading, i) {
         if (getHeadingTopPos(heading) > top + options.headingsOffset + 10) {
@@ -195,19 +208,19 @@ module.exports = function (options) {
       })
 
       // Remove the active class from the other tocLinks.
-      var tocLinks = document.querySelector(options.tocSelector)
+      var tocLinks = tocElement
         .querySelectorAll('.' + options.linkClass)
       forEach.call(tocLinks, function (tocLink) {
         tocLink.className = tocLink.className.split(SPACE_CHAR + options.activeLinkClass).join('')
       })
-      var tocLis = document.querySelector(options.tocSelector)
+      var tocLis = tocElement
         .querySelectorAll('.' + options.listItemClass)
       forEach.call(tocLis, function (tocLi) {
         tocLi.className = tocLi.className.split(SPACE_CHAR + options.activeListItemClass).join('')
       })
 
       // Add the active class to the active tocLink.
-      var activeTocLink = document.querySelector(options.tocSelector)
+      var activeTocLink = tocElement
         .querySelector('.' + options.linkClass +
           '.node-name--' + topHeader.nodeName +
           '[href="' + options.basePath + '#' + topHeader.id.replace(/([ #;&,.+*~':"!^$[\]()=>|/@])/g, '\\$1') + '"]')
@@ -219,7 +232,7 @@ module.exports = function (options) {
         li.className += SPACE_CHAR + options.activeListItemClass
       }
 
-      var tocLists = document.querySelector(options.tocSelector)
+      var tocLists = tocElement
         .querySelectorAll('.' + options.listClass + '.' + options.collapsibleClass)
 
       // Collapse the other collapsible lists.
@@ -272,6 +285,7 @@ module.exports = function (options) {
   }
 
   return {
+    setElements: setElements,
     enableTocAnimation: enableTocAnimation,
     disableTocAnimation: disableTocAnimation,
     render: render,
