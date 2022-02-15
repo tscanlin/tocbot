@@ -250,4 +250,52 @@ describe('Build HTML', function () {
     }])
     expect(tocEl.innerHTML).to.contain('<li class="toc-list-item"><a href="#Whatsup" class="toc-link node-name--H2 ">Whatsup</a></li>')
   })
+
+  it('Should respect tocElement with missing tocSelector', function () {
+    tocbot.destroy()
+    var tocEl = GLOBAL.window.document.querySelector('.js-toc')
+    tocbot.init({
+      tocSelector: '.missing',
+      tocElement: tocEl
+    })
+    var render = tocbot._buildHtml.render
+    var tocEl = render(tocEl, TEST_DATA)
+    var html = TEST_HTML.split('\n').join('')
+      .replace(/>\s+</g, '><') // Remove spaces between all elements.
+
+    expect(html).to.contain(tocEl.innerHTML)
+  })
+})
+
+describe('Update TOC on scroll', function () {
+
+  it('Should update TOC on scroll', function () {
+    tocbot.destroy()
+    tocbot.init()
+    var render = tocbot._buildHtml.render
+    var updateToc = tocbot._buildHtml.updateToc
+    var tocEl = GLOBAL.window.document.querySelector(tocbot.options.tocSelector)
+    var tocEl = render(tocEl, TEST_DATA)
+    GLOBAL.window.document.documentElement.scrollTop = 300
+    updateToc(tocbot._headingsArray)
+    expect(tocEl.innerHTML).to.contain(tocbot.options.activeLinkClass)
+    expect(tocEl.innerHTML).to.contain(tocbot.options.activeListItemClass)
+  })
+
+  it('Should update TOC on scroll using tocElement with missing tocSelector', function () {
+    tocbot.destroy()
+    var tocEl = GLOBAL.window.document.querySelector('.js-toc')
+    tocbot.init({
+      tocSelector: '.missing',
+      tocElement: tocEl
+    })
+    var render = tocbot._buildHtml.render
+    var updateToc = tocbot._buildHtml.updateToc
+    var tocEl = render(tocEl, TEST_DATA)
+    GLOBAL.window.document.documentElement.scrollTop = 300
+    updateToc(tocbot._headingsArray)
+    expect(tocEl.innerHTML).to.contain(tocbot.options.activeLinkClass)
+    expect(tocEl.innerHTML).to.contain(tocbot.options.activeListItemClass)
+  })
+
 })
