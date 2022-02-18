@@ -163,7 +163,7 @@ module.exports = function (options) {
    */
   function getHeadingTopPos (obj) {
     var position = 0
-    if (obj !== contentElement && obj != null) {
+    if (obj !== null) {
       position = obj.offsetTop
       if (options.hasInnerContainers) { position += getHeadingTopPos(obj.offsetParent) }
     }
