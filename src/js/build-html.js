@@ -11,19 +11,8 @@ module.exports = function (options) {
   var some = [].some
   var body = document.body
   var tocElement
-  var contentElement
   var currentlyHighlighting = true
   var SPACE_CHAR = ' '
-
-  /**
-   * Sets the TOC and the Content elements to be used
-   * @param {HTMLElement} tocEl
-   * @param {HTMLElement} contentEl
-   */
-  function setElements (tocEl, contentEl) {
-    tocElement = tocEl
-    contentElement = contentEl
-  }
 
   /**
    * Create link and list elements.
@@ -285,7 +274,6 @@ module.exports = function (options) {
   }
 
   return {
-    setElements: setElements,
     enableTocAnimation: enableTocAnimation,
     disableTocAnimation: disableTocAnimation,
     render: render,

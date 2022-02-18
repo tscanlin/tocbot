@@ -175,7 +175,6 @@
     if (tocElement === null) {
       return
     }
-    buildHtml.setElements(tocElement, contentElement)
 
     // Get headings array.
     headingsArray = parseContent.selectHeadings(contentElement, options.headingSelector)
