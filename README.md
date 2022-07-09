@@ -29,7 +29,7 @@ OR
 Include the script at the bottom of the page before the closing body tag.
 
 ```html
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.11.1/tocbot.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.min.js"></script>
 ```
 
 
@@ -38,7 +38,7 @@ Include the script at the bottom of the page before the closing body tag.
 CSS is used for expanding & collapsing groupings and some basic styling.
 
 ```html
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.11.1/tocbot.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.css">
 ```
 
 OR
