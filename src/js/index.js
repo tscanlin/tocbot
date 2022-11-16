@@ -19,7 +19,7 @@
   } else {
     root.tocbot = factory(root)
   }
-})(typeof global !== 'undefined' ? global : this.window || this.global, function (root) {
+})(typeof global !== 'undefined' ? global : window || global, function (root) {
   'use strict'
 
   // Default options.
