@@ -22,7 +22,7 @@ function Hero (props) {
                   </a>
                   )
                 : (
-                  <Link href={link.href} key={i}>
+                  <Link href={link.href} key={i} legacyBehavior>
                     <a
                       className='dib f6 white no-underline pa1 ma1'
                       href={link.href}
