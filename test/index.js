@@ -3,6 +3,7 @@ var chai = require('chai')
 var expect = chai.expect
 // Count all of the links from the io.js build page
 var jsdom = require('jsdom')
+const { JSDOM } = jsdom
 var TEST_DATA = require('./data/json-data.js')()
 var TEST_HTML = fs.readFileSync('./test/data/rendered.html').toString()
 
@@ -10,33 +11,20 @@ var GLOBAL = {
   window: {}
 }
 var tocbot
-
-// function spy (fn) {
-//   var args = []
-//   var fun = function () {
-//     args.push([].slice.call(arguments))
-//     return fn(arguments)
-//   }
-//   fun._args = args
-//   return fun
-// }
-
+    
 var content = fs.readFileSync('./test/data/sample-meat.html').toString()
-var markup = '<html><head></head><body>' + content + '</body></html>'
+var jsContent = fs.readFileSync('./static/js/tocbot.js').toString()
 
 before(function (done) {
-  jsdom.env(
-    markup,
-    [
-      './static/js/tocbot.js'
-    ],
-    function (err, window) {
-      if (err) return err
-      GLOBAL.window = window
-      tocbot = window.tocbot
-      done()
-    }
-  )
+  const { window } = new JSDOM(content, { runScripts: "dangerously" })
+  GLOBAL.window = window
+  window.document.body.innerHTML = content
+  const scriptEl = window.document.createElement("script")
+  scriptEl.textContent = jsContent
+  window.document.body.appendChild(scriptEl)
+  tocbot = window.tocbot
+  
+  done()
 })
 
 beforeEach(function () {

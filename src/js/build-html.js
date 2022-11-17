@@ -274,9 +274,9 @@ module.exports = function (options) {
   }
 
   return {
-    enableTocAnimation: enableTocAnimation,
-    disableTocAnimation: disableTocAnimation,
-    render: render,
-    updateToc: updateToc
+    enableTocAnimation,
+    disableTocAnimation,
+    render,
+    updateToc
   }
 }
