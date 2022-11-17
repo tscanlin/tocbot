@@ -283,10 +283,10 @@ module.exports = function (options) {
   }
 
   return {
-    enableTocAnimation: enableTocAnimation,
-    disableTocAnimation: disableTocAnimation,
-    render: render,
-    updateToc: updateToc
+    enableTocAnimation,
+    disableTocAnimation,
+    render,
+    updateToc
   }
 }
 
@@ -807,8 +807,8 @@ module.exports = function parseContent (options) {
   }
 
   return {
-    nestHeadingsArray: nestHeadingsArray,
-    selectHeadings: selectHeadings
+    nestHeadingsArray,
+    selectHeadings
   }
 }
 
@@ -855,8 +855,8 @@ function initSmoothScrolling (options) {
       // e.preventDefault()
 
       jump(e.target.hash, {
-        duration: duration,
-        offset: offset,
+        duration,
+        offset,
         callback: function () {
           setFocus(e.target.hash)
         }
@@ -909,9 +909,9 @@ function jump (target, options) {
     document.querySelector('[id="' + (target).split('#').join('') + '"]')
   var distance = typeof target === 'string'
     ? opt.offset + (
-        target
-          ? (tgt && tgt.getBoundingClientRect().top) || 0 // handle non-existent links better.
-          : -(document.documentElement.scrollTop || document.body.scrollTop))
+      target
+        ? (tgt && tgt.getBoundingClientRect().top) || 0 // handle non-existent links better.
+        : -(document.documentElement.scrollTop || document.body.scrollTop))
     : target
   var duration = typeof opt.duration === 'function'
     ? opt.duration(distance)
