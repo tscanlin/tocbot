@@ -138,7 +138,7 @@ module.exports = function parseContent (options) {
   }
 
   return {
-    nestHeadingsArray: nestHeadingsArray,
-    selectHeadings: selectHeadings
+    nestHeadingsArray,
+    selectHeadings
   }
 }
