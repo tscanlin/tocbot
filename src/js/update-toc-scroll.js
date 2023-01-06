@@ -5,7 +5,7 @@ module.exports = function updateTocScroll (options) {
   if (toc && toc.scrollHeight > toc.clientHeight) {
     var activeItem = toc.querySelector('.' + options.activeListItemClass)
     if (activeItem) {
-      toc.scrollTop = activeItem.offsetTop
+      toc.scrollTop = activeItem.offsetTop - options.tocScrollOffset
     }
   }
 }

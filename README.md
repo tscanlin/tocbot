@@ -225,7 +225,10 @@ headingObjectCallback: null,
 basePath: '',
 // Only takes affect when `tocSelector` is scrolling,
 // keep the toc scroll position in sync with the content.
-disableTocScrollSync: false
+disableTocScrollSync: false,
+// Offset for the toc scroll (top) position when scrolling the page.
+// Only effective if `disableTocScrollSync` is false.
+tocScrollOffset: 0,
 ```
 
 

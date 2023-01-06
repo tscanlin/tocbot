@@ -196,6 +196,17 @@ module.exports = function (options) {
         }
       })
 
+      var oldActiveTocLink = tocElement.querySelector('.' + options.activeLinkClass)
+      var activeTocLink = tocElement
+        .querySelector('.' + options.linkClass +
+          '.node-name--' + topHeader.nodeName +
+          '[href="' + options.basePath + '#' + topHeader.id.replace(/([ #;&,.+*~':"!^$[\]()=>|/\\@])/g, '\\$1') + '"]')
+      // Performance improvement to only change the classes
+      // for the toc if a new link should be highlighted.
+      if (oldActiveTocLink === activeTocLink) {
+        return
+      }
+
       // Remove the active class from the other tocLinks.
       var tocLinks = tocElement
         .querySelectorAll('.' + options.linkClass)
@@ -209,10 +220,6 @@ module.exports = function (options) {
       })
 
       // Add the active class to the active tocLink.
-      var activeTocLink = tocElement
-        .querySelector('.' + options.linkClass +
-          '.node-name--' + topHeader.nodeName +
-          '[href="' + options.basePath + '#' + topHeader.id.replace(/([ #;&,.+*~':"!^$[\]()=>|/@])/g, '\\$1') + '"]')
       if (activeTocLink && activeTocLink.className.indexOf(options.activeLinkClass) === -1) {
         activeTocLink.className += SPACE_CHAR + options.activeLinkClass
       }
