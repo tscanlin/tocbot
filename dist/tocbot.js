@@ -205,6 +205,17 @@ module.exports = function (options) {
         }
       })
 
+      var oldActiveTocLink = tocElement.querySelector('.' + options.activeLinkClass)
+      var activeTocLink = tocElement
+        .querySelector('.' + options.linkClass +
+          '.node-name--' + topHeader.nodeName +
+          '[href="' + options.basePath + '#' + topHeader.id.replace(/([ #;&,.+*~':"!^$[\]()=>|/\\@])/g, '\\$1') + '"]')
+      // Performance improvement to only change the classes
+      // for the toc if a new link should be highlighted.
+      if (oldActiveTocLink === activeTocLink) {
+        return
+      }
+
       // Remove the active class from the other tocLinks.
       var tocLinks = tocElement
         .querySelectorAll('.' + options.linkClass)
@@ -218,10 +229,6 @@ module.exports = function (options) {
       })
 
       // Add the active class to the active tocLink.
-      var activeTocLink = tocElement
-        .querySelector('.' + options.linkClass +
-          '.node-name--' + topHeader.nodeName +
-          '[href="' + options.basePath + '#' + topHeader.id.replace(/([ #;&,.+*~':"!^$[\]()=>|/@])/g, '\\$1') + '"]')
       if (activeTocLink && activeTocLink.className.indexOf(options.activeLinkClass) === -1) {
         activeTocLink.className += SPACE_CHAR + options.activeLinkClass
       }
@@ -395,7 +402,10 @@ module.exports = {
   basePath: '',
   // Only takes affect when `tocSelector` is scrolling,
   // keep the toc scroll position in sync with the content.
-  disableTocScrollSync: false
+  disableTocScrollSync: false,
+  // Offset for the toc scroll (top) position when scrolling the page.
+  // Only effective if `disableTocScrollSync` is false.
+  tocScrollOffset: 0,
 }
 
 
@@ -959,7 +969,7 @@ module.exports = function updateTocScroll (options) {
   if (toc && toc.scrollHeight > toc.clientHeight) {
     var activeItem = toc.querySelector('.' + options.activeListItemClass)
     if (activeItem) {
-      toc.scrollTop = activeItem.offsetTop
+      toc.scrollTop = activeItem.offsetTop - options.tocScrollOffset
     }
   }
 }
