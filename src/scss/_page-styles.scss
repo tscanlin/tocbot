@@ -70,3 +70,10 @@ a.toc-link {
 .page-content {
   display: block !important;
 }
+
+// Tocbot styles for extra nesting.
+.toc-link.node-name--H1 ~ .toc-list .toc-list-item .toc-link.node-name--H3,
+.toc-link.node-name--H2 ~ .toc-list .toc-list-item .toc-link.node-name--H4,
+.toc-link.node-name--H3 ~ .toc-list .toc-list-item .toc-link.node-name--H5 {
+  margin-left: 10px;
+}
