@@ -160,7 +160,7 @@ module.exports = function (options) {
   }
 
   /**
-   * Update TOC highlighting and collpased groupings.
+   * Update TOC highlighting and collapsed groupings.
    */
   function updateToc (headingsArray) {
     // If a fixed content container was set
@@ -247,7 +247,7 @@ module.exports = function (options) {
   }
 
   /**
-   * Remove collpased class from parent elements.
+   * Remove collapsed class from parent elements.
    * @param {HTMLElement} element
    * @return {HTMLElement}
    */
