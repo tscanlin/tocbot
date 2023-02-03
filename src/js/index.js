@@ -59,7 +59,7 @@
   }
 
   // From: https://remysharp.com/2010/07/21/throttling-function-calls
-  function throttle (fn, threshhold, scope) {
+  function throttle (fn, threshold, scope) {
     threshold || (threshold = 250)
     var last
     var deferTimer
