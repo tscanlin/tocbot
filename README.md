@@ -1,5 +1,5 @@
 <h1 class="dn">
-<a href="http://tscanlin.github.io/tocbot">Tocbot</a>
+<a href="https://tscanlin.github.io/tocbot">Tocbot</a>
 </h1>
 
 <a class="no-decoration" href="https://github.com/tscanlin/tocbot/actions" target="_blank"><img src="https://github.com/tscanlin/tocbot/actions/workflows/node.js.yml/badge.svg" alt="github-actions" /></a>
@@ -91,7 +91,7 @@ tocbot.destroy();
 
 ## Examples
 
-- [Tocbot Homepage](http://tscanlin.github.io/tocbot/)
+- [Tocbot Homepage](https://tscanlin.github.io/tocbot/)
 - [Pagekit TOC](https://spqr.wtf/projects/toc)
 - [Optimizely's Developer Documentation](https://developers.optimizely.com/x/solutions/javascript/reference/index.html)
 
