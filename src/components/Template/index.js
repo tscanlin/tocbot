@@ -70,7 +70,7 @@ Template.defaultProps = {
   subtitle: '',
   description: '',
   stylesheets: [
-    `https://unpkg.com/tachyons@${CSS_VERSION}/css/tachyons.min.css`
+    `https://unpkg.com/tachyons@${CSS_VERSION}/css/tachyons.css`
   ],
   extraElements: null
 }

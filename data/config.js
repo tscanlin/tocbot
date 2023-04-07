@@ -5,7 +5,7 @@ export default {
   subtitle: 'Generate a table of contents based on the heading structure of an html document',
   description: 'Tocbot - Generate a table of contents based on the heading structure of an html document',
   stylesheets: [
-    'https://unpkg.com/tachyons@4.20.1/css/tachyons.min.css',
+    'https://unpkg.com/tachyons@4.20.1/css/tachyons.css',
     nextConfig.assetPrefix + '/static/css/tocbot.css',
     nextConfig.assetPrefix + '/static/css/styles.css'
   ],
