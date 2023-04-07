@@ -109,10 +109,10 @@ module.exports = function (options) {
   function createList (isCollapsed) {
     var listElement = (options.orderedList) ? 'ol' : 'ul'
     var list = document.createElement(listElement)
-    var classes = (`${options.listClass + SPACE_CHAR + options.extraListClasses}`)
+    var classes = options.listClass + SPACE_CHAR + options.extraListClasses
     if (isCollapsed) {
-      classes += SPACE_CHAR + options.collapsibleClass
-      classes += SPACE_CHAR + options.isCollapsedClass
+      classes = classes + SPACE_CHAR + options.collapsibleClass
+      classes = classes + SPACE_CHAR + options.isCollapsedClass
     }
     list.setAttribute('class', classes)
     return list
