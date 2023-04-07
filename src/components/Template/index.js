@@ -6,8 +6,6 @@ import Tocbot from './Tocbot'
 import Tracking from './Tracking'
 import pkg from '../../../package.json'
 
-const CSS_VERSION = '4.20.1'
-
 function Template (props) {
   return (
     <div className='page-content'>
@@ -70,7 +68,7 @@ Template.defaultProps = {
   subtitle: '',
   description: '',
   stylesheets: [
-    `https://cdnjs.cloudflare.com/ajax/libs/tocbot/${CSS_VERSION}/tachyons.css`
+    'https://unpkg.com/tachyons@4.7.0/css/tachyons.min.css'
   ],
   extraElements: null
 }
