@@ -28,19 +28,19 @@ module.exports = function parseContent (options) {
   }
 
   /**
-   * Determine whether the object is an HTML Element. 
+   * Determine whether the object is an HTML Element.
    * Also works inside iframes. HTML Elements might be created by the parent document.
    * @param {Object} maybeElement
    * @return {Number}
    */
-  function isHTMLElement(maybeElement) {
+  function isHTMLElement (maybeElement) {
     try {
       return (
         maybeElement instanceof window.HTMLElement ||
         maybeElement instanceof window.parent.HTMLElement
-      );
+      )
     } catch (e) {
-      return maybeElement instanceof window.HTMLElement;
+      return maybeElement instanceof window.HTMLElement
     }
   }
 
