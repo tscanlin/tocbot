@@ -28,6 +28,23 @@ module.exports = function parseContent (options) {
   }
 
   /**
+   * Determine whether the object is an HTML Element.
+   * Also works inside iframes. HTML Elements might be created by the parent document.
+   * @param {Object} maybeElement
+   * @return {Number}
+   */
+  function isHTMLElement (maybeElement) {
+    try {
+      return (
+        maybeElement instanceof window.HTMLElement ||
+        maybeElement instanceof window.parent.HTMLElement
+      )
+    } catch (e) {
+      return maybeElement instanceof window.HTMLElement
+    }
+  }
+
+  /**
    * Get important properties from a heading element and store in a plain object.
    * @param {HTMLElement} heading
    * @return {Object}
@@ -36,7 +53,7 @@ module.exports = function parseContent (options) {
     // each node is processed twice by this method because nestHeadingsArray() and addNode() calls it
     // first time heading is real DOM node element, second time it is obj
     // that is causing problem so I am processing only original DOM node
-    if (!(heading instanceof window.HTMLElement)) return heading
+    if (!isHTMLElement(heading)) return heading
 
     if (options.ignoreHiddenElements && (!heading.offsetHeight || !heading.offsetParent)) {
       return null

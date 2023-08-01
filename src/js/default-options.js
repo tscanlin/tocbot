@@ -97,5 +97,5 @@ module.exports = {
   disableTocScrollSync: false,
   // Offset for the toc scroll (top) position when scrolling the page.
   // Only effective if `disableTocScrollSync` is false.
-  tocScrollOffset: 0,
+  tocScrollOffset: 0
 }
