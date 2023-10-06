@@ -190,6 +190,9 @@
     // Render.
     if (!options.skipRendering) {
       buildHtml.render(tocElement, nestedHeadings)
+    } else {
+      // No need to attach listeners if skipRendering is true, this was causing errors.
+      return this
     }
 
     // Update Sidebar and bind listeners.
