@@ -285,5 +285,17 @@ describe('Update TOC on scroll', function () {
     expect(tocEl.innerHTML).to.contain(tocbot.options.activeLinkClass)
     expect(tocEl.innerHTML).to.contain(tocbot.options.activeListItemClass)
   })
+  
+  it('Should not error when skipRendering is true', function () {
+    tocbot.destroy()
+    var tocEl = GLOBAL.window.document.querySelector('.js-toc')
+    expect(() => {
+      tocbot.init({
+        tocSelector: '.missing',
+        tocElement: tocEl,
+        skipRendering: true,
+      })
+    }).to.not.throw()
+  })
 
 })
