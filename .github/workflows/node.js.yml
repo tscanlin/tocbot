@@ -60,6 +60,7 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+      latest_tag: "$(git describe --tags `git rev-list --tags --max-count=1`)"
     runs-on: ubuntu-latest
     needs: build
     steps:
@@ -71,7 +72,7 @@ jobs:
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
-          automatic_release_tag: "${{ github.ref_name }}"
+          automatic_release_tag: "${{ latest_tag }}"
           files: |
             LICENSE
             dist/*.js
