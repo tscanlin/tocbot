@@ -23,9 +23,6 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 
-env:
-  LATEST_TAG: "$(git describe --tags `git rev-list --tags --max-count=1`)"
-
 jobs:
   build:
 
@@ -66,6 +63,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
+      - run: echo "GIT_TAG=`echo $(git describe --tags --abbrev=0)`" >> $GITHUB_ENV
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
@@ -74,7 +72,7 @@ jobs:
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
-          automatic_release_tag: "$LATEST_TAG"
+          automatic_release_tag: "$GIT_TAG"
           files: |
             LICENSE
             dist/*.js
