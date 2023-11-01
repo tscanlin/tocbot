@@ -67,6 +67,7 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
+      - run: 'echo "TAG: $GIT_TAG"'
       - name: Automatic Releases
         uses: marvinpinto/action-automatic-releases@v1.2.1
         with:
