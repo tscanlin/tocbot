@@ -46,11 +46,15 @@ jobs:
     - run: npm test
     - run: ${{ steps.detect-package-manager.outputs.runner }} npm run next-build
     - run: ${{ steps.detect-package-manager.outputs.runner }} npm run next-export
+    # - name: Upload artifact
+    #   uses: actions/upload-pages-artifact@v1
+    #   with:
+    #     path: ./dist
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v1
       with:
         path: ./out
-    
+
   # Deployment job
   deploy:
     environment:
@@ -62,4 +66,11 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
-
+      - name: Automatic Releases
+        uses: marvinpinto/action-automatic-releases@v1.2.1
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          files: |
+            LICENSE
+            dist/*.js
