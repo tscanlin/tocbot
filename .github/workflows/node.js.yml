@@ -67,13 +67,13 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
-      - run: 'echo "TAG: $(git describe --tags --abbrev=0)"'
+      - run: echo "$GIT_TAG"
       - name: Automatic Releases
         uses: marvinpinto/action-automatic-releases@v1.2.1
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
-          automatic_release_tag: "$(git describe --tags --abbrev=0)"
+          automatic_release_tag: "$GIT_TAG"
           files: |
             LICENSE
             dist/*.js
