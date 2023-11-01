@@ -33,6 +33,7 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
           files: |
-            LICENSE
             README.md
+            LICENSE
             dist/*.js
+            dist/*.css
