@@ -46,10 +46,6 @@ jobs:
     - run: npm test
     - run: ${{ steps.detect-package-manager.outputs.runner }} npm run next-build
     - run: ${{ steps.detect-package-manager.outputs.runner }} npm run next-export
-    # - name: Upload artifact
-    #   uses: actions/upload-pages-artifact@v1
-    #   with:
-    #     path: ./dist
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v1
       with:
@@ -66,16 +62,4 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@latest
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          body: |
-            ${{ steps.Changelog.outputs.changelog }}
-          draft: false
-          prerelease: false
 
