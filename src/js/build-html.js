@@ -141,7 +141,7 @@ module.exports = function (options) {
         posFixedEl.className += SPACE_CHAR + options.positionFixedClass
       }
     } else {
-      posFixedEl.className = posFixedEl.className.split(SPACE_CHAR + options.positionFixedClass).join('')
+      posFixedEl.className = posFixedEl.className.replace(SPACE_CHAR + options.positionFixedClass, '')
     }
   }
 
@@ -157,6 +157,19 @@ module.exports = function (options) {
       if (options.hasInnerContainers) { position += getHeadingTopPos(obj.offsetParent) }
     }
     return position
+  }
+
+  /**
+   * Update className only when changed.
+   * @param {HTMLElement} obj
+   * @param {string} className
+   * @return {HTMLElement} obj
+   */
+  function updateClassname (obj, className) {
+    if (obj && obj.className !== className) {
+      obj.className = className
+    }
+    return obj
   }
 
   /**
@@ -211,12 +224,12 @@ module.exports = function (options) {
       var tocLinks = tocElement
         .querySelectorAll('.' + options.linkClass)
       forEach.call(tocLinks, function (tocLink) {
-        tocLink.className = tocLink.className.split(SPACE_CHAR + options.activeLinkClass).join('')
+        updateClassname(tocLink, tocLink.className.replace(SPACE_CHAR + options.activeLinkClass, ''))
       })
       var tocLis = tocElement
         .querySelectorAll('.' + options.listItemClass)
       forEach.call(tocLis, function (tocLi) {
-        tocLi.className = tocLi.className.split(SPACE_CHAR + options.activeListItemClass).join('')
+        updateClassname(tocLi, tocLi.className.replace(SPACE_CHAR + options.activeListItemClass, ''))
       })
 
       // Add the active class to the active tocLink.
@@ -240,7 +253,7 @@ module.exports = function (options) {
 
       // Expand the active link's collapsible list and its sibling if applicable.
       if (activeTocLink && activeTocLink.nextSibling && activeTocLink.nextSibling.className.indexOf(options.isCollapsedClass) !== -1) {
-        activeTocLink.nextSibling.className = activeTocLink.nextSibling.className.split(SPACE_CHAR + options.isCollapsedClass).join('')
+        updateClassname(activeTocLink.nextSibling, activeTocLink.nextSibling.className.replace(SPACE_CHAR + options.isCollapsedClass, ''))
       }
       removeCollapsedFromParents(activeTocLink && activeTocLink.parentNode.parentNode)
     }
@@ -253,7 +266,7 @@ module.exports = function (options) {
    */
   function removeCollapsedFromParents (element) {
     if (element && element.className.indexOf(options.collapsibleClass) !== -1 && element.className.indexOf(options.isCollapsedClass) !== -1) {
-      element.className = element.className.split(SPACE_CHAR + options.isCollapsedClass).join('')
+      updateClassname(element, element.className.replace(SPACE_CHAR + options.isCollapsedClass, ''))
       return removeCollapsedFromParents(element.parentNode.parentNode)
     }
     return element
