@@ -20,7 +20,7 @@ before(function (done) {
   GLOBAL.window = window
   window.document.body.innerHTML = content
   const scriptEl = window.document.createElement("script")
-  scriptEl.textContent = jsContent
+  scriptEl.innerText = jsContent
   window.document.body.appendChild(scriptEl)
   tocbot = window.tocbot
   
@@ -117,7 +117,7 @@ describe('Parse content', function () {
     var contentEl = GLOBAL.window.document.querySelector(tocbot.options.contentSelector)
     var defaultHeadings = selectHeadings(contentEl, tocbot.options.headingSelector)
     defaultHeadings = [].map.call(defaultHeadings, function (node) {
-      return node.textContent
+      return node.innerText
     })
 
     expect(defaultHeadings).to.eql([
@@ -148,7 +148,7 @@ describe('Parse content', function () {
     var contentEl = GLOBAL.window.document.querySelector(tocbot.options.contentSelector)
     var defaultHeadings = selectHeadings(contentEl, 'h1, h2')
     defaultHeadings = [].map.call(defaultHeadings, function (node) {
-      return node.textContent
+      return node.innerText
     })
 
     expect(defaultHeadings).to.eql([
@@ -200,7 +200,7 @@ describe('Build HTML', function () {
       GLOBAL.window.document.createTextNode('What'),
       GLOBAL.window.document.createElement('SUP')
     ]
-    nodes[1].textContent = 'sup'
+    nodes[1].innerText = 'sup'
     var tocEl = GLOBAL.window.document.querySelector(tocbot.options.tocSelector)
     var tocEl = render(tocEl, [{
       'id': 'Whatsup',
@@ -225,7 +225,7 @@ describe('Build HTML', function () {
       GLOBAL.window.document.createTextNode('What'),
       GLOBAL.window.document.createElement('SUP')
     ]
-    nodes[1].textContent = 'sup'
+    nodes[1].innerText = 'sup'
     var tocEl = GLOBAL.window.document.querySelector(tocbot.options.tocSelector)
     var tocEl = render(tocEl, [{
       'id': 'Whatsup',

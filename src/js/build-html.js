@@ -82,7 +82,7 @@ module.exports = function (options) {
     }
 
     if (options.includeTitleTags) {
-      a.setAttribute('title', data.textContent)
+      a.setAttribute('title', data.innerText)
     }
 
     if (options.includeHtml && data.childNodes.length) {
@@ -91,7 +91,7 @@ module.exports = function (options) {
       })
     } else {
       // Default behavior.
-      a.textContent = data.textContent
+      a.innerText = data.innerText
     }
     a.setAttribute('href', options.basePath + '#' + data.id)
     a.setAttribute('class', options.linkClass +
