@@ -90,7 +90,7 @@ module.exports = function (options) {
         a.appendChild(node.cloneNode(true))
       })
     } else {
-      // Default behavior.
+      // Default behavior. Set to textContent to keep tests happy.
       a.textContent = data.textContent
     }
     a.setAttribute('href', options.basePath + '#' + data.id)
