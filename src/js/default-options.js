@@ -58,7 +58,7 @@ module.exports = {
   // element's offsetTop from the top of the document on init.
   fixedSidebarOffset: 'auto',
   // includeHtml can be set to true to include the HTML markup from the
-  // heading node instead of just including the textContent.
+  // heading node instead of just including the innerText.
   includeHtml: false,
   // includeTitleTags automatically sets the html title tag of the link
   // to match the title. This can be useful for SEO purposes or

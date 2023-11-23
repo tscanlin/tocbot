@@ -87,7 +87,7 @@ declare namespace tocbot {
     fixedSidebarOffset?: 'auto' | number;
 
     // includeHtml can be set to true to include the HTML markup from the
-    // heading node instead of just including the textContent.
+    // heading node instead of just including the innerText.
     includeHtml?: boolean;
 
     // includeTitleTags automatically sets the html title tag of the link

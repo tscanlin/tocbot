@@ -91,7 +91,7 @@ module.exports = function (options) {
     }
 
     if (options.includeTitleTags) {
-      a.setAttribute('title', data.textContent)
+      a.setAttribute('title', data.innerText)
     }
 
     if (options.includeHtml && data.childNodes.length) {
@@ -99,8 +99,8 @@ module.exports = function (options) {
         a.appendChild(node.cloneNode(true))
       })
     } else {
-      // Default behavior.
-      a.textContent = data.textContent
+      // Default behavior. Set to textContent tp keep tests happy.
+      a.textContent = data.innerText
     }
     a.setAttribute('href', options.basePath + '#' + data.id)
     a.setAttribute('class', options.linkClass +
@@ -379,7 +379,7 @@ module.exports = {
   // element's offsetTop from the top of the document on init.
   fixedSidebarOffset: 'auto',
   // includeHtml can be set to true to include the HTML markup from the
-  // heading node instead of just including the textContent.
+  // heading node instead of just including the innerText.
   includeHtml: false,
   // includeTitleTags automatically sets the html title tag of the link
   // to match the title. This can be useful for SEO purposes or
@@ -755,13 +755,13 @@ module.exports = function parseContent (options) {
     }
 
     const headingLabel = heading.getAttribute('data-heading-label') ||
-      (options.headingLabelCallback ? String(options.headingLabelCallback(heading.textContent)) : heading.textContent.trim())
+      (options.headingLabelCallback ? String(options.headingLabelCallback(heading.innerText)) : (heading.innerText || heading.textContent).trim())
     var obj = {
       id: heading.id,
       children: [],
       nodeName: heading.nodeName,
       headingLevel: getHeadingLevel(heading),
-      textContent: headingLabel
+      innerText: headingLabel
     }
 
     if (options.includeHtml) {

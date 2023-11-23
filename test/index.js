@@ -186,6 +186,7 @@ describe('Build HTML', function () {
     var html = TEST_HTML.split('\n').join('')
       .replace(/>\s+</g, '><') // Remove spaces between all elements.
 
+    console.log({html, h: tocEl.innerHTML})
     expect(html).to.contain(tocEl.innerHTML)
   })
 
@@ -207,7 +208,7 @@ describe('Build HTML', function () {
       'children': [],
       'nodeName': 'H2',
       'headingLevel': 2,
-      'textContent': 'Whatsup',
+      'innerText': 'Whatsup',
       'isCollapsed': true,
       'childNodes': nodes
     }])
@@ -232,7 +233,7 @@ describe('Build HTML', function () {
       'children': [],
       'nodeName': 'H2',
       'headingLevel': 2,
-      'textContent': 'Whatsup',
+      'innerText': 'Whatsup',
       'isCollapsed': true,
       'childNodes': nodes
     }])
