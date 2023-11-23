@@ -82,7 +82,7 @@ module.exports = function (options) {
     }
 
     if (options.includeTitleTags) {
-      a.setAttribute('title', data.innerText)
+      a.setAttribute('title', data.textContent)
     }
 
     if (options.includeHtml && data.childNodes.length) {
@@ -91,7 +91,7 @@ module.exports = function (options) {
       })
     } else {
       // Default behavior. Set to textContent to keep tests happy.
-      a.textContent = data.innerText
+      a.textContent = data.textContent
     }
     a.setAttribute('href', options.basePath + '#' + data.id)
     a.setAttribute('class', options.linkClass +

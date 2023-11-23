@@ -66,7 +66,7 @@ module.exports = function parseContent (options) {
       children: [],
       nodeName: heading.nodeName,
       headingLevel: getHeadingLevel(heading),
-      innerText: headingLabel
+      textContent: headingLabel
     }
 
     if (options.includeHtml) {

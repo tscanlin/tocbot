@@ -91,7 +91,7 @@ module.exports = function (options) {
     }
 
     if (options.includeTitleTags) {
-      a.setAttribute('title', data.innerText)
+      a.setAttribute('title', data.textContent)
     }
 
     if (options.includeHtml && data.childNodes.length) {
@@ -99,8 +99,8 @@ module.exports = function (options) {
         a.appendChild(node.cloneNode(true))
       })
     } else {
-      // Default behavior. Set to textContent tp keep tests happy.
-      a.textContent = data.innerText
+      // Default behavior. Set to textContent to keep tests happy.
+      a.textContent = data.textContent
     }
     a.setAttribute('href', options.basePath + '#' + data.id)
     a.setAttribute('class', options.linkClass +
@@ -761,7 +761,7 @@ module.exports = function parseContent (options) {
       children: [],
       nodeName: heading.nodeName,
       headingLevel: getHeadingLevel(heading),
-      innerText: headingLabel
+      textContent: headingLabel
     }
 
     if (options.includeHtml) {

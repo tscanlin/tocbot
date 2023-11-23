@@ -10,7 +10,7 @@ module.exports = function () {
           ],
           'nodeName': 'H2',
           'headingLevel': 2,
-          'innerText': 'Brisket',
+          'textContent': 'Brisket',
           'isCollapsed': true
         },
         {
@@ -23,13 +23,13 @@ module.exports = function () {
               ],
               'nodeName': 'H3',
               'headingLevel': 3,
-              'innerText': 'Pork',
+              'textContent': 'Pork',
               'isCollapsed': true
             }
           ],
           'nodeName': 'H2',
           'headingLevel': 2,
-          'innerText': 'Flank',
+          'textContent': 'Flank',
           'isCollapsed': true
         },
         {
@@ -42,7 +42,7 @@ module.exports = function () {
               ],
               'nodeName': 'H3',
               'headingLevel': 3,
-              'innerText': 'Drumstick',
+              'textContent': 'Drumstick',
               'isCollapsed': true
             },
             {
@@ -52,7 +52,7 @@ module.exports = function () {
               ],
               'nodeName': 'H3',
               'headingLevel': 3,
-              'innerText': 'Pastrami',
+              'textContent': 'Pastrami',
               'isCollapsed': true
             },
             {
@@ -62,19 +62,19 @@ module.exports = function () {
               ],
               'nodeName': 'H3',
               'headingLevel': 3,
-              'innerText': 'Meatloaf',
+              'textContent': 'Meatloaf',
               'isCollapsed': true
             }
           ],
           'nodeName': 'H2',
           'headingLevel': 2,
-          'innerText': 'Capicola',
+          'textContent': 'Capicola',
           'isCollapsed': true
         }
       ],
       'nodeName': 'H1',
       'headingLevel': 1,
-      'innerText': 'Bacon',
+      'textContent': 'Bacon',
       'isCollapsed': true
     },
     {
@@ -87,7 +87,7 @@ module.exports = function () {
           ],
           'nodeName': 'H2',
           'headingLevel': 2,
-          'innerText': 'Pork belly',
+          'textContent': 'Pork belly',
           'isCollapsed': true
         },
         {
@@ -97,7 +97,7 @@ module.exports = function () {
           ],
           'nodeName': 'H2',
           'headingLevel': 2,
-          'innerText': 'Bresaola shankle',
+          'textContent': 'Bresaola shankle',
           'isCollapsed': true
         },
         {
@@ -110,7 +110,7 @@ module.exports = function () {
               ],
               'nodeName': 'H3',
               'headingLevel': 3,
-              'innerText': 'Turducken',
+              'textContent': 'Turducken',
               'isCollapsed': true
             },
             {
@@ -120,7 +120,7 @@ module.exports = function () {
               ],
               'nodeName': 'H3',
               'headingLevel': 3,
-              'innerText': 'Alcatra',
+              'textContent': 'Alcatra',
               'isCollapsed': true
             },
             {
@@ -130,7 +130,7 @@ module.exports = function () {
               ],
               'nodeName': 'H3',
               'headingLevel': 3,
-              'innerText': 'Chuck',
+              'textContent': 'Chuck',
               'isCollapsed': true
             },
             {
@@ -140,13 +140,13 @@ module.exports = function () {
               ],
               'nodeName': 'H3',
               'headingLevel': 3,
-              'innerText': 'Spare ribs',
+              'textContent': 'Spare ribs',
               'isCollapsed': true
             }
           ],
           'nodeName': 'H2',
           'headingLevel': 2,
-          'innerText': 'Cow pancetta',
+          'textContent': 'Cow pancetta',
           'isCollapsed': true
         },
         {
@@ -156,13 +156,13 @@ module.exports = function () {
           ],
           'nodeName': 'H2',
           'headingLevel': 2,
-          'innerText': 'Swine venison chicken',
+          'textContent': 'Swine venison chicken',
           'isCollapsed': true
         }
       ],
       'nodeName': 'H1',
       'headingLevel': 1,
-      'innerText': 'Sirloin',
+      'textContent': 'Sirloin',
       'isCollapsed': true
     },
     {
@@ -175,13 +175,13 @@ module.exports = function () {
           ],
           'nodeName': 'H3',
           'headingLevel': 3,
-          'innerText': 'Kevin capicola shank',
+          'textContent': 'Kevin capicola shank',
           'isCollapsed': true
         }
       ],
       'nodeName': 'H1',
       'headingLevel': 1,
-      'innerText': 'Landjaeger',
+      'textContent': 'Landjaeger',
       'isCollapsed': true
     }
   ]

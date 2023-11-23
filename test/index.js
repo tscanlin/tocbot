@@ -207,7 +207,7 @@ describe('Build HTML', function () {
       'children': [],
       'nodeName': 'H2',
       'headingLevel': 2,
-      'innerText': 'Whatsup',
+      'textContent': 'Whatsup',
       'isCollapsed': true,
       'childNodes': nodes
     }])
@@ -232,7 +232,7 @@ describe('Build HTML', function () {
       'children': [],
       'nodeName': 'H2',
       'headingLevel': 2,
-      'innerText': 'Whatsup',
+      'textContent': 'Whatsup',
       'isCollapsed': true,
       'childNodes': nodes
     }])
