@@ -186,7 +186,6 @@ describe('Build HTML', function () {
     var html = TEST_HTML.split('\n').join('')
       .replace(/>\s+</g, '><') // Remove spaces between all elements.
 
-    console.log({html, h: tocEl.innerHTML})
     expect(html).to.contain(tocEl.innerHTML)
   })
 
