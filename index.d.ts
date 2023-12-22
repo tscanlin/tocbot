@@ -6,147 +6,114 @@ declare namespace tocbot {
    * @see https://github.com/tscanlin/tocbot#options
    */
   interface IStaticOptions {
-
     // Where to render the table of contents.
-    tocSelector?: string;
-
+    tocSelector?: string
     // Where to grab the headings to build the table of contents.
-    contentSelector?: string;
-
+    contentSelector?: string
     // Which headings to grab inside of the contentSelector element.
-    headingSelector?: string;
-
+    headingSelector?: string
     // Headings that match the ignoreSelector will be skipped.
-    ignoreSelector?: string;
-
+    ignoreSelector?: string
     // For headings inside relative or absolute positioned containers within content.
-    hasInnerContainers?: boolean;
-
+    hasInnerContainers?: boolean
     // Main class to add to links.
-    linkClass?: string;
-
+    linkClass?: string
     // Extra classes to add to links.
-    extraLinkClasses?: string;
-
-    // Class to add to active links;
-    // the link corresponding to the top most heading on the page.
-    activeLinkClass?: string;
-
+    extraLinkClasses?: string
+    // Class to add to active links    // the link corresponding to the top most heading on the page.
+    activeLinkClass?: string
     // Main class to add to lists.
-    listClass?: string;
-
+    listClass?: string
     // Extra classes to add to lists.
-    extraListClasses?: string;
-
+    extraListClasses?: string
     // Class that gets added when a list should be collapsed.
-    isCollapsedClass?: string;
-
+    isCollapsedClass?: string
     // Class that gets added when a list should be able
     // to be collapsed but isn't necessarily collapsed.
-    collapsibleClass?: string;
-
+    collapsibleClass?: string
     // Class to add to list items.
-    listItemClass?: string;
-
+    listItemClass?: string
+    // Class to add to active list items.
+    activeListItemClass?: string
     // How many heading levels should not be collapsed.
     // For example; number 6 will show everything since
     // there are only 6 heading levels and number 0 will collapse them all.
     // The sections that are hidden will open
     // and close as you scroll to headings within them.
-    collapseDepth?: number;
-
+    collapseDepth?: number
     // Smooth scrolling enabled.
-    scrollSmooth?: boolean;
-
+    scrollSmooth?: boolean
     // Smooth scroll duration.
-    scrollSmoothDuration?: number;
-
+    scrollSmoothDuration?: number
     // Smooth scroll offset.
-    scrollSmoothOffset?: number;
-
+    scrollSmoothOffset?: number
     // Callback for scroll end.
-    scrollEndCallback?(e: WheelEvent): void;
-
+    scrollEndCallback?(e: WheelEvent): void
     // Headings offset between the headings and the top of the document (this is meant for minor adjustments).
-    headingsOffset?: number;
-
+    headingsOffset?: number
     // Timeout between events firing to make sure it's
     // not too rapid (for performance reasons).
-    throttleTimeout?: number;
-
+    throttleTimeout?: number
     // Element to add the positionFixedClass to.
-    positionFixedSelector?: string | null;
-
+    positionFixedSelector?: string | null
     // Fixed position class to add to make sidebar fixed after scrolling
     // down past the fixedSidebarOffset.
-    positionFixedClass?: string;
-
+    positionFixedClass?: string
     // fixedSidebarOffset can be any number but by default is set
     // to auto which sets the fixedSidebarOffset to the sidebar
     // element's offsetTop from the top of the document on init.
-    fixedSidebarOffset?: 'auto' | number;
-
+    fixedSidebarOffset?: 'auto' | number
     // includeHtml can be set to true to include the HTML markup from the
     // heading node instead of just including the innerText.
-    includeHtml?: boolean;
-
+    includeHtml?: boolean
     // includeTitleTags automatically sets the html title tag of the link
     // to match the title. This can be useful for SEO purposes or
     // when truncating titles.
-    includeTitleTags?: boolean;
-
+    includeTitleTags?: boolean
     // onclick function to apply to all links in toc. will be called with
-    // the event as the first parameter; and this can be used to stop;
-    // propagation; prevent default or perform action
-    onClick?: (e: MouseEvent) => void;
-
+    // the event as the first parameter; and this can be used to stop    // propagation; prevent default or perform action
+    onClick?: (e: MouseEvent) => void
     // orderedList can be set to false to generate unordered lists (ul)
     // instead of ordered lists (ol)
-    orderedList?: boolean;
-
+    orderedList?: boolean
     // If there is a fixed article scroll container; set to calculate titles' offset
-    scrollContainer?: string | null;
-
+    scrollContainer?: string | null
     // prevent ToC DOM rendering if it's already rendered by an external system
-    skipRendering?: boolean;
-
+    skipRendering?: boolean
     // Optional callback to change heading labels.
     // For example it can be used to cut down and put ellipses on multiline headings you deem too long.
     // Called each time a heading is parsed. Expects a string in return, the modified label to display.
-    headingLabelCallback?: (headingLabel: string) => string;
-
+    headingLabelCallback?: (headingLabel: string) => string
     // ignore headings that are hidden in DOM
-    ignoreHiddenElements?: boolean;
-
+    ignoreHiddenElements?: boolean
     // Optional callback to modify properties of parsed headings.
     // The heading element is passed in node parameter and information parsed by default parser is provided in obj parameter.
     // Function has to return the same or modified obj.
     // The heading will be excluded from TOC if nothing is returned.
-    headingObjectCallback?: (obj: object, node: HTMLElement) => object | void;
-
+    headingObjectCallback?: (obj: object, node: HTMLElement) => object | void
     // Set the base path, useful if you use a `base` tag in `head`.
-    basePath?: string,
-
+    basePath?: string
     // Only takes affect when `tocSelector` is scrolling,
     // keep the toc scroll position in sync with the content.
     disableTocScrollSync?: boolean
+    // Offset for the toc scroll (top) position when scrolling the page.
+    // Only effective if `disableTocScrollSync` is false.
+    tocScrollOffset?: number
   }
 
   /**
    * Initialize tocbot with an options object.
    * @see https://github.com/tscanlin/tocbot#init
    */
-  function init(options?: IStaticOptions): void;
-
+  function init(options?: IStaticOptions): void
   /**
    * Destroy tocbot and remove event listeners.
    * @see https://github.com/tscanlin/tocbot#destroy
    */
-  function destroy(): void;
-
+  function destroy(): void
   /**
    * Refresh tocbot if the document changes and it needs to be rebuilt.
    * @see https://github.com/tscanlin/tocbot#refresh
    */
-  function refresh(options?: IStaticOptions): void;
+  function refresh(options?: IStaticOptions): void
 }
