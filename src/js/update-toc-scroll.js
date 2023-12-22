@@ -18,9 +18,8 @@ module.exports = function updateTocScroll (options) {
       // Above scroll view
       if (eTop < cTop + options.tocScrollOffset) {
         toc.scrollTop -= (cTop - eTop) + options.tocScrollOffset
-      }
       // Below scroll view
-      else if (eBottom > cBottom - options.tocScrollOffset - SCROLL_LEEWAY) {
+      } else if (eBottom > cBottom - options.tocScrollOffset - SCROLL_LEEWAY) {
         toc.scrollTop += (eBottom - cBottom) + options.tocScrollOffset + (2 * SCROLL_LEEWAY)
       }
     }
