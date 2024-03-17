@@ -263,7 +263,7 @@ tocbot.refresh()
 
 - Tocbot scrolls to the right position onClick but highlighting doesn't seem to show the active section
   - Try running this from the console: `tocbot.refresh({ ...tocbot.options, hasInnerContainers: true })`. If that works then one option (`hasInnerContainers: true`) to handle inner containers should be all you need to add.
-
+- If you have a really long TOC and are seeing headings getting truncated, then have a [look at this issue for a workaround to resolve it](https://github.com/tscanlin/tocbot/issues/330).
 
 ## Contributing
 
