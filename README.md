@@ -29,7 +29,7 @@ OR
 Include the script at the bottom of the page before the closing body tag.
 
 ```html
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.25.0/tocbot.min.js"></script>
 ```
 
 
@@ -38,7 +38,7 @@ Include the script at the bottom of the page before the closing body tag.
 CSS is used for expanding & collapsing groupings and some basic styling.
 
 ```html
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.25.0/tocbot.css">
 ```
 
 OR
@@ -92,7 +92,6 @@ tocbot.destroy();
 ## Examples
 
 - [Tocbot Homepage](https://tscanlin.github.io/tocbot/)
-- [Pagekit TOC](https://spqr.wtf/projects/toc)
 - [Optimizely's Developer Documentation](https://developers.optimizely.com/x/solutions/javascript/reference/index.html)
 
 If you'd like to add your page to this list open a pull request.

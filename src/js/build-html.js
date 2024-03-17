@@ -111,7 +111,7 @@ module.exports = function (options) {
     var list = document.createElement(listElement)
     var classes = options.listClass + SPACE_CHAR + options.extraListClasses
     if (isCollapsed) {
-      // No plus/equals here fixes compilcation issue.
+      // No plus/equals here fixes compilation issue.
       classes = classes + SPACE_CHAR + options.collapsibleClass
       classes = classes + SPACE_CHAR + options.isCollapsedClass
     }
