@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   // Where to render the table of contents.
   tocSelector: '.js-toc',
   // Where to grab the headings to build the table of contents.

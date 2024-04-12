@@ -15,9 +15,8 @@ const TOCBOT_OPTIONS = {
 }
 
 // Only require tocbot if in browser.
-const tocbot = (typeof window !== 'undefined')
-  ? require('../../../js/index.js')
-  : null
+const tocbot =
+  typeof window !== 'undefined' ? require('../../../js/index-dist.js') : null
 
 export default class Tocbot extends React.Component {
   componentDidMount () {

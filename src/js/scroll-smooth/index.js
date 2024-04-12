@@ -1,9 +1,7 @@
 /* eslint no-var: off */
 /* globals location, requestAnimationFrame */
 
-exports.initSmoothScrolling = initSmoothScrolling
-
-function initSmoothScrolling (options) {
+export default function initSmoothScrolling (options) {
   // if (isCssSmoothSCrollSupported()) { return }
 
   var duration = options.duration
