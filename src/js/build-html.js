@@ -6,7 +6,7 @@
  * @author Tim Scanlin
  */
 
-module.exports = function (options) {
+export default function (options) {
   var forEach = [].forEach
   var some = [].some
   var body = document.body

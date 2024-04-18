@@ -1,7 +1,7 @@
 /* eslint no-var: off */
 
 const SCROLL_LEEWAY = 30
-module.exports = function updateTocScroll (options) {
+export default function updateTocScroll (options) {
   var toc = options.tocElement || document.querySelector(options.tocSelector)
   if (toc && toc.scrollHeight > toc.clientHeight) {
     var activeItem = toc.querySelector('.' + options.activeListItemClass)

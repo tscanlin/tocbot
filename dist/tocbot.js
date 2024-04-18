@@ -5,8 +5,13 @@
 /*!******************************!*\
   !*** ./src/js/build-html.js ***!
   \******************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* export default binding */ __WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
 /* eslint no-var: off */
 
 /**
@@ -15,7 +20,7 @@
  * @author Tim Scanlin
  */
 
-module.exports = function (options) {
+/* harmony default export */ function __WEBPACK_DEFAULT_EXPORT__(options) {
   var forEach = [].forEach
   var some = [].some
   var body = document.body
@@ -120,7 +125,7 @@ module.exports = function (options) {
     var list = document.createElement(listElement)
     var classes = options.listClass + SPACE_CHAR + options.extraListClasses
     if (isCollapsed) {
-      // No plus/equals here fixes compilcation issue.
+      // No plus/equals here fixes compilation issue.
       classes = classes + SPACE_CHAR + options.collapsibleClass
       classes = classes + SPACE_CHAR + options.isCollapsedClass
     }
@@ -317,9 +322,14 @@ module.exports = function (options) {
 /*!***********************************!*\
   !*** ./src/js/default-options.js ***!
   \***********************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-module.exports = {
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   // Where to render the table of contents.
   tocSelector: '.js-toc',
   // Where to grab the headings to build the table of contents.
@@ -419,31 +429,20 @@ module.exports = {
   // Offset for the toc scroll (top) position when scrolling the page.
   // Only effective if `disableTocScrollSync` is false.
   tocScrollOffset: 0
-}
+});
 
 
 /***/ }),
 
-/***/ "./src/js/index.js":
-/*!*************************!*\
-  !*** ./src/js/index.js ***!
-  \*************************/
+/***/ "./src/js/index-dist.js":
+/*!******************************!*\
+  !*** ./src/js/index-dist.js ***!
+  \******************************/
 /***/ ((module, exports, __webpack_require__) => {
 
-var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* eslint no-var: off */
-/**
- * Tocbot
- * Tocbot creates a table of contents based on HTML headings on a page,
- * this allows users to easily jump to different sections of the document.
- * Tocbot was inspired by tocify (http://gregfranko.com/jquery.tocify.js/).
- * The main differences are that it works natively without any need for jquery or jquery UI).
- *
- * @author Tim Scanlin
- */
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* globals define */
 
-/* globals define */
-
-(function (root, factory) {
+;(function (root, factory) {
   if (true) {
     !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory(root)),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
@@ -453,230 +452,17 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 })(typeof __webpack_require__.g !== 'undefined' ? __webpack_require__.g : window || __webpack_require__.g, function (root) {
   'use strict'
 
-  // Default options.
-  var defaultOptions = __webpack_require__(/*! ./default-options.js */ "./src/js/default-options.js")
-  // Object to store current options.
-  var options = {}
-  // Object for public APIs.
-  var tocbot = {}
-
-  var BuildHtml = __webpack_require__(/*! ./build-html.js */ "./src/js/build-html.js")
-  var ParseContent = __webpack_require__(/*! ./parse-content.js */ "./src/js/parse-content.js")
-  var updateTocScroll = __webpack_require__(/*! ./update-toc-scroll.js */ "./src/js/update-toc-scroll.js")
-  // Keep these variables at top scope once options are passed in.
-  var buildHtml
-  var parseContent
-
   // Just return if its not a browser.
-  var supports = !!root && !!root.document && !!root.document.querySelector && !!root.addEventListener // Feature test
+  const supports =
+    !!root &&
+    !!root.document &&
+    !!root.document.querySelector &&
+    !!root.addEventListener // Feature test
   if (typeof window === 'undefined' && !supports) {
     return
   }
-  var headingsArray
 
-  // From: https://github.com/Raynos/xtend
-  var hasOwnProperty = Object.prototype.hasOwnProperty
-  function extend () {
-    var target = {}
-    for (var i = 0; i < arguments.length; i++) {
-      var source = arguments[i]
-      for (var key in source) {
-        if (hasOwnProperty.call(source, key)) {
-          target[key] = source[key]
-        }
-      }
-    }
-    return target
-  }
-
-  // From: https://remysharp.com/2010/07/21/throttling-function-calls
-  function throttle (fn, threshold, scope) {
-    threshold || (threshold = 250)
-    var last
-    var deferTimer
-    return function () {
-      var context = scope || this
-      var now = +new Date()
-      var args = arguments
-      if (last && now < last + threshold) {
-        // hold on to it
-        clearTimeout(deferTimer)
-        deferTimer = setTimeout(function () {
-          last = now
-          fn.apply(context, args)
-        }, threshold)
-      } else {
-        last = now
-        fn.apply(context, args)
-      }
-    }
-  }
-
-  function getContentElement (options) {
-    try {
-      return options.contentElement || document.querySelector(options.contentSelector)
-    } catch (e) {
-      console.warn('Contents element not found: ' + options.contentSelector) // eslint-disable-line
-      return null
-    }
-  }
-
-  function getTocElement (options) {
-    try {
-      return options.tocElement || document.querySelector(options.tocSelector)
-    } catch (e) {
-      console.warn('TOC element not found: ' + options.tocSelector) // eslint-disable-line
-      return null
-    }
-  }
-
-  /**
-   * Destroy tocbot.
-   */
-  tocbot.destroy = function () {
-    var tocElement = getTocElement(options)
-    if (tocElement === null) {
-      return
-    }
-
-    if (!options.skipRendering) {
-      // Clear HTML.
-      if (tocElement) {
-        tocElement.innerHTML = ''
-      }
-    }
-
-    // Remove event listeners.
-    if (options.scrollContainer && document.querySelector(options.scrollContainer)) {
-      document.querySelector(options.scrollContainer).removeEventListener('scroll', this._scrollListener, false)
-      document.querySelector(options.scrollContainer).removeEventListener('resize', this._scrollListener, false)
-      if (buildHtml) {
-        document.querySelector(options.scrollContainer).removeEventListener('click', this._clickListener, false)
-      }
-    } else {
-      document.removeEventListener('scroll', this._scrollListener, false)
-      document.removeEventListener('resize', this._scrollListener, false)
-      if (buildHtml) {
-        document.removeEventListener('click', this._clickListener, false)
-      }
-    }
-  }
-
-  /**
-   * Initialize tocbot.
-   * @param {object} customOptions
-   */
-  tocbot.init = function (customOptions) {
-    // feature test
-    if (!supports) {
-      return
-    }
-
-    // Merge defaults with user options.
-    // Set to options variable at the top.
-    options = extend(defaultOptions, customOptions || {})
-    this.options = options
-    this.state = {}
-
-    // Init smooth scroll if enabled (default).
-    if (options.scrollSmooth) {
-      options.duration = options.scrollSmoothDuration
-      options.offset = options.scrollSmoothOffset
-      tocbot.scrollSmooth = (__webpack_require__(/*! ./scroll-smooth */ "./src/js/scroll-smooth/index.js").initSmoothScrolling)(options)
-    }
-
-    // Pass options to these modules.
-    buildHtml = BuildHtml(options)
-    parseContent = ParseContent(options)
-
-    // For testing purposes.
-    this._buildHtml = buildHtml
-    this._parseContent = parseContent
-    this._headingsArray = headingsArray
-
-    // Destroy it if it exists first.
-    tocbot.destroy()
-
-    var contentElement = getContentElement(options)
-    if (contentElement === null) {
-      return
-    }
-
-    var tocElement = getTocElement(options)
-    if (tocElement === null) {
-      return
-    }
-
-    // Get headings array.
-    headingsArray = parseContent.selectHeadings(contentElement, options.headingSelector)
-    // Return if no headings are found.
-    if (headingsArray === null) {
-      return
-    }
-
-    // Build nested headings array.
-    var nestedHeadingsObj = parseContent.nestHeadingsArray(headingsArray)
-    var nestedHeadings = nestedHeadingsObj.nest
-
-    // Render.
-    if (!options.skipRendering) {
-      buildHtml.render(tocElement, nestedHeadings)
-    } else {
-      // No need to attach listeners if skipRendering is true, this was causing errors.
-      return this
-    }
-
-    // Update Sidebar and bind listeners.
-    this._scrollListener = throttle(function (e) {
-      buildHtml.updateToc(headingsArray)
-      !options.disableTocScrollSync && updateTocScroll(options)
-      var isTop = e && e.target && e.target.scrollingElement && e.target.scrollingElement.scrollTop === 0
-      if ((e && (e.eventPhase === 0 || e.currentTarget === null)) || isTop) {
-        buildHtml.updateToc(headingsArray)
-        if (options.scrollEndCallback) {
-          options.scrollEndCallback(e)
-        }
-      }
-    }, options.throttleTimeout)
-    this._scrollListener()
-    if (options.scrollContainer && document.querySelector(options.scrollContainer)) {
-      document.querySelector(options.scrollContainer).addEventListener('scroll', this._scrollListener, false)
-      document.querySelector(options.scrollContainer).addEventListener('resize', this._scrollListener, false)
-    } else {
-      document.addEventListener('scroll', this._scrollListener, false)
-      document.addEventListener('resize', this._scrollListener, false)
-    }
-
-    // Bind click listeners to disable animation.
-    var timeout = null
-    this._clickListener = throttle(function (event) {
-      if (options.scrollSmooth) {
-        buildHtml.disableTocAnimation(event)
-      }
-      buildHtml.updateToc(headingsArray)
-      // Timeout to re-enable the animation.
-      timeout && clearTimeout(timeout)
-      timeout = setTimeout(function () {
-        buildHtml.enableTocAnimation()
-      }, options.scrollSmoothDuration)
-    }, options.throttleTimeout)
-
-    if (options.scrollContainer && document.querySelector(options.scrollContainer)) {
-      document.querySelector(options.scrollContainer).addEventListener('click', this._clickListener, false)
-    } else {
-      document.addEventListener('click', this._clickListener, false)
-    }
-
-    return this
-  }
-
-  /**
-   * Refresh tocbot.
-   */
-  tocbot.refresh = function (customOptions) {
-    tocbot.destroy()
-    tocbot.init(customOptions || this.options)
-  }
+  const tocbot = __webpack_require__(/*! ./index-esm.js */ "./src/js/index-esm.js")
 
   // Make tocbot available globally.
   root.tocbot = tocbot
@@ -687,12 +473,291 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
+/***/ "./src/js/index-esm.js":
+/*!*****************************!*\
+  !*** ./src/js/index-esm.js ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "_buildHtml": () => (/* binding */ _buildHtml),
+/* harmony export */   "_headingsArray": () => (/* binding */ _headingsArray),
+/* harmony export */   "_options": () => (/* binding */ _options),
+/* harmony export */   "_parseContent": () => (/* binding */ _parseContent),
+/* harmony export */   "_scrollListener": () => (/* binding */ _scrollListener),
+/* harmony export */   "destroy": () => (/* binding */ destroy),
+/* harmony export */   "init": () => (/* binding */ init),
+/* harmony export */   "refresh": () => (/* binding */ refresh)
+/* harmony export */ });
+/* harmony import */ var _build_html_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./build-html.js */ "./src/js/build-html.js");
+/* harmony import */ var _default_options_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./default-options.js */ "./src/js/default-options.js");
+/* harmony import */ var _parse_content_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./parse-content.js */ "./src/js/parse-content.js");
+/* harmony import */ var _scroll_smooth_index_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./scroll-smooth/index.js */ "./src/js/scroll-smooth/index.js");
+/* harmony import */ var _update_toc_scroll_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./update-toc-scroll.js */ "./src/js/update-toc-scroll.js");
+/* eslint no-var: off */
+/**
+ * Tocbot
+ * Tocbot creates a table of contents based on HTML headings on a page,
+ * this allows users to easily jump to different sections of the document.
+ * Tocbot was inspired by tocify (http://gregfranko.com/jquery.tocify.js/).
+ * The main differences are that it works natively without any need for jquery or jquery UI).
+ *
+ * @author Tim Scanlin
+ */
+
+
+
+
+
+
+
+// For testing purposes.
+let _options = {} // Object to store current options.
+let _buildHtml
+let _parseContent
+let _headingsArray
+let _scrollListener
+
+let clickListener
+
+/**
+ * Initialize tocbot.
+ * @param {object} customOptions
+ */
+function init (customOptions) {
+  // Merge defaults with user options.
+  // Set to options variable at the top.
+  _options = extend(_default_options_js__WEBPACK_IMPORTED_MODULE_1__["default"], customOptions || {})
+
+  // Init smooth scroll if enabled (default).
+  if (_options.scrollSmooth) {
+    _options.duration = _options.scrollSmoothDuration
+    _options.offset = _options.scrollSmoothOffset
+
+    ;(0,_scroll_smooth_index_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_options)
+  }
+
+  // Pass options to these modules.
+  _buildHtml = (0,_build_html_js__WEBPACK_IMPORTED_MODULE_0__["default"])(_options)
+  _parseContent = (0,_parse_content_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_options)
+
+  // Destroy it if it exists first.
+  destroy()
+
+  const contentElement = getContentElement(_options)
+  if (contentElement === null) {
+    return
+  }
+
+  const tocElement = getTocElement(_options)
+  if (tocElement === null) {
+    return
+  }
+
+  // Get headings array.
+  _headingsArray = _parseContent.selectHeadings(
+    contentElement,
+    _options.headingSelector
+  )
+
+  // Return if no headings are found.
+  if (_headingsArray === null) {
+    return
+  }
+
+  // Build nested headings array.
+  const nestedHeadingsObj = _parseContent.nestHeadingsArray(_headingsArray)
+  const nestedHeadings = nestedHeadingsObj.nest
+
+  // Render.
+  if (!_options.skipRendering) {
+    _buildHtml.render(tocElement, nestedHeadings)
+  } else {
+    // No need to attach listeners if skipRendering is true, this was causing errors.
+    return this
+  }
+
+  // Update Sidebar and bind listeners.
+  _scrollListener = throttle(function (e) {
+    _buildHtml.updateToc(_headingsArray)
+    !_options.disableTocScrollSync && (0,_update_toc_scroll_js__WEBPACK_IMPORTED_MODULE_4__["default"])(_options)
+    const isTop =
+      e &&
+      e.target &&
+      e.target.scrollingElement &&
+      e.target.scrollingElement.scrollTop === 0
+    if ((e && (e.eventPhase === 0 || e.currentTarget === null)) || isTop) {
+      _buildHtml.updateToc(_headingsArray)
+      if (_options.scrollEndCallback) {
+        _options.scrollEndCallback(e)
+      }
+    }
+  }, _options.throttleTimeout)
+  _scrollListener()
+  if (
+    _options.scrollContainer &&
+    document.querySelector(_options.scrollContainer)
+  ) {
+    document
+      .querySelector(_options.scrollContainer)
+      .addEventListener('scroll', _scrollListener, false)
+    document
+      .querySelector(_options.scrollContainer)
+      .addEventListener('resize', _scrollListener, false)
+  } else {
+    document.addEventListener('scroll', _scrollListener, false)
+    document.addEventListener('resize', _scrollListener, false)
+  }
+
+  // Bind click listeners to disable animation.
+  let timeout = null
+  clickListener = throttle(function (event) {
+    if (_options.scrollSmooth) {
+      _buildHtml.disableTocAnimation(event)
+    }
+    _buildHtml.updateToc(_headingsArray)
+    // Timeout to re-enable the animation.
+    timeout && clearTimeout(timeout)
+    timeout = setTimeout(function () {
+      _buildHtml.enableTocAnimation()
+    }, _options.scrollSmoothDuration)
+  }, _options.throttleTimeout)
+
+  if (
+    _options.scrollContainer &&
+    document.querySelector(_options.scrollContainer)
+  ) {
+    document
+      .querySelector(_options.scrollContainer)
+      .addEventListener('click', clickListener, false)
+  } else {
+    document.addEventListener('click', clickListener, false)
+  }
+}
+
+/**
+ * Destroy tocbot.
+ */
+function destroy () {
+  const tocElement = getTocElement(_options)
+  if (tocElement === null) {
+    return
+  }
+
+  if (!_options.skipRendering) {
+    // Clear HTML.
+    if (tocElement) {
+      tocElement.innerHTML = ''
+    }
+  }
+
+  // Remove event listeners.
+  if (
+    _options.scrollContainer &&
+    document.querySelector(_options.scrollContainer)
+  ) {
+    document
+      .querySelector(_options.scrollContainer)
+      .removeEventListener('scroll', _scrollListener, false)
+    document
+      .querySelector(_options.scrollContainer)
+      .removeEventListener('resize', _scrollListener, false)
+    if (_buildHtml) {
+      document
+        .querySelector(_options.scrollContainer)
+        .removeEventListener('click', clickListener, false)
+    }
+  } else {
+    document.removeEventListener('scroll', _scrollListener, false)
+    document.removeEventListener('resize', _scrollListener, false)
+    if (_buildHtml) {
+      document.removeEventListener('click', clickListener, false)
+    }
+  }
+}
+
+/**
+ * Refresh tocbot.
+ */
+function refresh (customOptions) {
+  destroy()
+  init(customOptions || _options)
+}
+
+// From: https://github.com/Raynos/xtend
+const hasOwnProperty = Object.prototype.hasOwnProperty
+function extend () {
+  const target = {}
+  for (let i = 0; i < arguments.length; i++) {
+    const source = arguments[i]
+    for (const key in source) {
+      if (hasOwnProperty.call(source, key)) {
+        target[key] = source[key]
+      }
+    }
+  }
+  return target
+}
+
+// From: https://remysharp.com/2010/07/21/throttling-function-calls
+function throttle (fn, threshold, scope) {
+  threshold || (threshold = 250)
+  let last
+  let deferTimer
+  return function () {
+    const context = scope || this
+    const now = +new Date()
+    const args = arguments
+    if (last && now < last + threshold) {
+      // hold on to it
+      clearTimeout(deferTimer)
+      deferTimer = setTimeout(function () {
+        last = now
+        fn.apply(context, args)
+      }, threshold)
+    } else {
+      last = now
+      fn.apply(context, args)
+    }
+  }
+}
+
+function getContentElement (options) {
+  try {
+    return (
+      options.contentElement || document.querySelector(options.contentSelector)
+    )
+  } catch (e) {
+    console.warn('Contents element not found: ' + options.contentSelector) // eslint-disable-line
+    return null
+  }
+}
+
+function getTocElement (options) {
+  try {
+    return options.tocElement || document.querySelector(options.tocSelector)
+  } catch (e) {
+    console.warn('TOC element not found: ' + options.tocSelector) // eslint-disable-line
+    return null
+  }
+}
+
+
+/***/ }),
+
 /***/ "./src/js/parse-content.js":
 /*!*********************************!*\
   !*** ./src/js/parse-content.js ***!
   \*********************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ parseContent)
+/* harmony export */ });
 /* eslint no-var: off */
 /**
  * This file is responsible for parsing the content from the DOM and making
@@ -701,7 +766,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
  * @author Tim Scanlin
  */
 
-module.exports = function parseContent (options) {
+function parseContent (options) {
   var reduce = [].reduce
 
   /**
@@ -862,12 +927,15 @@ module.exports = function parseContent (options) {
 /*!***************************************!*\
   !*** ./src/js/scroll-smooth/index.js ***!
   \***************************************/
-/***/ ((__unused_webpack_module, exports) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ initSmoothScrolling)
+/* harmony export */ });
 /* eslint no-var: off */
 /* globals location, requestAnimationFrame */
-
-exports.initSmoothScrolling = initSmoothScrolling
 
 function initSmoothScrolling (options) {
   // if (isCssSmoothSCrollSupported()) { return }
@@ -993,12 +1061,17 @@ function jump (target, options) {
 /*!*************************************!*\
   !*** ./src/js/update-toc-scroll.js ***!
   \*************************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ updateTocScroll)
+/* harmony export */ });
 /* eslint no-var: off */
 
 const SCROLL_LEEWAY = 30
-module.exports = function updateTocScroll (options) {
+function updateTocScroll (options) {
   var toc = options.tocElement || document.querySelector(options.tocSelector)
   if (toc && toc.scrollHeight > toc.clientHeight) {
     var activeItem = toc.querySelector('.' + options.activeListItemClass)
@@ -1053,6 +1126,18 @@ module.exports = function updateTocScroll (options) {
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/global */
 /******/ 	(() => {
 /******/ 		__webpack_require__.g = (function() {
@@ -1065,12 +1150,28 @@ module.exports = function updateTocScroll (options) {
 /******/ 		})();
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /************************************************************************/
 /******/ 	
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module used 'module' so it can't be inlined
-/******/ 	var __webpack_exports__ = __webpack_require__("./src/js/index.js");
+/******/ 	var __webpack_exports__ = __webpack_require__("./src/js/index-dist.js");
 /******/ 	
 /******/ })()
 ;

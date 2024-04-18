@@ -6,7 +6,7 @@
  * @author Tim Scanlin
  */
 
-module.exports = function parseContent (options) {
+export default function parseContent (options) {
   var reduce = [].reduce
 
   /**

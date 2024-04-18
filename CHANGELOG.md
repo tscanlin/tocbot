@@ -1,5 +1,9 @@
 ## Changelog
 
+### 4.26.0
+
+- Add exports for ESM bare module, keep compatible exports for current dist paths
+
 ### 4.2.0
 
 ### 4.1.3
