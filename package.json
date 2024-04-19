@@ -1,6 +1,6 @@
 {
   "name": "tocbot",
-  "version": "4.26.0",
+  "version": "4.27.0",
   "description": "Generate a table of contents based on the heading structure of a html document.",
   "main": "src/js/index-dist.js",
   "browser": "index.js",
