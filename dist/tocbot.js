@@ -482,14 +482,14 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "_buildHtml": () => (/* binding */ _buildHtml),
-/* harmony export */   "_headingsArray": () => (/* binding */ _headingsArray),
-/* harmony export */   "_options": () => (/* binding */ _options),
-/* harmony export */   "_parseContent": () => (/* binding */ _parseContent),
-/* harmony export */   "_scrollListener": () => (/* binding */ _scrollListener),
-/* harmony export */   "destroy": () => (/* binding */ destroy),
-/* harmony export */   "init": () => (/* binding */ init),
-/* harmony export */   "refresh": () => (/* binding */ refresh)
+/* harmony export */   _buildHtml: () => (/* binding */ _buildHtml),
+/* harmony export */   _headingsArray: () => (/* binding */ _headingsArray),
+/* harmony export */   _options: () => (/* binding */ _options),
+/* harmony export */   _parseContent: () => (/* binding */ _parseContent),
+/* harmony export */   _scrollListener: () => (/* binding */ _scrollListener),
+/* harmony export */   destroy: () => (/* binding */ destroy),
+/* harmony export */   init: () => (/* binding */ init),
+/* harmony export */   refresh: () => (/* binding */ refresh)
 /* harmony export */ });
 /* harmony import */ var _build_html_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./build-html.js */ "./src/js/build-html.js");
 /* harmony import */ var _default_options_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./default-options.js */ "./src/js/default-options.js");
