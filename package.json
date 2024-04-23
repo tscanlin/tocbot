@@ -14,7 +14,9 @@
     "./dist/tocbot.js": "./dist/tocbot.js",
     "./dist/tocbot.min.js": "./dist/tocbot.min.js",
     "./dist/styles.css": "./dist/styles.css",
-    "./dist/tocbot.css": "./dist/tocbot.css"
+    "./dist/tocbot.css": "./dist/tocbot.css",
+    "./src/scss/styles.scss": "./src/scss/styles.scss",
+    "./src/scss/tocbot.scss": "./src/scss/tocbot.scss"
   },
   "scripts": {
     "clean": "rm -rf dist/",
