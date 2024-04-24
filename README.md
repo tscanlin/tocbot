@@ -24,12 +24,23 @@ Install it with npm.
 npm install --save tocbot
 ```
 
+Then use with either commonjs or ESM imports:
+
+```js
+const tocbot = require('tocbot/dist/tocbot.js')
+// OR
+import tocbot from 'tocbot'
+
+// Initialize tocbot
+tocbot.init()
+```
+
 OR
 
 Include the script at the bottom of the page before the closing body tag.
 
 ```html
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.25.0/tocbot.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.27.4/tocbot.min.js"></script>
 ```
 
 
@@ -38,7 +49,7 @@ Include the script at the bottom of the page before the closing body tag.
 CSS is used for expanding & collapsing groupings and some basic styling.
 
 ```html
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.25.0/tocbot.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.27.4/tocbot.css">
 ```
 
 OR

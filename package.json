@@ -7,6 +7,7 @@
   "exports": {
     ".": {
       "import": "./index.js",
+      "default": "./index.js",
       "types": "./index.d.ts"
     },
     "./styles.css": "./dist/styles.css",
