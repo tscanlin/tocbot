@@ -21,8 +21,11 @@
     "./src/scss/tocbot.scss": "./src/scss/tocbot.scss"
   },
   "files": [
-    "dist/*",
-    "src/js/*"
+    "./*.js",
+    "./index.js",
+    "./index.mjs",
+    "./dist/*",
+    "./src/js/*"
   ],
   "scripts": {
     "clean": "rm -rf dist/",
