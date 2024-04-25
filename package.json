@@ -3,13 +3,13 @@
   "version": "4.27.10",
   "description": "Generate a table of contents based on the heading structure of a html document.",
   "main": "./dist/tocbot.js",
-  "module": "./index.mjs",
+  "module": "./index.js",
   "exports": {
     ".": {
       "require": "./dist/tocbot.js",
-      "import": "./index.mjs",
+      "import": "./index.js",
       "types": "./index.d.ts",
-      "default": "./index.mjs"
+      "default": "./index.js"
     },
     "./styles.css": "./dist/styles.css",
     "./tocbot.css": "./dist/tocbot.css",
