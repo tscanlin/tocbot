@@ -1,6 +1,6 @@
 {
   "name": "tocbot",
-  "version": "4.27.9",
+  "version": "4.27.10",
   "description": "Generate a table of contents based on the heading structure of a html document.",
   "main": "./dist/tocbot.js",
   "module": "./index.mjs",
@@ -20,7 +20,10 @@
     "./src/scss/styles.scss": "./src/scss/styles.scss",
     "./src/scss/tocbot.scss": "./src/scss/tocbot.scss"
   },
-  "files": ["dist/*", "src/js/*"],
+  "files": [
+    "dist/*",
+    "src/js/*"
+  ],
   "scripts": {
     "clean": "rm -rf dist/",
     "mkdir-dist": "mkdir dist",
