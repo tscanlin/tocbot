@@ -5,5 +5,5 @@ scripts/
 .next/
 .github/
 out/
-src/
+src/components/
 static/
