@@ -20,6 +20,7 @@
     "./src/scss/styles.scss": "./src/scss/styles.scss",
     "./src/scss/tocbot.scss": "./src/scss/tocbot.scss"
   },
+  "files": ["dist/*", "src/js/*"],
   "scripts": {
     "clean": "rm -rf dist/",
     "mkdir-dist": "mkdir dist",
