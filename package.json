@@ -7,8 +7,8 @@
   "exports": {
     ".": {
       "import": "./index.js",
-      "default": "./index.js",
-      "types": "./index.d.ts"
+      "types": "./index.d.ts",
+      "default": "./index.js"
     },
     "./styles.css": "./dist/styles.css",
     "./tocbot.css": "./dist/tocbot.css",
