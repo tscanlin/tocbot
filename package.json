@@ -25,7 +25,9 @@
     "./index.js",
     "./index.mjs",
     "./dist/*",
-    "./src/js/*"
+    "./src/js/*",
+    "./src/scss/*",
+    "./src/utils/*"
   ],
   "scripts": {
     "clean": "rm -rf dist/",
