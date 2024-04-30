@@ -1,13 +1,13 @@
 /******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "./src/js/build-html.js":
 /*!******************************!*\
   !*** ./src/js/build-html.js ***!
   \******************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* export default binding */ __WEBPACK_DEFAULT_EXPORT__)
@@ -322,9 +322,8 @@ __webpack_require__.r(__webpack_exports__);
 /*!***********************************!*\
   !*** ./src/js/default-options.js ***!
   \***********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -434,52 +433,12 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/js/index-dist.js":
-/*!******************************!*\
-  !*** ./src/js/index-dist.js ***!
-  \******************************/
-/***/ ((module, exports, __webpack_require__) => {
-
-var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* globals define */
-
-;(function (root, factory) {
-  if (true) {
-    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory(root)),
-		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
-		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
-		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__))
-  } else {}
-})(typeof __webpack_require__.g !== 'undefined' ? __webpack_require__.g : window || __webpack_require__.g, function (root) {
-  'use strict'
-
-  // Just return if its not a browser.
-  const supports =
-    !!root &&
-    !!root.document &&
-    !!root.document.querySelector &&
-    !!root.addEventListener // Feature test
-  if (typeof window === 'undefined' && !supports) {
-    return
-  }
-
-  const tocbot = __webpack_require__(/*! ./index-esm.js */ "./src/js/index-esm.js")
-
-  // Make tocbot available globally.
-  root.tocbot = tocbot
-
-  return tocbot
-})
-
-
-/***/ }),
-
 /***/ "./src/js/index-esm.js":
 /*!*****************************!*\
   !*** ./src/js/index-esm.js ***!
   \*****************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "_buildHtml": () => (/* binding */ _buildHtml),
@@ -751,9 +710,8 @@ function getTocElement (options) {
 /*!*********************************!*\
   !*** ./src/js/parse-content.js ***!
   \*********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ parseContent)
@@ -927,9 +885,8 @@ function parseContent (options) {
 /*!***************************************!*\
   !*** ./src/js/scroll-smooth/index.js ***!
   \***************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ initSmoothScrolling)
@@ -1061,9 +1018,8 @@ function jump (target, options) {
 /*!*************************************!*\
   !*** ./src/js/update-toc-scroll.js ***!
   \*************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ updateTocScroll)
@@ -1138,18 +1094,6 @@ function updateTocScroll (options) {
 /******/ 		};
 /******/ 	})();
 /******/ 	
-/******/ 	/* webpack/runtime/global */
-/******/ 	(() => {
-/******/ 		__webpack_require__.g = (function() {
-/******/ 			if (typeof globalThis === 'object') return globalThis;
-/******/ 			try {
-/******/ 				return this || new Function('return this')();
-/******/ 			} catch (e) {
-/******/ 				if (typeof window === 'object') return window;
-/******/ 			}
-/******/ 		})();
-/******/ 	})();
-/******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
@@ -1167,12 +1111,45 @@ function updateTocScroll (options) {
 /******/ 	})();
 /******/ 	
 /************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module used 'module' so it can't be inlined
-/******/ 	var __webpack_exports__ = __webpack_require__("./src/js/index-dist.js");
-/******/ 	
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
+/*!******************************!*\
+  !*** ./src/js/index-dist.js ***!
+  \******************************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _index_esm_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index-esm.js */ "./src/js/index-esm.js");
+/* globals define */
+
+(function (root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    define([], factory(root))
+  } else if (typeof exports === 'object') {
+    module.exports = factory(root)
+  } else {
+    root.tocbot = factory(root)
+  }
+})(typeof global !== 'undefined' ? global : window || global, function (root) {
+  'use strict'
+
+  // Just return if its not a browser.
+  const supports =
+    !!root &&
+    !!root.document &&
+    !!root.document.querySelector &&
+    !!root.addEventListener // Feature test
+  if (typeof window === 'undefined' && !supports) {
+    return
+  }
+
+  // Make tocbot available globally.
+  root.tocbot = _index_esm_js__WEBPACK_IMPORTED_MODULE_0__
+
+  return _index_esm_js__WEBPACK_IMPORTED_MODULE_0__
+})
+
+})();
+
 /******/ })()
 ;
 //# sourceMappingURL=main.js.map
