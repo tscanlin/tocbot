@@ -3,4 +3,3 @@ const tocbot = { destroy, init, refresh }
 
 export { destroy, init, refresh }
 export default tocbot
-
