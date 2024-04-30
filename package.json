@@ -4,6 +4,7 @@
   "description": "Generate a table of contents based on the heading structure of a html document.",
   "main": "./dist/tocbot.js",
   "module": "./index.js",
+  "type": "module",
   "exports": {
     ".": {
       "require": "./dist/tocbot.js",
