@@ -1,6 +1,6 @@
 const assetPrefix = '/tocbot'
 
-module.exports = {
+export default {
   assetPrefix,
   webpack: (webpackConfig) => {
     const newConfig = Object.assign({}, webpackConfig)

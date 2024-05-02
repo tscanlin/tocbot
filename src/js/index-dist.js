@@ -1,5 +1,7 @@
 /* globals define */
 
+import * as tocbot from './index-esm.js'
+
 ;(function (root, factory) {
   if (typeof define === 'function' && define.amd) {
     define([], factory(root))
@@ -20,8 +22,6 @@
   if (typeof window === 'undefined' && !supports) {
     return
   }
-
-  const tocbot = require('./index-esm.js')
 
   // Make tocbot available globally.
   root.tocbot = tocbot

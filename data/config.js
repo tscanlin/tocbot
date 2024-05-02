@@ -1,4 +1,4 @@
-import nextConfig from '../next.config.js'
+import nextConfig from '../next.config.mjs'
 
 export default {
   title: 'Tocbot',
