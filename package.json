@@ -23,6 +23,7 @@
   },
   "files": [
     "./*.js",
+    "./index.d.ts",
     "./index.js",
     "./index.mjs",
     "./dist/*",
