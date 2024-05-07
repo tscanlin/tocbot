@@ -1,4 +1,5 @@
 import React from 'react'
+import * as tocbot from '../../../js/index-esm.js'
 
 const TOCBOT_OPTIONS = {
   tocSelector: '.js-toc',
@@ -13,10 +14,6 @@ const TOCBOT_OPTIONS = {
   scrollSmoothOffset: -40
   // skipRendering: true,
 }
-
-// Only require tocbot if in browser.
-const tocbot =
-  typeof window !== 'undefined' ? require('../../../js/index-dist.js') : null
 
 export default class Tocbot extends React.Component {
   componentDidMount () {

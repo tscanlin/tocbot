@@ -1,6 +1,6 @@
-const express = require('express')
-const next = require('next')
-const config = require('./next.config.js')
+import express from 'express'
+import next from 'next'
+import config from './next.config.mjs'
 
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
