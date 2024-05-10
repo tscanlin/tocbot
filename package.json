@@ -112,7 +112,7 @@
     "marked": "^4.2.2",
     "mkdirp": "^1.0.4",
     "mocha": "^10.1.0",
-    "next": "^13.0.3",
+    "next": "^14.1.1",
     "node-resemble-js": "^0.2.0",
     "npm-run-all": "^4.1.5",
     "processmd": "^4.6.3",
