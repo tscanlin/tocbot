@@ -9,7 +9,8 @@
 export default function (options) {
   var forEach = [].forEach
   var some = [].some
-  var body = document.body
+  // if (typeof window === 'undefined') return
+  var body = typeof window !== 'undefined' && document.body
   var tocElement
   var currentlyHighlighting = true
   var SPACE_CHAR = ' '
