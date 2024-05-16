@@ -9,16 +9,16 @@ const HTML_EXAMPLE = `
 
 export function htmlTemplate (content){
   return `
-  <html>
-    <body>
-      <div class="js-toc-content">
-        ${content}
-      </div>
-      <div class="js-toc">
-      </div>
-    </body>
-  </html>
-  `
+<html>
+  <body>
+    <div class="js-toc-content">
+      ${content}
+    </div>
+    <div class="js-toc">
+    </div>
+  </body>
+</html>
+`
 }
 
 export function serverRender (content) {
