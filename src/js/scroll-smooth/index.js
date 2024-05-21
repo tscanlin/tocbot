@@ -6,6 +6,7 @@ export default function initSmoothScrolling (options) {
 
   var duration = options.duration
   var offset = options.offset
+  if (typeof window === 'undefined' || typeof location === 'undefined') return
 
   var pageUrl = location.hash
     ? stripHash(location.href)
