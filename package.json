@@ -18,6 +18,7 @@
     "./dist/tocbot.min.js": "./dist/tocbot.min.js",
     "./dist/styles.css": "./dist/styles.css",
     "./dist/tocbot.css": "./dist/tocbot.css",
+    "./src/js/": "./src/js/",
     "./src/scss/styles.scss": "./src/scss/styles.scss",
     "./src/scss/tocbot.scss": "./src/scss/tocbot.scss"
   },

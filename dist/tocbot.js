@@ -23,7 +23,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ function __WEBPACK_DEFAULT_EXPORT__(options) {
   var forEach = [].forEach
   var some = [].some
-  var body = document.body
+  // if (typeof window === 'undefined') return
+  var body = typeof window !== 'undefined' && document.body
   var tocElement
   var currentlyHighlighting = true
   var SPACE_CHAR = ' '
@@ -899,6 +900,7 @@ function initSmoothScrolling (options) {
 
   var duration = options.duration
   var offset = options.offset
+  if (typeof window === 'undefined' || typeof location === 'undefined') return
 
   var pageUrl = location.hash
     ? stripHash(location.href)

@@ -1,7 +1,7 @@
 import * as tocbot from './index-esm.js'
 import { JSDOM } from 'jsdom'
 
-export function htmlTemplate (content){
+export function htmlTemplate (content) {
   return `
 <html>
   <body>
