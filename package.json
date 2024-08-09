@@ -2,12 +2,12 @@
   "name": "tocbot",
   "version": "4.28.2",
   "description": "Generate a table of contents based on the heading structure of a html document.",
-  "main": "./dist/tocbot.js",
+  "main": "./dist/tocbot.cjs",
   "module": "./index.js",
   "type": "module",
   "exports": {
     ".": {
-      "require": "./dist/tocbot.js",
+      "require": "./dist/tocbot.cjs",
       "import": "./index.js",
       "types": "./index.d.ts",
       "default": "./index.js"
@@ -38,7 +38,8 @@
     "mkdir-dist": "mkdir dist",
     "cleanInstall": "rm -rf node_modules package-lock.json && npm i",
     "build": "npm run build-all",
-    "build-all": "npm run clean && npm run mkdir-dist && npm run build-js && npm run build-js-uglify && npm run build-css && npm run build-dist && npm run build-docs",
+    "build-all": "npm run clean && npm run mkdir-dist && npm run build-js && npm run build-js-uglify && npm run build-css && npm run build-dist && npm run build-docs && npm run build-cjs",
+    "build-cjs": "cp ./dist/tocbot.js ./dist/tocbot.cjs",
     "build-docs": "npm run build-content && npm run next-build && npm run next-export && npm run fix-jekyll",
     "build-css": "sass --load-path=./node_modules --style=compressed src/scss/:static/css/",
     "build-css-watch": "sass --watch --load-path=./node_modules --style=compressed src/scss/:static/css/",
