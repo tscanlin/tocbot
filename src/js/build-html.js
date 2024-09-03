@@ -1,5 +1,3 @@
-/* eslint no-var: off */
-
 /**
  * This file is responsible for building the DOM and updating DOM state.
  *
@@ -7,13 +5,13 @@
  */
 
 export default function (options) {
-  var forEach = [].forEach
-  var some = [].some
+  const forEach = [].forEach
+  const some = [].some
   // if (typeof window === 'undefined') return
-  var body = typeof window !== 'undefined' && document.body
-  var tocElement
-  var currentlyHighlighting = true
-  var SPACE_CHAR = ' '
+  const body = typeof window !== 'undefined' && document.body
+  const SPACE_CHAR = ' '
+  let tocElement
+  let currentlyHighlighting = true
 
   /**
    * Create link and list elements.
@@ -22,9 +20,9 @@ export default function (options) {
    * @return {HTMLElement}
    */
   function createEl (d, container) {
-    var link = container.appendChild(createLink(d))
+    const link = container.appendChild(createLink(d))
     if (d.children.length) {
-      var list = createList(d.isCollapsed)
+      const list = createList(d.isCollapsed)
       d.children.forEach(function (child) {
         createEl(child, list)
       })
@@ -39,8 +37,8 @@ export default function (options) {
    * @return {HTMLElement}
    */
   function render (parent, data) {
-    var collapsed = false
-    var container = createList(collapsed)
+    const collapsed = false
+    const container = createList(collapsed)
 
     data.forEach(function (d) {
       createEl(d, container)
@@ -72,8 +70,8 @@ export default function (options) {
    * @return {HTMLElement}
    */
   function createLink (data) {
-    var item = document.createElement('li')
-    var a = document.createElement('a')
+    const item = document.createElement('li')
+    const a = document.createElement('a')
     if (options.listItemClass) {
       item.setAttribute('class', options.listItemClass)
     }
@@ -108,9 +106,9 @@ export default function (options) {
    * @return {HTMLElement}
    */
   function createList (isCollapsed) {
-    var listElement = (options.orderedList) ? 'ol' : 'ul'
-    var list = document.createElement(listElement)
-    var classes = options.listClass + SPACE_CHAR + options.extraListClasses
+    const listElement = (options.orderedList) ? 'ol' : 'ul'
+    const list = document.createElement(listElement)
+    let classes = options.listClass + SPACE_CHAR + options.extraListClasses
     if (isCollapsed) {
       // No plus/equals here fixes compilation issue.
       classes = classes + SPACE_CHAR + options.collapsibleClass
@@ -125,14 +123,14 @@ export default function (options) {
    * @return {HTMLElement}
    */
   function updateFixedSidebarClass () {
+    let top
     if (options.scrollContainer && document.querySelector(options.scrollContainer)) {
-      var top
       top = document.querySelector(options.scrollContainer).scrollTop
     } else {
       top = document.documentElement.scrollTop || body.scrollTop
     }
-    var posFixedEl = document.querySelector(options.positionFixedSelector)
 
+    const posFixedEl = document.querySelector(options.positionFixedSelector)
     if (options.fixedSidebarOffset === 'auto') {
       options.fixedSidebarOffset = tocElement.offsetTop
     }
@@ -152,7 +150,7 @@ export default function (options) {
    * @return {int} position
    */
   function getHeadingTopPos (obj) {
-    var position = 0
+    let position = 0
     if (obj !== null) {
       position = obj.offsetTop
       if (options.hasInnerContainers) { position += getHeadingTopPos(obj.offsetParent) }
@@ -178,8 +176,8 @@ export default function (options) {
    */
   function updateToc (headingsArray) {
     // If a fixed content container was set
+    let top
     if (options.scrollContainer && document.querySelector(options.scrollContainer)) {
-      var top
       top = document.querySelector(options.scrollContainer).scrollTop
     } else {
       top = document.documentElement.scrollTop || body.scrollTop
@@ -191,8 +189,8 @@ export default function (options) {
     }
 
     // Get the top most heading currently visible on the page so we know what to highlight.
-    var headings = headingsArray
-    var topHeader
+    const headings = headingsArray
+    let topHeader
     // Using some instead of each so that we can escape early.
     if (currentlyHighlighting &&
       tocElement !== null &&
@@ -200,7 +198,7 @@ export default function (options) {
       some.call(headings, function (heading, i) {
         if (getHeadingTopPos(heading) > top + options.headingsOffset + 10) {
           // Don't allow negative index value.
-          var index = (i === 0) ? i : i - 1
+          const index = (i === 0) ? i : i - 1
           topHeader = headings[index]
           return true
         } else if (i === headings.length - 1) {
@@ -210,8 +208,8 @@ export default function (options) {
         }
       })
 
-      var oldActiveTocLink = tocElement.querySelector('.' + options.activeLinkClass)
-      var activeTocLink = tocElement
+      const oldActiveTocLink = tocElement.querySelector('.' + options.activeLinkClass)
+      const activeTocLink = tocElement
         .querySelector('.' + options.linkClass +
           '.node-name--' + topHeader.nodeName +
           '[href="' + options.basePath + '#' + topHeader.id.replace(/([ #;&,.+*~':"!^$[\]()=>|/\\@])/g, '\\$1') + '"]')
@@ -222,12 +220,12 @@ export default function (options) {
       }
 
       // Remove the active class from the other tocLinks.
-      var tocLinks = tocElement
+      const tocLinks = tocElement
         .querySelectorAll('.' + options.linkClass)
       forEach.call(tocLinks, function (tocLink) {
         updateClassname(tocLink, tocLink.className.replace(SPACE_CHAR + options.activeLinkClass, ''))
       })
-      var tocLis = tocElement
+      const tocLis = tocElement
         .querySelectorAll('.' + options.listItemClass)
       forEach.call(tocLis, function (tocLi) {
         updateClassname(tocLi, tocLi.className.replace(SPACE_CHAR + options.activeListItemClass, ''))
@@ -237,12 +235,12 @@ export default function (options) {
       if (activeTocLink && activeTocLink.className.indexOf(options.activeLinkClass) === -1) {
         activeTocLink.className += SPACE_CHAR + options.activeLinkClass
       }
-      var li = activeTocLink && activeTocLink.parentNode
+      const li = activeTocLink && activeTocLink.parentNode
       if (li && li.className.indexOf(options.activeListItemClass) === -1) {
         li.className += SPACE_CHAR + options.activeListItemClass
       }
 
-      var tocLists = tocElement
+      const tocLists = tocElement
         .querySelectorAll('.' + options.listClass + '.' + options.collapsibleClass)
 
       // Collapse the other collapsible lists.
@@ -278,7 +276,7 @@ export default function (options) {
    * @param {Event} event
    */
   function disableTocAnimation (event) {
-    var target = event.target || event.srcElement
+    const target = event.target || event.srcElement
     if (typeof target.className !== 'string' || target.className.indexOf(options.linkClass) === -1) {
       return
     }
@@ -294,10 +292,18 @@ export default function (options) {
     currentlyHighlighting = true
   }
 
+  /**
+   * Return currently highlighting status.
+   */
+  function getCurrentlyHighlighting () {
+    return currentlyHighlighting
+  }
+
   return {
     enableTocAnimation,
     disableTocAnimation,
     render,
-    updateToc
+    updateToc,
+    getCurrentlyHighlighting
   }
 }

@@ -1,4 +1,3 @@
-/* eslint no-var: off */
 /**
  * This file is responsible for parsing the content from the DOM and making
  * sure data is nested properly.
@@ -7,7 +6,7 @@
  */
 
 export default function parseContent (options) {
-  var reduce = [].reduce
+  const reduce = [].reduce
 
   /**
    * Get the last item in an array and return a reference to it.
@@ -61,7 +60,7 @@ export default function parseContent (options) {
 
     const headingLabel = heading.getAttribute('data-heading-label') ||
       (options.headingLabelCallback ? String(options.headingLabelCallback(heading.innerText)) : (heading.innerText || heading.textContent).trim())
-    var obj = {
+    const obj = {
       id: heading.id,
       children: [],
       nodeName: heading.nodeName,
@@ -87,14 +86,14 @@ export default function parseContent (options) {
    * @return {Array}
    */
   function addNode (node, nest) {
-    var obj = getHeadingObject(node)
-    var level = obj.headingLevel
-    var array = nest
-    var lastItem = getLastItem(array)
-    var lastItemLevel = lastItem
+    const obj = getHeadingObject(node)
+    const level = obj.headingLevel
+    let array = nest
+    let lastItem = getLastItem(array)
+    const lastItemLevel = lastItem
       ? lastItem.headingLevel
       : 0
-    var counter = level - lastItemLevel
+    let counter = level - lastItemLevel
 
     while (counter > 0) {
       lastItem = getLastItem(array)
@@ -122,7 +121,7 @@ export default function parseContent (options) {
    * @return {Array}
    */
   function selectHeadings (contentElement, headingSelector) {
-    var selectors = headingSelector
+    let selectors = headingSelector
     if (options.ignoreSelector) {
       selectors = headingSelector.split(',')
         .map(function mapSelectors (selector) {
@@ -144,7 +143,7 @@ export default function parseContent (options) {
    */
   function nestHeadingsArray (headingsArray) {
     return reduce.call(headingsArray, function reducer (prev, curr) {
-      var currentHeading = getHeadingObject(curr)
+      const currentHeading = getHeadingObject(curr)
       if (currentHeading) {
         addNode(currentHeading, prev.nest)
       }

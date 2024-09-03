@@ -14,6 +14,7 @@ import defaultOptions from './default-options.js'
 import ParseContent from './parse-content.js'
 import initSmoothScrolling from './scroll-smooth/index.js'
 import updateTocScroll from './update-toc-scroll.js'
+import * as helpers from '../utils/helpers.js'
 
 // For testing purposes.
 export let _options = {} // Object to store current options.
@@ -82,9 +83,13 @@ export function init (customOptions) {
   }
 
   // Update Sidebar and bind listeners.
-  _scrollListener = throttle(function (e) {
+  _scrollListener = throttle((e) => {
     _buildHtml.updateToc(_headingsArray)
     !_options.disableTocScrollSync && updateTocScroll(_options)
+
+    const enableUpdatingHash = _buildHtml.getCurrentlyHighlighting()
+    enableUpdatingHash && helpers.updateUrlHashForHeader(_headingsArray)
+
     const isTop =
       e &&
       e.target &&
