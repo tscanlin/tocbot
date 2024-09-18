@@ -23,7 +23,7 @@ export default function (options) {
     const link = container.appendChild(createLink(d))
     if (d.children.length) {
       const list = createList(d.isCollapsed)
-      d.children.forEach(function (child) {
+      d.children.forEach((child) => {
         createEl(child, list)
       })
       link.appendChild(list)
@@ -40,7 +40,7 @@ export default function (options) {
     const collapsed = false
     const container = createList(collapsed)
 
-    data.forEach(function (d) {
+    data.forEach((d) => {
       createEl(d, container)
     })
 
@@ -85,17 +85,16 @@ export default function (options) {
     }
 
     if (options.includeHtml && data.childNodes.length) {
-      forEach.call(data.childNodes, function (node) {
+      forEach.call(data.childNodes, (node) => {
         a.appendChild(node.cloneNode(true))
       })
     } else {
       // Default behavior. Set to textContent to keep tests happy.
       a.textContent = data.textContent
     }
-    a.setAttribute('href', options.basePath + '#' + data.id)
-    a.setAttribute('class', options.linkClass +
-      SPACE_CHAR + 'node-name--' + data.nodeName +
-      SPACE_CHAR + options.extraLinkClasses)
+    a.setAttribute('href', `${options.basePath}#${data.id}`)
+    a.setAttribute('class', `${options.linkClass +
+      SPACE_CHAR}node-name--${data.nodeName}${SPACE_CHAR}${options.extraLinkClasses}`)
     item.appendChild(a)
     return item
   }
@@ -195,24 +194,23 @@ export default function (options) {
     if (currentlyHighlighting &&
       tocElement !== null &&
       headings.length > 0) {
-      some.call(headings, function (heading, i) {
+      some.call(headings, (heading, i) => {
         if (getHeadingTopPos(heading) > top + options.headingsOffset + 10) {
           // Don't allow negative index value.
           const index = (i === 0) ? i : i - 1
           topHeader = headings[index]
           return true
-        } else if (i === headings.length - 1) {
+        }
+        if (i === headings.length - 1) {
           // This allows scrolling for the last heading on the page.
           topHeader = headings[headings.length - 1]
           return true
         }
       })
 
-      const oldActiveTocLink = tocElement.querySelector('.' + options.activeLinkClass)
+      const oldActiveTocLink = tocElement.querySelector(`.${options.activeLinkClass}`)
       const activeTocLink = tocElement
-        .querySelector('.' + options.linkClass +
-          '.node-name--' + topHeader.nodeName +
-          '[href="' + options.basePath + '#' + topHeader.id.replace(/([ #;&,.+*~':"!^$[\]()=>|/\\@])/g, '\\$1') + '"]')
+        .querySelector(`.${options.linkClass}.node-name--${topHeader.nodeName}[href="${options.basePath}#${topHeader.id.replace(/([ #;&,.+*~':"!^$[\]()=>|/\\@])/g, '\\$1')}"]`)
       // Performance improvement to only change the classes
       // for the toc if a new link should be highlighted.
       if (oldActiveTocLink === activeTocLink) {
@@ -221,13 +219,13 @@ export default function (options) {
 
       // Remove the active class from the other tocLinks.
       const tocLinks = tocElement
-        .querySelectorAll('.' + options.linkClass)
-      forEach.call(tocLinks, function (tocLink) {
+        .querySelectorAll(`.${options.linkClass}`)
+      forEach.call(tocLinks, (tocLink) => {
         updateClassname(tocLink, tocLink.className.replace(SPACE_CHAR + options.activeLinkClass, ''))
       })
       const tocLis = tocElement
-        .querySelectorAll('.' + options.listItemClass)
-      forEach.call(tocLis, function (tocLi) {
+        .querySelectorAll(`.${options.listItemClass}`)
+      forEach.call(tocLis, (tocLi) => {
         updateClassname(tocLi, tocLi.className.replace(SPACE_CHAR + options.activeListItemClass, ''))
       })
 
@@ -235,26 +233,26 @@ export default function (options) {
       if (activeTocLink && activeTocLink.className.indexOf(options.activeLinkClass) === -1) {
         activeTocLink.className += SPACE_CHAR + options.activeLinkClass
       }
-      const li = activeTocLink && activeTocLink.parentNode
+      const li = activeTocLink?.parentNode
       if (li && li.className.indexOf(options.activeListItemClass) === -1) {
         li.className += SPACE_CHAR + options.activeListItemClass
       }
 
       const tocLists = tocElement
-        .querySelectorAll('.' + options.listClass + '.' + options.collapsibleClass)
+        .querySelectorAll(`.${options.listClass}.${options.collapsibleClass}`)
 
       // Collapse the other collapsible lists.
-      forEach.call(tocLists, function (list) {
+      forEach.call(tocLists, (list) => {
         if (list.className.indexOf(options.isCollapsedClass) === -1) {
           list.className += SPACE_CHAR + options.isCollapsedClass
         }
       })
 
       // Expand the active link's collapsible list and its sibling if applicable.
-      if (activeTocLink && activeTocLink.nextSibling && activeTocLink.nextSibling.className.indexOf(options.isCollapsedClass) !== -1) {
+      if (activeTocLink?.nextSibling && activeTocLink.nextSibling.className.indexOf(options.isCollapsedClass) !== -1) {
         updateClassname(activeTocLink.nextSibling, activeTocLink.nextSibling.className.replace(SPACE_CHAR + options.isCollapsedClass, ''))
       }
-      removeCollapsedFromParents(activeTocLink && activeTocLink.parentNode.parentNode)
+      removeCollapsedFromParents(activeTocLink?.parentNode.parentNode)
     }
   }
 

@@ -125,13 +125,13 @@ export default function parseContent (options) {
     if (options.ignoreSelector) {
       selectors = headingSelector.split(',')
         .map(function mapSelectors (selector) {
-          return selector.trim() + ':not(' + options.ignoreSelector + ')'
+          return `${selector.trim()}:not(${options.ignoreSelector})`
         })
     }
     try {
       return contentElement.querySelectorAll(selectors)
     } catch (e) {
-      console.warn('Headers not found with selector: ' + selectors); // eslint-disable-line
+      console.warn(`Headers not found with selector: ${selectors}`); // eslint-disable-line
       return null
     }
   }
