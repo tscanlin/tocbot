@@ -14,7 +14,6 @@ import defaultOptions from './default-options.js'
 import ParseContent from './parse-content.js'
 import initSmoothScrolling from './scroll-smooth/index.js'
 import updateTocScroll from './update-toc-scroll.js'
-import * as helpers from '../utils/helpers.js'
 
 // For testing purposes.
 export let _options = {} // Object to store current options.

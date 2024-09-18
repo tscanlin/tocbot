@@ -7,8 +7,8 @@
 export default function (options) {
   const forEach = [].forEach
   const some = [].some
-  // if (typeof window === 'undefined') return
-  const body = typeof window !== 'undefined' && document.body
+  if (typeof window === 'undefined') return
+  const body = document.body
   const SPACE_CHAR = ' '
   let tocElement
   let currentlyHighlighting = true
@@ -180,7 +180,7 @@ export default function (options) {
     if (currentlyHighlighting &&
       tocElement !== null &&
       headings.length > 0) {
-      const topHeader = getTopHeader(headings);
+      const topHeader = getTopHeader(headings)
 
       const oldActiveTocLink = tocElement.querySelector(`.${options.activeLinkClass}`)
       const activeTocLink = tocElement
@@ -301,47 +301,18 @@ export default function (options) {
   }
 
   function updateUrlHashForHeader (headingsArray) {
-    // if (!window.history.pushState) return
-    // if (typeof window === 'undefined') return
-    const body = document.body
     const scrollTop = getScrollTop()
-  
     const topHeader = getTopHeader(headingsArray, scrollTop)
-    console.log(!topHeader, scrollTop === 0)
-    if (!topHeader || scrollTop === 0 || (scrollTop < 4 && !isElementInViewport(topHeader))) { //! hasElInView) {
-      console.log('hash: ', window.location.hash)
-      
-      
-      
-      
+    if (!topHeader || scrollTop === 0 || (scrollTop < 4 && !isElementInViewport(topHeader))) {
       if (!(window.location.hash === '#' || window.location.hash === '')) {
         window.history.pushState(null, null, '#')
       }
-      // return
     } else if (topHeader) {
       const newHash = `#${topHeader.id}`
       if (window.location.hash !== newHash) {
         window.history.pushState(null, null, newHash)
       }
     }
-    console.log({topHeader})
-    // let hasElInView = false
-    // for (const el of headingsArray) {
-    //   if (isElementInViewport(el) && !hasElInView) {
-    //     // window.location.hash = `#${el.id}`
-    //     const newHash = `#${el.id}`
-    //     if (window.location.hash !== newHash) {
-    //       window.history.pushState(null, null, newHash)
-    //     }
-    //     hasElInView = true
-    //   }
-    // }
-    // if (scrollTop === 0 || (scrollTop < 4 && !hasElInView)) { //! hasElInView) {
-    //   console.log('a: ', window.location.hash === '')
-    //   if (!(window.location.hash === '#' || window.location.hash === '')) {
-    //     window.history.pushState(null, null, '#')
-    //   }
-    // }
   }
 
   function isElementInViewport (el) {
