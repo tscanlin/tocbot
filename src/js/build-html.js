@@ -122,19 +122,14 @@ export default function (options) {
    * @return {HTMLElement}
    */
   function updateFixedSidebarClass () {
-    let top
-    if (options.scrollContainer && document.querySelector(options.scrollContainer)) {
-      top = document.querySelector(options.scrollContainer).scrollTop
-    } else {
-      top = document.documentElement.scrollTop || body.scrollTop
-    }
+    const scrollTop = getScrollTop()
 
     const posFixedEl = document.querySelector(options.positionFixedSelector)
     if (options.fixedSidebarOffset === 'auto') {
       options.fixedSidebarOffset = tocElement.offsetTop
     }
 
-    if (top > options.fixedSidebarOffset) {
+    if (scrollTop > options.fixedSidebarOffset) {
       if (posFixedEl.className.indexOf(options.positionFixedClass) === -1) {
         posFixedEl.className += SPACE_CHAR + options.positionFixedClass
       }
@@ -174,14 +169,6 @@ export default function (options) {
    * Update TOC highlighting and collapsed groupings.
    */
   function updateToc (headingsArray) {
-    // If a fixed content container was set
-    let top
-    if (options.scrollContainer && document.querySelector(options.scrollContainer)) {
-      top = document.querySelector(options.scrollContainer).scrollTop
-    } else {
-      top = document.documentElement.scrollTop || body.scrollTop
-    }
-
     // Add fixed class at offset
     if (options.positionFixedSelector) {
       updateFixedSidebarClass()
@@ -189,24 +176,11 @@ export default function (options) {
 
     // Get the top most heading currently visible on the page so we know what to highlight.
     const headings = headingsArray
-    let topHeader
     // Using some instead of each so that we can escape early.
     if (currentlyHighlighting &&
       tocElement !== null &&
       headings.length > 0) {
-      some.call(headings, (heading, i) => {
-        if (getHeadingTopPos(heading) > top + options.headingsOffset + 10) {
-          // Don't allow negative index value.
-          const index = (i === 0) ? i : i - 1
-          topHeader = headings[index]
-          return true
-        }
-        if (i === headings.length - 1) {
-          // This allows scrolling for the last heading on the page.
-          topHeader = headings[headings.length - 1]
-          return true
-        }
-      })
+      const topHeader = getTopHeader(headings);
 
       const oldActiveTocLink = tocElement.querySelector(`.${options.activeLinkClass}`)
       const activeTocLink = tocElement
@@ -297,11 +271,97 @@ export default function (options) {
     return currentlyHighlighting
   }
 
+  function getScrollTop () {
+    // If a fixed content container was set
+    let top
+    if (options.scrollContainer && document.querySelector(options.scrollContainer)) {
+      top = document.querySelector(options.scrollContainer).scrollTop
+    } else {
+      top = document.documentElement.scrollTop || body.scrollTop
+    }
+    return top
+  }
+
+  function getTopHeader (headings, scrollTop = getScrollTop()) {
+    let topHeader
+    some.call(headings, (heading, i) => {
+      if (getHeadingTopPos(heading) > scrollTop + options.headingsOffset + 10) {
+        // Don't allow negative index value.
+        const index = (i === 0) ? i : i - 1
+        topHeader = headings[index]
+        return true
+      }
+      if (i === headings.length - 1) {
+        // This allows scrolling for the last heading on the page.
+        topHeader = headings[headings.length - 1]
+        return true
+      }
+    })
+    return topHeader
+  }
+
+  function updateUrlHashForHeader (headingsArray) {
+    // if (!window.history.pushState) return
+    // if (typeof window === 'undefined') return
+    const body = document.body
+    const scrollTop = getScrollTop()
+  
+    const topHeader = getTopHeader(headingsArray, scrollTop)
+    console.log(!topHeader, scrollTop === 0)
+    if (!topHeader || scrollTop === 0 || (scrollTop < 4 && !isElementInViewport(topHeader))) { //! hasElInView) {
+      console.log('hash: ', window.location.hash)
+      
+      
+      
+      
+      if (!(window.location.hash === '#' || window.location.hash === '')) {
+        window.history.pushState(null, null, '#')
+      }
+      // return
+    } else if (topHeader) {
+      const newHash = `#${topHeader.id}`
+      if (window.location.hash !== newHash) {
+        window.history.pushState(null, null, newHash)
+      }
+    }
+    console.log({topHeader})
+    // let hasElInView = false
+    // for (const el of headingsArray) {
+    //   if (isElementInViewport(el) && !hasElInView) {
+    //     // window.location.hash = `#${el.id}`
+    //     const newHash = `#${el.id}`
+    //     if (window.location.hash !== newHash) {
+    //       window.history.pushState(null, null, newHash)
+    //     }
+    //     hasElInView = true
+    //   }
+    // }
+    // if (scrollTop === 0 || (scrollTop < 4 && !hasElInView)) { //! hasElInView) {
+    //   console.log('a: ', window.location.hash === '')
+    //   if (!(window.location.hash === '#' || window.location.hash === '')) {
+    //     window.history.pushState(null, null, '#')
+    //   }
+    // }
+  }
+
+  function isElementInViewport (el) {
+    const rect = el.getBoundingClientRect()
+    return (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    )
+  }
+
   return {
     enableTocAnimation,
     disableTocAnimation,
     render,
     updateToc,
-    getCurrentlyHighlighting
+    getCurrentlyHighlighting,
+    getTopHeader,
+    getScrollTop,
+    updateUrlHashForHeader
   }
 }
