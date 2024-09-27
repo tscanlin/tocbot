@@ -86,8 +86,10 @@ export function init (customOptions) {
     _buildHtml.updateToc(_headingsArray)
     !_options.disableTocScrollSync && updateTocScroll(_options)
 
-    const enableUpdatingHash = _buildHtml.getCurrentlyHighlighting()
-    enableUpdatingHash && _buildHtml.updateUrlHashForHeader(_headingsArray)
+    if (_options.enableUrlHashUpdateOnScroll) {
+      const enableUpdatingHash = _buildHtml.getCurrentlyHighlighting()
+      enableUpdatingHash && _buildHtml.updateUrlHashForHeader(_headingsArray)
+    }
 
     const isTop =
       e?.target?.scrollingElement &&
