@@ -12,8 +12,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* export default binding */ __WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* eslint no-var: off */
-
 /**
  * This file is responsible for building the DOM and updating DOM state.
  *
@@ -21,13 +19,12 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 /* harmony default export */ function __WEBPACK_DEFAULT_EXPORT__(options) {
-  var forEach = [].forEach
-  var some = [].some
-  // if (typeof window === 'undefined') return
-  var body = typeof window !== 'undefined' && document.body
-  var tocElement
-  var currentlyHighlighting = true
-  var SPACE_CHAR = ' '
+  const forEach = [].forEach
+  const some = [].some
+  const body = typeof window !== 'undefined' && document.body
+  const SPACE_CHAR = ' '
+  let tocElement
+  let currentlyHighlighting = true
 
   /**
    * Create link and list elements.
@@ -36,10 +33,10 @@ __webpack_require__.r(__webpack_exports__);
    * @return {HTMLElement}
    */
   function createEl (d, container) {
-    var link = container.appendChild(createLink(d))
+    const link = container.appendChild(createLink(d))
     if (d.children.length) {
-      var list = createList(d.isCollapsed)
-      d.children.forEach(function (child) {
+      const list = createList(d.isCollapsed)
+      d.children.forEach((child) => {
         createEl(child, list)
       })
       link.appendChild(list)
@@ -53,10 +50,10 @@ __webpack_require__.r(__webpack_exports__);
    * @return {HTMLElement}
    */
   function render (parent, data) {
-    var collapsed = false
-    var container = createList(collapsed)
+    const collapsed = false
+    const container = createList(collapsed)
 
-    data.forEach(function (d) {
+    data.forEach((d) => {
       createEl(d, container)
     })
 
@@ -86,8 +83,8 @@ __webpack_require__.r(__webpack_exports__);
    * @return {HTMLElement}
    */
   function createLink (data) {
-    var item = document.createElement('li')
-    var a = document.createElement('a')
+    const item = document.createElement('li')
+    const a = document.createElement('a')
     if (options.listItemClass) {
       item.setAttribute('class', options.listItemClass)
     }
@@ -101,17 +98,16 @@ __webpack_require__.r(__webpack_exports__);
     }
 
     if (options.includeHtml && data.childNodes.length) {
-      forEach.call(data.childNodes, function (node) {
+      forEach.call(data.childNodes, (node) => {
         a.appendChild(node.cloneNode(true))
       })
     } else {
       // Default behavior. Set to textContent to keep tests happy.
       a.textContent = data.textContent
     }
-    a.setAttribute('href', options.basePath + '#' + data.id)
-    a.setAttribute('class', options.linkClass +
-      SPACE_CHAR + 'node-name--' + data.nodeName +
-      SPACE_CHAR + options.extraLinkClasses)
+    a.setAttribute('href', `${options.basePath}#${data.id}`)
+    a.setAttribute('class', `${options.linkClass +
+      SPACE_CHAR}node-name--${data.nodeName}${SPACE_CHAR}${options.extraLinkClasses}`)
     item.appendChild(a)
     return item
   }
@@ -122,9 +118,9 @@ __webpack_require__.r(__webpack_exports__);
    * @return {HTMLElement}
    */
   function createList (isCollapsed) {
-    var listElement = (options.orderedList) ? 'ol' : 'ul'
-    var list = document.createElement(listElement)
-    var classes = options.listClass + SPACE_CHAR + options.extraListClasses
+    const listElement = (options.orderedList) ? 'ol' : 'ul'
+    const list = document.createElement(listElement)
+    let classes = options.listClass + SPACE_CHAR + options.extraListClasses
     if (isCollapsed) {
       // No plus/equals here fixes compilation issue.
       classes = classes + SPACE_CHAR + options.collapsibleClass
@@ -139,19 +135,14 @@ __webpack_require__.r(__webpack_exports__);
    * @return {HTMLElement}
    */
   function updateFixedSidebarClass () {
-    if (options.scrollContainer && document.querySelector(options.scrollContainer)) {
-      var top
-      top = document.querySelector(options.scrollContainer).scrollTop
-    } else {
-      top = document.documentElement.scrollTop || body.scrollTop
-    }
-    var posFixedEl = document.querySelector(options.positionFixedSelector)
+    const scrollTop = getScrollTop()
 
+    const posFixedEl = document.querySelector(options.positionFixedSelector)
     if (options.fixedSidebarOffset === 'auto') {
       options.fixedSidebarOffset = tocElement.offsetTop
     }
 
-    if (top > options.fixedSidebarOffset) {
+    if (scrollTop > options.fixedSidebarOffset) {
       if (posFixedEl.className.indexOf(options.positionFixedClass) === -1) {
         posFixedEl.className += SPACE_CHAR + options.positionFixedClass
       }
@@ -166,7 +157,7 @@ __webpack_require__.r(__webpack_exports__);
    * @return {int} position
    */
   function getHeadingTopPos (obj) {
-    var position = 0
+    let position = 0
     if (obj !== null) {
       position = obj.offsetTop
       if (options.hasInnerContainers) { position += getHeadingTopPos(obj.offsetParent) }
@@ -191,44 +182,22 @@ __webpack_require__.r(__webpack_exports__);
    * Update TOC highlighting and collapsed groupings.
    */
   function updateToc (headingsArray) {
-    // If a fixed content container was set
-    if (options.scrollContainer && document.querySelector(options.scrollContainer)) {
-      var top
-      top = document.querySelector(options.scrollContainer).scrollTop
-    } else {
-      top = document.documentElement.scrollTop || body.scrollTop
-    }
-
     // Add fixed class at offset
     if (options.positionFixedSelector) {
       updateFixedSidebarClass()
     }
 
     // Get the top most heading currently visible on the page so we know what to highlight.
-    var headings = headingsArray
-    var topHeader
+    const headings = headingsArray
     // Using some instead of each so that we can escape early.
     if (currentlyHighlighting &&
-      tocElement !== null &&
+      !!tocElement &&
       headings.length > 0) {
-      some.call(headings, function (heading, i) {
-        if (getHeadingTopPos(heading) > top + options.headingsOffset + 10) {
-          // Don't allow negative index value.
-          var index = (i === 0) ? i : i - 1
-          topHeader = headings[index]
-          return true
-        } else if (i === headings.length - 1) {
-          // This allows scrolling for the last heading on the page.
-          topHeader = headings[headings.length - 1]
-          return true
-        }
-      })
+      const topHeader = getTopHeader(headings)
 
-      var oldActiveTocLink = tocElement.querySelector('.' + options.activeLinkClass)
-      var activeTocLink = tocElement
-        .querySelector('.' + options.linkClass +
-          '.node-name--' + topHeader.nodeName +
-          '[href="' + options.basePath + '#' + topHeader.id.replace(/([ #;&,.+*~':"!^$[\]()=>|/\\@])/g, '\\$1') + '"]')
+      const oldActiveTocLink = tocElement.querySelector(`.${options.activeLinkClass}`)
+      const activeTocLink = tocElement
+        .querySelector(`.${options.linkClass}.node-name--${topHeader.nodeName}[href="${options.basePath}#${topHeader.id.replace(/([ #;&,.+*~':"!^$[\]()=>|/\\@])/g, '\\$1')}"]`)
       // Performance improvement to only change the classes
       // for the toc if a new link should be highlighted.
       if (oldActiveTocLink === activeTocLink) {
@@ -236,14 +205,14 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       // Remove the active class from the other tocLinks.
-      var tocLinks = tocElement
-        .querySelectorAll('.' + options.linkClass)
-      forEach.call(tocLinks, function (tocLink) {
+      const tocLinks = tocElement
+        .querySelectorAll(`.${options.linkClass}`)
+      forEach.call(tocLinks, (tocLink) => {
         updateClassname(tocLink, tocLink.className.replace(SPACE_CHAR + options.activeLinkClass, ''))
       })
-      var tocLis = tocElement
-        .querySelectorAll('.' + options.listItemClass)
-      forEach.call(tocLis, function (tocLi) {
+      const tocLis = tocElement
+        .querySelectorAll(`.${options.listItemClass}`)
+      forEach.call(tocLis, (tocLi) => {
         updateClassname(tocLi, tocLi.className.replace(SPACE_CHAR + options.activeListItemClass, ''))
       })
 
@@ -251,26 +220,26 @@ __webpack_require__.r(__webpack_exports__);
       if (activeTocLink && activeTocLink.className.indexOf(options.activeLinkClass) === -1) {
         activeTocLink.className += SPACE_CHAR + options.activeLinkClass
       }
-      var li = activeTocLink && activeTocLink.parentNode
+      const li = activeTocLink?.parentNode
       if (li && li.className.indexOf(options.activeListItemClass) === -1) {
         li.className += SPACE_CHAR + options.activeListItemClass
       }
 
-      var tocLists = tocElement
-        .querySelectorAll('.' + options.listClass + '.' + options.collapsibleClass)
+      const tocLists = tocElement
+        .querySelectorAll(`.${options.listClass}.${options.collapsibleClass}`)
 
       // Collapse the other collapsible lists.
-      forEach.call(tocLists, function (list) {
+      forEach.call(tocLists, (list) => {
         if (list.className.indexOf(options.isCollapsedClass) === -1) {
           list.className += SPACE_CHAR + options.isCollapsedClass
         }
       })
 
       // Expand the active link's collapsible list and its sibling if applicable.
-      if (activeTocLink && activeTocLink.nextSibling && activeTocLink.nextSibling.className.indexOf(options.isCollapsedClass) !== -1) {
+      if (activeTocLink?.nextSibling && activeTocLink.nextSibling.className.indexOf(options.isCollapsedClass) !== -1) {
         updateClassname(activeTocLink.nextSibling, activeTocLink.nextSibling.className.replace(SPACE_CHAR + options.isCollapsedClass, ''))
       }
-      removeCollapsedFromParents(activeTocLink && activeTocLink.parentNode.parentNode)
+      removeCollapsedFromParents(activeTocLink?.parentNode.parentNode)
     }
   }
 
@@ -292,7 +261,7 @@ __webpack_require__.r(__webpack_exports__);
    * @param {Event} event
    */
   function disableTocAnimation (event) {
-    var target = event.target || event.srcElement
+    const target = event.target || event.srcElement
     if (typeof target.className !== 'string' || target.className.indexOf(options.linkClass) === -1) {
       return
     }
@@ -308,11 +277,66 @@ __webpack_require__.r(__webpack_exports__);
     currentlyHighlighting = true
   }
 
+  /**
+   * Return currently highlighting status.
+   */
+  function getCurrentlyHighlighting () {
+    return currentlyHighlighting
+  }
+
+  function getScrollTop () {
+    // If a fixed content container was set
+    let top
+    if (options.scrollContainer && document.querySelector(options.scrollContainer)) {
+      top = document.querySelector(options.scrollContainer).scrollTop
+    } else {
+      top = document.documentElement.scrollTop || body.scrollTop
+    }
+    return top
+  }
+
+  function getTopHeader (headings, scrollTop = getScrollTop()) {
+    let topHeader
+    some.call(headings, (heading, i) => {
+      if (getHeadingTopPos(heading) > scrollTop + options.headingsOffset + 10) {
+        // Don't allow negative index value.
+        const index = (i === 0) ? i : i - 1
+        topHeader = headings[index]
+        return true
+      }
+      if (i === headings.length - 1) {
+        // This allows scrolling for the last heading on the page.
+        topHeader = headings[headings.length - 1]
+        return true
+      }
+    })
+    return topHeader
+  }
+
+  function updateUrlHashForHeader (headingsArray) {
+    const scrollTop = getScrollTop()
+    const topHeader = getTopHeader(headingsArray, scrollTop)
+    if (!topHeader || scrollTop < 5) {
+      if (!(window.location.hash === '#' || window.location.hash === '')) {
+        window.history.pushState(null, null, '#')
+      }
+    } else if (topHeader) {
+      const newHash = `#${topHeader.id}`
+      if (window.location.hash !== newHash) {
+        window.history.pushState(null, null, newHash)
+      }
+    }
+  }
+
   return {
     enableTocAnimation,
     disableTocAnimation,
     render,
-    updateToc
+    updateToc,
+    getCurrentlyHighlighting,
+    getTopHeader,
+    getScrollTop,
+    updateUrlHashForHeader
   }
 }
 
@@ -332,13 +356,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   // Where to render the table of contents.
   tocSelector: '.js-toc',
+  // Or, you can pass in a DOM node instead
+  tocElement: null,
   // Where to grab the headings to build the table of contents.
   contentSelector: '.js-toc-content',
+  // Or, you can pass in a DOM node instead
+  contentElement: null,
   // Which headings to grab inside of the contentSelector element.
   headingSelector: 'h1, h2, h3',
   // Headings that match the ignoreSelector will be skipped.
   ignoreSelector: '.js-toc-ignore',
-  // For headings inside relative or absolute positioned containers within content
+  // For headings inside relative or absolute positioned
+  // containers within content.
   hasInnerContainers: false,
   // Main class to add to links.
   linkClass: 'toc-link',
@@ -374,7 +403,8 @@ __webpack_require__.r(__webpack_exports__);
   scrollSmoothOffset: 0,
   // Callback for scroll end.
   scrollEndCallback: function (e) {},
-  // Headings offset between the headings and the top of the document (this is meant for minor adjustments).
+  // Headings offset between the headings and the top of
+  // the document (this is meant for minor adjustments).
   headingsOffset: 1,
   // Timeout between events firing to make sure it's
   // not too rapid (for performance reasons).
@@ -402,9 +432,9 @@ __webpack_require__.r(__webpack_exports__);
   // orderedList can be set to false to generate unordered lists (ul)
   // instead of ordered lists (ol)
   orderedList: true,
-  // If there is a fixed article scroll container, set to calculate titles' offset
+  // If there is a fixed article scroll container, set to calculate offset.
   scrollContainer: null,
-  // prevent ToC DOM rendering if it's already rendered by an external system
+  // prevent ToC DOM rendering if it's already rendered by an external system.
   skipRendering: false,
   // Optional callback to change heading labels.
   // For example it can be used to cut down and put ellipses on multiline headings you deem too long.
@@ -416,7 +446,8 @@ __webpack_require__.r(__webpack_exports__);
   // ignore headings that are hidden in DOM
   ignoreHiddenElements: false,
   // Optional callback to modify properties of parsed headings.
-  // The heading element is passed in node parameter and information parsed by default parser is provided in obj parameter.
+  // The heading element is passed in node parameter and information
+  // parsed by default parser is provided in obj parameter.
   // Function has to return the same or modified obj.
   // The heading will be excluded from TOC if nothing is returned.
   // function (object, HTMLElement) => object | void
@@ -428,7 +459,10 @@ __webpack_require__.r(__webpack_exports__);
   disableTocScrollSync: false,
   // Offset for the toc scroll (top) position when scrolling the page.
   // Only effective if `disableTocScrollSync` is false.
-  tocScrollOffset: 0
+  tocScrollOffset: 0,
+  // Enable the URL hash to update with the proper heading ID as
+  // a user scrolls the page.
+  enableUrlHashUpdateOnScroll: false
 });
 
 
@@ -447,6 +481,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "_options": () => (/* binding */ _options),
 /* harmony export */   "_parseContent": () => (/* binding */ _parseContent),
 /* harmony export */   "_scrollListener": () => (/* binding */ _scrollListener),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
 /* harmony export */   "destroy": () => (/* binding */ destroy),
 /* harmony export */   "init": () => (/* binding */ init),
 /* harmony export */   "refresh": () => (/* binding */ refresh)
@@ -540,13 +575,17 @@ function init (customOptions) {
   }
 
   // Update Sidebar and bind listeners.
-  _scrollListener = throttle(function (e) {
+  _scrollListener = throttle((e) => {
     _buildHtml.updateToc(_headingsArray)
     !_options.disableTocScrollSync && (0,_update_toc_scroll_js__WEBPACK_IMPORTED_MODULE_4__["default"])(_options)
+
+    if (_options.enableUrlHashUpdateOnScroll) {
+      const enableUpdatingHash = _buildHtml.getCurrentlyHighlighting()
+      enableUpdatingHash && _buildHtml.updateUrlHashForHeader(_headingsArray)
+    }
+
     const isTop =
-      e &&
-      e.target &&
-      e.target.scrollingElement &&
+      e?.target?.scrollingElement &&
       e.target.scrollingElement.scrollTop === 0
     if ((e && (e.eventPhase === 0 || e.currentTarget === null)) || isTop) {
       _buildHtml.updateToc(_headingsArray)
@@ -573,14 +612,14 @@ function init (customOptions) {
 
   // Bind click listeners to disable animation.
   let timeout = null
-  clickListener = throttle(function (event) {
+  clickListener = throttle((event) => {
     if (_options.scrollSmooth) {
       _buildHtml.disableTocAnimation(event)
     }
     _buildHtml.updateToc(_headingsArray)
     // Timeout to re-enable the animation.
     timeout && clearTimeout(timeout)
-    timeout = setTimeout(function () {
+    timeout = setTimeout(() => {
       _buildHtml.enableTocAnimation()
     }, _options.scrollSmoothDuration)
   }, _options.throttleTimeout)
@@ -647,13 +686,13 @@ function refresh (customOptions) {
 }
 
 // From: https://github.com/Raynos/xtend
-const hasOwnProperty = Object.prototype.hasOwnProperty
-function extend () {
+const hasOwnProp = Object.prototype.hasOwnProperty
+function extend (...args) {
   const target = {}
-  for (let i = 0; i < arguments.length; i++) {
-    const source = arguments[i]
+  for (let i = 0; i < args.length; i++) {
+    const source = args[i]
     for (const key in source) {
-      if (hasOwnProperty.call(source, key)) {
+      if (hasOwnProp.call(source, key)) {
         target[key] = source[key]
       }
     }
@@ -666,14 +705,13 @@ function throttle (fn, threshold, scope) {
   threshold || (threshold = 250)
   let last
   let deferTimer
-  return function () {
+  return function (...args) {
     const context = scope || this
     const now = +new Date()
-    const args = arguments
     if (last && now < last + threshold) {
       // hold on to it
       clearTimeout(deferTimer)
-      deferTimer = setTimeout(function () {
+      deferTimer = setTimeout(() => {
         last = now
         fn.apply(context, args)
       }, threshold)
@@ -690,7 +728,7 @@ function getContentElement (options) {
       options.contentElement || document.querySelector(options.contentSelector)
     )
   } catch (e) {
-    console.warn('Contents element not found: ' + options.contentSelector) // eslint-disable-line
+    console.warn(`Contents element not found: ${options.contentSelector}`) // eslint-disable-line
     return null
   }
 }
@@ -699,10 +737,22 @@ function getTocElement (options) {
   try {
     return options.tocElement || document.querySelector(options.tocSelector)
   } catch (e) {
-    console.warn('TOC element not found: ' + options.tocSelector) // eslint-disable-line
+    console.warn(`TOC element not found: ${options.tocSelector}`) // eslint-disable-line
     return null
   }
 }
+
+// Add default export for easier use.
+const tocbot = {
+  _options,
+  _buildHtml,
+  _parseContent,
+  init,
+  destroy,
+  refresh
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (tocbot);
 
 
 /***/ }),
@@ -717,7 +767,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ parseContent)
 /* harmony export */ });
-/* eslint no-var: off */
 /**
  * This file is responsible for parsing the content from the DOM and making
  * sure data is nested properly.
@@ -726,7 +775,7 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 function parseContent (options) {
-  var reduce = [].reduce
+  const reduce = [].reduce
 
   /**
    * Get the last item in an array and return a reference to it.
@@ -780,7 +829,7 @@ function parseContent (options) {
 
     const headingLabel = heading.getAttribute('data-heading-label') ||
       (options.headingLabelCallback ? String(options.headingLabelCallback(heading.innerText)) : (heading.innerText || heading.textContent).trim())
-    var obj = {
+    const obj = {
       id: heading.id,
       children: [],
       nodeName: heading.nodeName,
@@ -806,14 +855,14 @@ function parseContent (options) {
    * @return {Array}
    */
   function addNode (node, nest) {
-    var obj = getHeadingObject(node)
-    var level = obj.headingLevel
-    var array = nest
-    var lastItem = getLastItem(array)
-    var lastItemLevel = lastItem
+    const obj = getHeadingObject(node)
+    const level = obj.headingLevel
+    let array = nest
+    let lastItem = getLastItem(array)
+    const lastItemLevel = lastItem
       ? lastItem.headingLevel
       : 0
-    var counter = level - lastItemLevel
+    let counter = level - lastItemLevel
 
     while (counter > 0) {
       lastItem = getLastItem(array)
@@ -841,17 +890,17 @@ function parseContent (options) {
    * @return {Array}
    */
   function selectHeadings (contentElement, headingSelector) {
-    var selectors = headingSelector
+    let selectors = headingSelector
     if (options.ignoreSelector) {
       selectors = headingSelector.split(',')
         .map(function mapSelectors (selector) {
-          return selector.trim() + ':not(' + options.ignoreSelector + ')'
+          return `${selector.trim()}:not(${options.ignoreSelector})`
         })
     }
     try {
       return contentElement.querySelectorAll(selectors)
     } catch (e) {
-      console.warn('Headers not found with selector: ' + selectors); // eslint-disable-line
+      console.warn(`Headers not found with selector: ${selectors}`); // eslint-disable-line
       return null
     }
   }
@@ -863,7 +912,7 @@ function parseContent (options) {
    */
   function nestHeadingsArray (headingsArray) {
     return reduce.call(headingsArray, function reducer (prev, curr) {
-      var currentHeading = getHeadingObject(curr)
+      const currentHeading = getHeadingObject(curr)
       if (currentHeading) {
         addNode(currentHeading, prev.nest)
       }
