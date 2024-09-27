@@ -103,5 +103,5 @@ export default {
   tocScrollOffset: 0,
   // Enable the URL hash to update with the proper heading ID as
   // a user scrolls the page.
-  enableUrlHashUpdateOnScroll: false,
+  enableUrlHashUpdateOnScroll: false
 }

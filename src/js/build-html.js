@@ -7,8 +7,7 @@
 export default function (options) {
   const forEach = [].forEach
   const some = [].some
-  if (typeof window === 'undefined') return
-  const body = document.body
+  const body = typeof window !== 'undefined' && document.body
   const SPACE_CHAR = ' '
   let tocElement
   let currentlyHighlighting = true
