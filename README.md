@@ -103,7 +103,8 @@ tocbot.destroy();
 ## Examples
 
 - [Tocbot Homepage](https://tscanlin.github.io/tocbot/)
-- [Optimizely's Developer Documentation](https://developers.optimizely.com/x/solutions/javascript/reference/index.html)
+- [Storybook uses Tocbot](https://storybook.js.org/docs/writing-docs/autodocs#configure-the-table-of-contents)
+  - Tocbot is used under the hood in storybook to provide TOC generation for component docs in storybook.
 
 If you'd like to add your page to this list open a pull request.
 
@@ -139,16 +140,17 @@ tocbot.init({
 // Where to render the table of contents.
 tocSelector: '.js-toc',
 // Or, you can pass in a DOM node instead
-tocElement: element,
+tocElement: null,
 // Where to grab the headings to build the table of contents.
 contentSelector: '.js-toc-content',
 // Or, you can pass in a DOM node instead
-contentElement: element,
+contentElement: null,
 // Which headings to grab inside of the contentSelector element.
 headingSelector: 'h1, h2, h3',
 // Headings that match the ignoreSelector will be skipped.
 ignoreSelector: '.js-toc-ignore',
-// For headings inside relative or absolute positioned containers within content
+// For headings inside relative or absolute positioned
+// containers within content.
 hasInnerContainers: false,
 // Main class to add to links.
 linkClass: 'toc-link',
@@ -184,7 +186,8 @@ scrollSmoothDuration: 420,
 scrollSmoothOffset: 0,
 // Callback for scroll end.
 scrollEndCallback: function (e) {},
-// Headings offset between the headings and the top of the document (this is meant for minor adjustments).
+// Headings offset between the headings and the top of
+// the document (this is meant for minor adjustments).
 headingsOffset: 1,
 // Timeout between events firing to make sure it's
 // not too rapid (for performance reasons).
@@ -212,9 +215,9 @@ onClick: function (e) {},
 // orderedList can be set to false to generate unordered lists (ul)
 // instead of ordered lists (ol)
 orderedList: true,
-// If there is a fixed article scroll container, set to calculate titles' offset
+// If there is a fixed article scroll container, set to calculate offset.
 scrollContainer: null,
-// prevent ToC DOM rendering if it's already rendered by an external system
+// prevent ToC DOM rendering if it's already rendered by an external system.
 skipRendering: false,
 // Optional callback to change heading labels.
 // For example it can be used to cut down and put ellipses on multiline headings you deem too long.
@@ -226,7 +229,8 @@ headingLabelCallback: false,
 // ignore headings that are hidden in DOM
 ignoreHiddenElements: false,
 // Optional callback to modify properties of parsed headings.
-// The heading element is passed in node parameter and information parsed by default parser is provided in obj parameter.
+// The heading element is passed in node parameter and information
+// parsed by default parser is provided in obj parameter.
 // Function has to return the same or modified obj.
 // The heading will be excluded from TOC if nothing is returned.
 // function (object, HTMLElement) => object | void
@@ -239,6 +243,9 @@ disableTocScrollSync: false,
 // Offset for the toc scroll (top) position when scrolling the page.
 // Only effective if `disableTocScrollSync` is false.
 tocScrollOffset: 0,
+// Enable the URL hash to update with the proper heading ID as
+// a user scrolls the page.
+enableUrlHashUpdateOnScroll: false
 ```
 
 

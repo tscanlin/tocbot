@@ -82,13 +82,17 @@ export function init (customOptions) {
   }
 
   // Update Sidebar and bind listeners.
-  _scrollListener = throttle(function (e) {
+  _scrollListener = throttle((e) => {
     _buildHtml.updateToc(_headingsArray)
     !_options.disableTocScrollSync && updateTocScroll(_options)
+
+    if (_options.enableUrlHashUpdateOnScroll) {
+      const enableUpdatingHash = _buildHtml.getCurrentlyHighlighting()
+      enableUpdatingHash && _buildHtml.updateUrlHashForHeader(_headingsArray)
+    }
+
     const isTop =
-      e &&
-      e.target &&
-      e.target.scrollingElement &&
+      e?.target?.scrollingElement &&
       e.target.scrollingElement.scrollTop === 0
     if ((e && (e.eventPhase === 0 || e.currentTarget === null)) || isTop) {
       _buildHtml.updateToc(_headingsArray)
@@ -115,14 +119,14 @@ export function init (customOptions) {
 
   // Bind click listeners to disable animation.
   let timeout = null
-  clickListener = throttle(function (event) {
+  clickListener = throttle((event) => {
     if (_options.scrollSmooth) {
       _buildHtml.disableTocAnimation(event)
     }
     _buildHtml.updateToc(_headingsArray)
     // Timeout to re-enable the animation.
     timeout && clearTimeout(timeout)
-    timeout = setTimeout(function () {
+    timeout = setTimeout(() => {
       _buildHtml.enableTocAnimation()
     }, _options.scrollSmoothDuration)
   }, _options.throttleTimeout)
@@ -189,13 +193,13 @@ export function refresh (customOptions) {
 }
 
 // From: https://github.com/Raynos/xtend
-const hasOwnProperty = Object.prototype.hasOwnProperty
-function extend () {
+const hasOwnProp = Object.prototype.hasOwnProperty
+function extend (...args) {
   const target = {}
-  for (let i = 0; i < arguments.length; i++) {
-    const source = arguments[i]
+  for (let i = 0; i < args.length; i++) {
+    const source = args[i]
     for (const key in source) {
-      if (hasOwnProperty.call(source, key)) {
+      if (hasOwnProp.call(source, key)) {
         target[key] = source[key]
       }
     }
@@ -208,14 +212,13 @@ function throttle (fn, threshold, scope) {
   threshold || (threshold = 250)
   let last
   let deferTimer
-  return function () {
+  return function (...args) {
     const context = scope || this
     const now = +new Date()
-    const args = arguments
     if (last && now < last + threshold) {
       // hold on to it
       clearTimeout(deferTimer)
-      deferTimer = setTimeout(function () {
+      deferTimer = setTimeout(() => {
         last = now
         fn.apply(context, args)
       }, threshold)
@@ -232,7 +235,7 @@ function getContentElement (options) {
       options.contentElement || document.querySelector(options.contentSelector)
     )
   } catch (e) {
-    console.warn('Contents element not found: ' + options.contentSelector) // eslint-disable-line
+    console.warn(`Contents element not found: ${options.contentSelector}`) // eslint-disable-line
     return null
   }
 }
@@ -241,7 +244,19 @@ function getTocElement (options) {
   try {
     return options.tocElement || document.querySelector(options.tocSelector)
   } catch (e) {
-    console.warn('TOC element not found: ' + options.tocSelector) // eslint-disable-line
+    console.warn(`TOC element not found: ${options.tocSelector}`) // eslint-disable-line
     return null
   }
 }
+
+// Add default export for easier use.
+const tocbot = {
+  _options,
+  _buildHtml,
+  _parseContent,
+  init,
+  destroy,
+  refresh
+}
+
+export default tocbot
