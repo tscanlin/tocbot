@@ -103,7 +103,8 @@ tocbot.destroy();
 ## Examples
 
 - [Tocbot Homepage](https://tscanlin.github.io/tocbot/)
-- [Optimizely's Developer Documentation](https://developers.optimizely.com/x/solutions/javascript/reference/index.html)
+- [Storybook uses Tocbot](https://storybook.js.org/docs/writing-docs/autodocs#configure-the-table-of-contents)
+  - Tocbot is used under the hood in storybook to provide TOC generation for component docs in storybook.
 
 If you'd like to add your page to this list open a pull request.
 

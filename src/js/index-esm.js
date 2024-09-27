@@ -246,3 +246,15 @@ function getTocElement (options) {
     return null
   }
 }
+
+// Add default export for easier use.
+const tocbot = {
+  _options,
+  _buildHtml,
+  _parseContent,
+  init,
+  destroy,
+  refresh
+}
+
+export default tocbot
