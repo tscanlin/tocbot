@@ -9,7 +9,6 @@ export function isElementInViewport (el) {
 }
 
 export function updateUrlHashForHeader (headingsArray) {
-  // if (!window.history.pushState) return
   if (typeof window === 'undefined') return
   const body = document.body
   const scrollTop = document.documentElement.scrollTop || body.scrollTop
@@ -17,7 +16,6 @@ export function updateUrlHashForHeader (headingsArray) {
   let hasElInView = false
   for (const el of headingsArray) {
     if (isElementInViewport(el) && !hasElInView) {
-      // window.location.hash = `#${el.id}`
       const newHash = `#${el.id}`
       if (window.location.hash !== newHash) {
         window.history.pushState(null, null, newHash)
