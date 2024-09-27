@@ -177,7 +177,7 @@ export default function (options) {
     const headings = headingsArray
     // Using some instead of each so that we can escape early.
     if (currentlyHighlighting &&
-      tocElement !== null &&
+      !!tocElement &&
       headings.length > 0) {
       const topHeader = getTopHeader(headings)
 

@@ -11,7 +11,8 @@ const TOCBOT_OPTIONS = {
   hasInnerContainers: true,
   onClick: (e) => { console.log('you clicked a link', e) },
   headingsOffset: 40,
-  scrollSmoothOffset: -40
+  scrollSmoothOffset: -40,
+  enableUrlHashUpdateOnScroll: true,
   // skipRendering: true,
 }
 
