@@ -1,8 +1,12 @@
 export default {
   // Where to render the table of contents.
   tocSelector: '.js-toc',
+  // Or, you can pass in a DOM node instead
+  tocElement: null,
   // Where to grab the headings to build the table of contents.
   contentSelector: '.js-toc-content',
+  // Or, you can pass in a DOM node instead
+  contentElement: null,
   // Which headings to grab inside of the contentSelector element.
   headingSelector: 'h1, h2, h3',
   // Headings that match the ignoreSelector will be skipped.

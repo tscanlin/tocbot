@@ -302,7 +302,7 @@ export default function (options) {
   function updateUrlHashForHeader (headingsArray) {
     const scrollTop = getScrollTop()
     const topHeader = getTopHeader(headingsArray, scrollTop)
-    if (!topHeader || scrollTop === 0 || (scrollTop < 4 && !isElementInViewport(topHeader))) {
+    if (!topHeader || scrollTop < 5) {
       if (!(window.location.hash === '#' || window.location.hash === '')) {
         window.history.pushState(null, null, '#')
       }
@@ -312,16 +312,6 @@ export default function (options) {
         window.history.pushState(null, null, newHash)
       }
     }
-  }
-
-  function isElementInViewport (el) {
-    const rect = el.getBoundingClientRect()
-    return (
-      rect.top >= 0 &&
-      rect.left >= 0 &&
-      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-    )
   }
 
   return {

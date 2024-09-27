@@ -139,8 +139,12 @@ tocbot.init({
 ```javascript
 // Where to render the table of contents.
 tocSelector: '.js-toc',
+// Or, you can pass in a DOM node instead
+tocElement: null,
 // Where to grab the headings to build the table of contents.
 contentSelector: '.js-toc-content',
+// Or, you can pass in a DOM node instead
+contentElement: null,
 // Which headings to grab inside of the contentSelector element.
 headingSelector: 'h1, h2, h3',
 // Headings that match the ignoreSelector will be skipped.
@@ -241,7 +245,7 @@ disableTocScrollSync: false,
 tocScrollOffset: 0,
 // Enable the URL hash to update with the proper heading ID as
 // a user scrolls the page.
-enableUrlHashUpdateOnScroll: false,
+enableUrlHashUpdateOnScroll: false
 ```
 
 
