@@ -102,6 +102,10 @@ export default {
   // Only takes affect when `tocSelector` is scrolling,
   // keep the toc scroll position in sync with the content.
   disableTocScrollSync: false,
+  // If this is null then just use `tocElement` or `tocSelector` instead
+  // assuming `disableTocScrollSync` is set to false. This allows for
+  // scrolling an outer element (like a nav panel w/ search) containing the toc.
+  tocScrollingWrapper: null,
   // Offset for the toc scroll (top) position when scrolling the page.
   // Only effective if `disableTocScrollSync` is false.
   tocScrollOffset: 0,
