@@ -40,7 +40,7 @@ OR
 Include the script at the bottom of the page before the closing body tag.
 
 ```html
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.27.4/tocbot.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.30.0/tocbot.min.js"></script>
 ```
 
 
@@ -49,7 +49,7 @@ Include the script at the bottom of the page before the closing body tag.
 CSS is used for expanding & collapsing groupings and some basic styling.
 
 ```html
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.27.4/tocbot.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.30.0/tocbot.css">
 ```
 
 OR
@@ -240,6 +240,11 @@ basePath: '',
 // Only takes affect when `tocSelector` is scrolling,
 // keep the toc scroll position in sync with the content.
 disableTocScrollSync: false,
+// If this is null then just use `tocElement` or `tocSelector` instead
+// assuming `disableTocScrollSync` is set to false. This allows for
+// scrolling an outer element (like a nav panel w/ search) containing the toc.
+// Please pass an element, not a selector here.
+tocScrollingWrapper: null,
 // Offset for the toc scroll (top) position when scrolling the page.
 // Only effective if `disableTocScrollSync` is false.
 tocScrollOffset: 0,

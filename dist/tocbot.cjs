@@ -457,6 +457,10 @@ __webpack_require__.r(__webpack_exports__);
   // Only takes affect when `tocSelector` is scrolling,
   // keep the toc scroll position in sync with the content.
   disableTocScrollSync: false,
+  // If this is null then just use `tocElement` or `tocSelector` instead
+  // assuming `disableTocScrollSync` is set to false. This allows for
+  // scrolling an outer element (like a nav panel w/ search) containing the toc.
+  tocScrollingWrapper: null,
   // Offset for the toc scroll (top) position when scrolling the page.
   // Only effective if `disableTocScrollSync` is false.
   tocScrollOffset: 0,
@@ -1075,21 +1079,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ updateTocScroll)
 /* harmony export */ });
-/* eslint no-var: off */
-
 const SCROLL_LEEWAY = 30
 function updateTocScroll (options) {
-  var toc = options.tocElement || document.querySelector(options.tocSelector)
+  const toc = options.tocScrollingWrapper || options.tocElement || document.querySelector(options.tocSelector)
   if (toc && toc.scrollHeight > toc.clientHeight) {
-    var activeItem = toc.querySelector('.' + options.activeListItemClass)
+    const activeItem = toc.querySelector(`.${options.activeListItemClass}`)
     if (activeItem) {
       // Determine container top and bottom
-      var cTop = toc.scrollTop
-      var cBottom = cTop + toc.clientHeight
+      const cTop = toc.scrollTop
+      const cBottom = cTop + toc.clientHeight
 
       // Determine element top and bottom
-      var eTop = activeItem.offsetTop
-      var eBottom = eTop + activeItem.clientHeight
+      const eTop = activeItem.offsetTop
+      const eBottom = eTop + activeItem.clientHeight
 
       // Check if out of view
       // Above scroll view
