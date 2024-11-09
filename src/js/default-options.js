@@ -105,10 +105,11 @@ export default {
   // If this is null then just use `tocElement` or `tocSelector` instead
   // assuming `disableTocScrollSync` is set to false. This allows for
   // scrolling an outer element (like a nav panel w/ search) containing the toc.
+  // Please pass an element, not a selector here.
   tocScrollingWrapper: null,
   // Offset for the toc scroll (top) position when scrolling the page.
   // Only effective if `disableTocScrollSync` is false.
-  tocScrollOffset: 0,
+  tocScrollOffset: 50,
   // Enable the URL hash to update with the proper heading ID as
   // a user scrolls the page.
   enableUrlHashUpdateOnScroll: false
