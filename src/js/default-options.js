@@ -109,7 +109,7 @@ export default {
   tocScrollingWrapper: null,
   // Offset for the toc scroll (top) position when scrolling the page.
   // Only effective if `disableTocScrollSync` is false.
-  tocScrollOffset: 50,
+  tocScrollOffset: 30,
   // Enable the URL hash to update with the proper heading ID as
   // a user scrolls the page.
   enableUrlHashUpdateOnScroll: false

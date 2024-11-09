@@ -460,10 +460,11 @@ __webpack_require__.r(__webpack_exports__);
   // If this is null then just use `tocElement` or `tocSelector` instead
   // assuming `disableTocScrollSync` is set to false. This allows for
   // scrolling an outer element (like a nav panel w/ search) containing the toc.
+  // Please pass an element, not a selector here.
   tocScrollingWrapper: null,
   // Offset for the toc scroll (top) position when scrolling the page.
   // Only effective if `disableTocScrollSync` is false.
-  tocScrollOffset: 0,
+  tocScrollOffset: 30,
   // Enable the URL hash to update with the proper heading ID as
   // a user scrolls the page.
   enableUrlHashUpdateOnScroll: false
@@ -1079,28 +1080,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ updateTocScroll)
 /* harmony export */ });
-const SCROLL_LEEWAY = 30
+
 function updateTocScroll (options) {
   const toc = options.tocScrollingWrapper || options.tocElement || document.querySelector(options.tocSelector)
   if (toc && toc.scrollHeight > toc.clientHeight) {
     const activeItem = toc.querySelector(`.${options.activeListItemClass}`)
     if (activeItem) {
-      // Determine container top and bottom
-      const cTop = toc.scrollTop
-      const cBottom = cTop + toc.clientHeight
-
       // Determine element top and bottom
       const eTop = activeItem.offsetTop
-      const eBottom = eTop + activeItem.clientHeight
 
       // Check if out of view
       // Above scroll view
-      if (eTop < cTop + options.tocScrollOffset) {
-        toc.scrollTop -= (cTop - eTop) + options.tocScrollOffset
-      // Below scroll view
-      } else if (eBottom > cBottom - options.tocScrollOffset - SCROLL_LEEWAY) {
-        toc.scrollTop += (eBottom - cBottom) + options.tocScrollOffset + (2 * SCROLL_LEEWAY)
-      }
+      const scrollAmount = eTop - options.tocScrollOffset
+      toc.scrollTop = scrollAmount > 0 ? scrollAmount : 0
     }
   }
 }
