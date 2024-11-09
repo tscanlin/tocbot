@@ -580,9 +580,11 @@ function init (customOptions) {
   }
 
   // Update Sidebar and bind listeners.
+  let isClick = false
   _scrollListener = throttle((e) => {
     _buildHtml.updateToc(_headingsArray)
-    !_options.disableTocScrollSync && (0,_update_toc_scroll_js__WEBPACK_IMPORTED_MODULE_4__["default"])(_options)
+    // Only do this update for normal scrolls and not during clicks.
+    !_options.disableTocScrollSync && !isClick && (0,_update_toc_scroll_js__WEBPACK_IMPORTED_MODULE_4__["default"])(_options)
 
     if (_options.enableUrlHashUpdateOnScroll) {
       const enableUpdatingHash = _buildHtml.getCurrentlyHighlighting()
@@ -618,6 +620,7 @@ function init (customOptions) {
   // Bind click listeners to disable animation.
   let timeout = null
   clickListener = throttle((event) => {
+    isClick = true
     if (_options.scrollSmooth) {
       _buildHtml.disableTocAnimation(event)
     }
@@ -627,6 +630,11 @@ function init (customOptions) {
     timeout = setTimeout(() => {
       _buildHtml.enableTocAnimation()
     }, _options.scrollSmoothDuration)
+    // Set is click w/ a bit of delay so that animations can finish
+    // and we don't disturb the user while they click the toc.
+    setTimeout(() => {
+      isClick = false
+    }, _options.scrollSmoothDuration + 100)
   }, _options.throttleTimeout)
 
   if (
