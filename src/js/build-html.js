@@ -188,7 +188,7 @@ export default function (options) {
       const oldActiveTocLink = tocElement.querySelector(`.${options.activeLinkClass}`)
       
       const topHeaderId = topHeader.id.replace(/([ #;&,.+*~':"!^$[\]()=>|/\\@])/g, '\\$1')
-      const hashId = location.hash.replace('#', '')
+      const hashId = window.location.hash.replace('#', '')
       let activeId = topHeaderId
 
       if (isBottomMode) {
