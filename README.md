@@ -78,7 +78,7 @@ tocbot.init({
 });
 ```
 
-**NOTE:** Make sure the body is scrollable and the document headings have id attributes, tocbot and your browser needs these things to make hashes jump to the proper heading, some markdown libraries (like [marked](https://github.com/chjj/marked)) already do this for you.
+**NOTE:** Make sure the body is scrollable and the document headings have id attributes, tocbot and your browser needs these things to make hashes jump to the proper heading. Some markdown libraries already do this for you: [marked](https://github.com/markedjs/marked) [can be configured to generate IDs based on patterns you define](https://github.com/markedjs/marked/issues/326#issuecomment-2567091770); [Showdown.js](https://showdownjs.com) generates IDs by default.
 
 If content in the div has changed then trigger a refresh (optionally with new options).
 
