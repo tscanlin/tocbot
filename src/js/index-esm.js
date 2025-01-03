@@ -106,6 +106,11 @@ export function init (customOptions) {
   // Fire it initially to setup the page.
   _scrollListener()
 
+  // Fire scroll listener on hash change to trigger highlighting changes too.
+  window.onhashchange = () => {
+    _scrollListener()
+  }
+
   if (
     _options.scrollContainer &&
     document.querySelector(_options.scrollContainer)

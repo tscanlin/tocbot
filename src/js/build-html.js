@@ -176,7 +176,7 @@ export default function (options) {
     const headings = headingsArray
 
     const clickedHref = event?.target?.getAttribute('href') || null
-    const isBottomMode = clickedHref ? getIsHeaderBottomMode(clickedHref.replace('#', '')) : false
+    const isBottomMode = clickedHref && clickedHref.charAt(0) === '#' ? getIsHeaderBottomMode(clickedHref.replace('#', '')) : false
     const shouldUpdate = currentlyHighlighting || isBottomMode
 
     // Using some instead of each so that we can escape early.
@@ -188,11 +188,18 @@ export default function (options) {
       const oldActiveTocLink = tocElement.querySelector(`.${options.activeLinkClass}`)
       
       const topHeaderId = topHeader.id.replace(/([ #;&,.+*~':"!^$[\]()=>|/\\@])/g, '\\$1')
+      const hashId = location.hash.replace('#', '')
       let activeId = topHeaderId
-      if (clickedHref && isBottomMode) {
+
+      if (isBottomMode) {
         activeId = clickedHref.replace('#', '')
+      } else if (hashId && hashId !== topHeaderId) {
+        activeId = hashId
       }
-      // console.log({isBottomMode, activeId, clickedHref, hash: location.hash})
+      // TODO: remove this.
+      // console.log({isBottomMode, topHeaderId, activeId, clickedHref, hash: location.hash})
+
+
       const activeTocLink = tocElement
         .querySelector(`.${options.linkClass}[href="${options.basePath}#${activeId}"]`)
       // Performance improvement to only change the classes
@@ -283,8 +290,14 @@ export default function (options) {
 
   function getIsHeaderBottomMode (headerId) {
     const scrollEl = getScrollEl()
-    const activeHeading = scrollEl.querySelector(`#${headerId}`)
+    const activeHeading = scrollEl?.querySelector(`#${headerId}`)
     const isBottomMode = activeHeading.offsetTop > scrollEl.offsetHeight - (2 * scrollEl.clientHeight)
+    return isBottomMode
+  }
+
+  function getIsPageBottomMode () {
+    const scrollEl = getScrollEl()
+    const isBottomMode = getScrollTop() + scrollEl.clientHeight > scrollEl.offsetHeight - options.bottomModeThreshold
     return isBottomMode
   }
 
@@ -328,7 +341,7 @@ export default function (options) {
       if (!(window.location.hash === '#' || window.location.hash === '')) {
         window.history.pushState(null, null, '#')
       }
-    } else if (topHeader) {
+    } else if (topHeader && !getIsPageBottomMode()) {
       const newHash = `#${topHeader.id}`
       if (window.location.hash !== newHash) {
         window.history.pushState(null, null, newHash)
