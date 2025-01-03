@@ -112,5 +112,8 @@ export default {
   tocScrollOffset: 30,
   // Enable the URL hash to update with the proper heading ID as
   // a user scrolls the page.
-  enableUrlHashUpdateOnScroll: false
+  enableUrlHashUpdateOnScroll: false,
+  // Threshold for when bottom mode should be enabled to handle
+  // highlighting links that cannot be scrolled to.
+  bottomModeThreshold: 30,
 }
