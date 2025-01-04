@@ -179,7 +179,6 @@ export default function (options) {
     const isBottomMode = clickedHref && clickedHref.charAt(0) === '#' ? getIsHeaderBottomMode(clickedHref.replace('#', '')) : false
     const shouldUpdate = currentlyHighlighting || isBottomMode
 
-    // Using some instead of each so that we can escape early.
     if (shouldUpdate &&
       !!tocElement &&
       headings.length > 0) {
@@ -191,14 +190,11 @@ export default function (options) {
       const hashId = window.location.hash.replace('#', '')
       let activeId = topHeaderId
 
-      if (isBottomMode) {
+      if (clickedHref && isBottomMode) {
         activeId = clickedHref.replace('#', '')
       } else if (hashId && hashId !== topHeaderId) {
         activeId = hashId
       }
-      // TODO: remove this.
-      // console.log({isBottomMode, topHeaderId, activeId, clickedHref, hash: location.hash})
-
 
       const activeTocLink = tocElement
         .querySelector(`.${options.linkClass}[href="${options.basePath}#${activeId}"]`)
@@ -291,7 +287,7 @@ export default function (options) {
   function getIsHeaderBottomMode (headerId) {
     const scrollEl = getScrollEl()
     const activeHeading = scrollEl?.querySelector(`#${headerId}`)
-    const isBottomMode = activeHeading.offsetTop > scrollEl.offsetHeight - (2 * scrollEl.clientHeight)
+    const isBottomMode = activeHeading.offsetTop > scrollEl.offsetHeight - (scrollEl.clientHeight * 1.4) - options.bottomModeThreshold
     return isBottomMode
   }
 

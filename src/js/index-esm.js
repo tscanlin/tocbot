@@ -107,7 +107,7 @@ export function init (customOptions) {
   _scrollListener()
 
   // Fire scroll listener on hash change to trigger highlighting changes too.
-  window.onhashchange = () => {
+  window.onhashchange = window.onscrollend = (e) => {
     _scrollListener()
   }
 
