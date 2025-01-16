@@ -291,12 +291,12 @@ tocbot.refresh()
 
 If you find Tocbot useful, consider supporting it by becoming a sponsor. You can do this by visiting [the tocbot repo on github](https://github.com/tscanlin/tocbot) and clicking the "Sponsor" button at the top of the page. This will help me continue to develop and maintain Tocbot. Sponsors that contribute $5 /month or more will have their logos shown below. Thank you!
 
-<img width="50" height="50" src="https://raw.githubusercontent.com/tscanlin/tocbot/add-sponsors-section/static/img/getsentry.png" alt="Get Sentry">
+<img width="50" height="50" src="https://raw.githubusercontent.com/tscanlin/tocbot/master/static/img/getsentry.png" alt="Get Sentry">
 <span>&nbsp;</span>
 <a href="https://www.getsentry.com/">Get Sentry</a>
 <br /><br />
 
-<img width="50" height="50" src="https://raw.githubusercontent.com/tscanlin/tocbot/add-sponsors-section/static/img/roboflow.png" alt="Roboflow">
+<img width="50" height="50" src="https://raw.githubusercontent.com/tscanlin/tocbot/master/static/img/roboflow.png" alt="Roboflow">
 <span>&nbsp;</span>
 <a href="https://www.roboflow.com/">Roboflow</a>
 <br /><br />
