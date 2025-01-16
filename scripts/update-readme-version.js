@@ -2,9 +2,9 @@ import * as fs from 'fs';
 import pkg from '../package.json' with { type: 'json' };
 
 const readmePath = 'README.md';
-const thisScriptPath = 'scripts/update-readme-versions.js';
+const thisScriptPath = 'scripts/update-readme-version.js';
 
-const LAST_VERSION = '4.30.0'
+const LAST_VERSION = '4.32.2'
 const NEW_VERSION = pkg.version
 
 function replaceOldVersionWithNew() {
