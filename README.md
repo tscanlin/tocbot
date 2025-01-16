@@ -293,11 +293,11 @@ If you find Tocbot useful, consider supporting it by becoming a sponsor. You can
 
 Sponsors that contribute $5 /month or more will have their logos shown below. Thank you to the existing sponsors!
 
-![Roboflow](https://github.com/tscanlin/tocbot/blob/master/static/img/roboflow.png)
+![Roboflow](https://raw.githubusercontent.com/tscanlin/tocbot/add-sponsors-section/static/img/roboflow.png)
 <br />
 <a href="https://www.roboflow.com/">Roboflow</a>
 
-![GetSentry](https://github.com/tscanlin/tocbot/blob/master/static/img/getsentry.png)
+![GetSentry](https://raw.githubusercontent.com/tscanlin/tocbot/add-sponsors-section/static/img/getsentry.png)
 <br />
 <a href="https://www.getsentry.com/">Get Sentry</a>
 
