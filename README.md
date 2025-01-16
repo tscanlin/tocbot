@@ -287,6 +287,20 @@ tocbot.refresh()
   - Try running this from the console: `tocbot.refresh({ ...tocbot.options, hasInnerContainers: true })`. If that works then one option (`hasInnerContainers: true`) to handle inner containers should be all you need to add.
 - If you have a really long TOC and are seeing headings getting truncated, then have a [look at this issue for a workaround to resolve it](https://github.com/tscanlin/tocbot/issues/330).
 
+## Sponsors
+
+If you find Tocbot useful, consider supporting it by becoming a sponsor. You can do this by visiting [the tocbot repo on github](https://github.com/tscanlin/tocbot) and clicking the "Sponsor" button at the top of the page. This will help me continue to develop and maintain Tocbot. Thank you!
+
+Sponsors that contribute $5 /month or more will have their logos shown below. Thank you to the existing sponsors!
+
+![Roboflow](https://github.com/tscanlin/tocbot/blob/master/static/img/roboflow.png)
+<br />
+<a href="https://www.roboflow.com/">Roboflow</a>
+
+![GetSentry](https://github.com/tscanlin/tocbot/blob/master/static/img/getsentry.png)
+<br />
+<a href="https://www.getsentry.com/">Get Sentry</a>
+
 ## Contributing
 
 Contributions and suggestions are welcome! Please feel free to open an issue if you run into a problem or have a feature request. I'll do my best to respond in a timely fashion.
