@@ -167,23 +167,37 @@ export default function (options) {
   /**
    * Update TOC highlighting and collapsed groupings.
    */
-  function updateToc (headingsArray) {
+  function updateToc (headingsArray, event) {
     // Add fixed class at offset
     if (options.positionFixedSelector) {
       updateFixedSidebarClass()
     }
-
     // Get the top most heading currently visible on the page so we know what to highlight.
     const headings = headingsArray
-    // Using some instead of each so that we can escape early.
-    if (currentlyHighlighting &&
+
+    const clickedHref = event?.target?.getAttribute('href') || null
+    const isBottomMode = clickedHref && clickedHref.charAt(0) === '#' ? getIsHeaderBottomMode(clickedHref.replace('#', '')) : false
+    const shouldUpdate = currentlyHighlighting || isBottomMode
+
+    if (shouldUpdate &&
       !!tocElement &&
       headings.length > 0) {
       const topHeader = getTopHeader(headings)
 
       const oldActiveTocLink = tocElement.querySelector(`.${options.activeLinkClass}`)
+      
+      const topHeaderId = topHeader.id.replace(/([ #;&,.+*~':"!^$[\]()=>|/\\@])/g, '\\$1')
+      const hashId = window.location.hash.replace('#', '')
+      let activeId = topHeaderId
+
+      if (clickedHref && isBottomMode) {
+        activeId = clickedHref.replace('#', '')
+      } else if (hashId && hashId !== topHeaderId) {
+        activeId = hashId
+      }
+
       const activeTocLink = tocElement
-        .querySelector(`.${options.linkClass}.node-name--${topHeader.nodeName}[href="${options.basePath}#${topHeader.id.replace(/([ #;&,.+*~':"!^$[\]()=>|/\\@])/g, '\\$1')}"]`)
+        .querySelector(`.${options.linkClass}[href="${options.basePath}#${activeId}"]`)
       // Performance improvement to only change the classes
       // for the toc if a new link should be highlighted.
       if (oldActiveTocLink === activeTocLink) {
@@ -270,17 +284,34 @@ export default function (options) {
     return currentlyHighlighting
   }
 
-  function getScrollTop () {
-    // If a fixed content container was set
-    let top
-    if (options.scrollContainer && document.querySelector(options.scrollContainer)) {
-      top = document.querySelector(options.scrollContainer).scrollTop
-    } else {
-      top = document.documentElement.scrollTop || body.scrollTop
-    }
-    return top
+  function getIsHeaderBottomMode (headerId) {
+    const scrollEl = getScrollEl()
+    const activeHeading = scrollEl?.querySelector(`#${headerId}`)
+    const isBottomMode = activeHeading.offsetTop > scrollEl.offsetHeight - (scrollEl.clientHeight * 1.4) - options.bottomModeThreshold
+    return isBottomMode
   }
 
+  function getIsPageBottomMode () {
+    const scrollEl = getScrollEl()
+    const isBottomMode = getScrollTop() + scrollEl.clientHeight > scrollEl.offsetHeight - options.bottomModeThreshold
+    return isBottomMode
+  }
+
+  function getScrollEl () {
+    let el
+    if (options.scrollContainer && document.querySelector(options.scrollContainer)) {
+      el = document.querySelector(options.scrollContainer)
+    } else {
+      el = document.documentElement || body
+    }
+    return el
+  }
+
+  function getScrollTop () {
+    const el = getScrollEl()
+    return el?.scrollTop || 0
+  }
+  
   function getTopHeader (headings, scrollTop = getScrollTop()) {
     let topHeader
     some.call(headings, (heading, i) => {
@@ -306,7 +337,7 @@ export default function (options) {
       if (!(window.location.hash === '#' || window.location.hash === '')) {
         window.history.pushState(null, null, '#')
       }
-    } else if (topHeader) {
+    } else if (topHeader && !getIsPageBottomMode()) {
       const newHash = `#${topHeader.id}`
       if (window.location.hash !== newHash) {
         window.history.pushState(null, null, newHash)

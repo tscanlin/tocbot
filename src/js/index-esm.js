@@ -103,7 +103,14 @@ export function init (customOptions) {
       }
     }
   }, _options.throttleTimeout)
+  // Fire it initially to setup the page.
   _scrollListener()
+
+  // Fire scroll listener on hash change to trigger highlighting changes too.
+  window.onhashchange = window.onscrollend = (e) => {
+    _scrollListener()
+  }
+
   if (
     _options.scrollContainer &&
     document.querySelector(_options.scrollContainer)
@@ -126,7 +133,7 @@ export function init (customOptions) {
     if (_options.scrollSmooth) {
       _buildHtml.disableTocAnimation(event)
     }
-    _buildHtml.updateToc(_headingsArray)
+    _buildHtml.updateToc(_headingsArray, event)
     // Timeout to re-enable the animation.
     timeout && clearTimeout(timeout)
     timeout = setTimeout(() => {
