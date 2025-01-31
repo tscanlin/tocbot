@@ -70,6 +70,7 @@
     "next-build": "./node_modules/.bin/next build",
     "next-export": "./node_modules/.bin/next export",
     "next-start": "./node_modules/.bin/next start",
+    "update-readme-version": "node ./scripts/update-readme-version.js",
     "v-prerelease": "npm version prerelease && git push --tags && npm publish && git push",
     "v-patch": "npm version patch && git push --tags && npm publish && git push",
     "v-minor": "npm version minor && git push --tags && npm publish && git push",

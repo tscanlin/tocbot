@@ -40,7 +40,7 @@ OR
 Include the script at the bottom of the page before the closing body tag.
 
 ```html
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.30.0/tocbot.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.32.2/tocbot.min.js"></script>
 ```
 
 
@@ -49,7 +49,7 @@ Include the script at the bottom of the page before the closing body tag.
 CSS is used for expanding & collapsing groupings and some basic styling.
 
 ```html
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.30.0/tocbot.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.32.2/tocbot.css">
 ```
 
 OR
@@ -286,6 +286,17 @@ tocbot.refresh()
 - Tocbot scrolls to the right position onClick but highlighting doesn't seem to show the active section
   - Try running this from the console: `tocbot.refresh({ ...tocbot.options, hasInnerContainers: true })`. If that works then one option (`hasInnerContainers: true`) to handle inner containers should be all you need to add.
 - If you have a really long TOC and are seeing headings getting truncated, then have a [look at this issue for a workaround to resolve it](https://github.com/tscanlin/tocbot/issues/330).
+
+## Sponsors
+
+If you find Tocbot useful, consider supporting it by becoming a sponsor. You can do this by visiting [the tocbot repo on github](https://github.com/tscanlin/tocbot) and clicking the "Sponsor" button at the top of the page. This will help me continue to develop and maintain Tocbot. Sponsors that contribute $5 /month or more will have their logos shown below. Thank you!
+
+<img width="50" height="50" src="https://raw.githubusercontent.com/tscanlin/tocbot/master/static/img/getsentry.png" alt="Get Sentry"><span>&nbsp;</span><a href="https://www.getsentry.com/">Get Sentry</a>
+<br /><br />
+
+<img width="50" height="50" src="https://raw.githubusercontent.com/tscanlin/tocbot/master/static/img/roboflow.png" alt="Roboflow"><span>&nbsp;</span><a href="https://www.roboflow.com/">Roboflow</a>
+<br /><br />
+
 
 ## Contributing
 
