@@ -185,7 +185,7 @@ export default function (options) {
       const topHeader = getTopHeader(headings)
 
       const oldActiveTocLink = tocElement.querySelector(`.${options.activeLinkClass}`)
-      
+
       const topHeaderId = topHeader.id.replace(/([ #;&,.+*~':"!^$[\]()=>|/\\@])/g, '\\$1')
       const hashId = window.location.hash.replace('#', '')
       let activeId = topHeaderId
@@ -311,7 +311,7 @@ export default function (options) {
     const el = getScrollEl()
     return el?.scrollTop || 0
   }
-  
+
   function getTopHeader (headings, scrollTop = getScrollTop()) {
     let topHeader
     some.call(headings, (heading, i) => {

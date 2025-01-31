@@ -181,23 +181,37 @@ __webpack_require__.r(__webpack_exports__);
   /**
    * Update TOC highlighting and collapsed groupings.
    */
-  function updateToc (headingsArray) {
+  function updateToc (headingsArray, event) {
     // Add fixed class at offset
     if (options.positionFixedSelector) {
       updateFixedSidebarClass()
     }
-
     // Get the top most heading currently visible on the page so we know what to highlight.
     const headings = headingsArray
-    // Using some instead of each so that we can escape early.
-    if (currentlyHighlighting &&
+
+    const clickedHref = event?.target?.getAttribute('href') || null
+    const isBottomMode = clickedHref && clickedHref.charAt(0) === '#' ? getIsHeaderBottomMode(clickedHref.replace('#', '')) : false
+    const shouldUpdate = currentlyHighlighting || isBottomMode
+
+    if (shouldUpdate &&
       !!tocElement &&
       headings.length > 0) {
       const topHeader = getTopHeader(headings)
 
       const oldActiveTocLink = tocElement.querySelector(`.${options.activeLinkClass}`)
+
+      const topHeaderId = topHeader.id.replace(/([ #;&,.+*~':"!^$[\]()=>|/\\@])/g, '\\$1')
+      const hashId = window.location.hash.replace('#', '')
+      let activeId = topHeaderId
+
+      if (clickedHref && isBottomMode) {
+        activeId = clickedHref.replace('#', '')
+      } else if (hashId && hashId !== topHeaderId) {
+        activeId = hashId
+      }
+
       const activeTocLink = tocElement
-        .querySelector(`.${options.linkClass}.node-name--${topHeader.nodeName}[href="${options.basePath}#${topHeader.id.replace(/([ #;&,.+*~':"!^$[\]()=>|/\\@])/g, '\\$1')}"]`)
+        .querySelector(`.${options.linkClass}[href="${options.basePath}#${activeId}"]`)
       // Performance improvement to only change the classes
       // for the toc if a new link should be highlighted.
       if (oldActiveTocLink === activeTocLink) {
@@ -284,15 +298,32 @@ __webpack_require__.r(__webpack_exports__);
     return currentlyHighlighting
   }
 
-  function getScrollTop () {
-    // If a fixed content container was set
-    let top
+  function getIsHeaderBottomMode (headerId) {
+    const scrollEl = getScrollEl()
+    const activeHeading = scrollEl?.querySelector(`#${headerId}`)
+    const isBottomMode = activeHeading.offsetTop > scrollEl.offsetHeight - (scrollEl.clientHeight * 1.4) - options.bottomModeThreshold
+    return isBottomMode
+  }
+
+  function getIsPageBottomMode () {
+    const scrollEl = getScrollEl()
+    const isBottomMode = getScrollTop() + scrollEl.clientHeight > scrollEl.offsetHeight - options.bottomModeThreshold
+    return isBottomMode
+  }
+
+  function getScrollEl () {
+    let el
     if (options.scrollContainer && document.querySelector(options.scrollContainer)) {
-      top = document.querySelector(options.scrollContainer).scrollTop
+      el = document.querySelector(options.scrollContainer)
     } else {
-      top = document.documentElement.scrollTop || body.scrollTop
+      el = document.documentElement || body
     }
-    return top
+    return el
+  }
+
+  function getScrollTop () {
+    const el = getScrollEl()
+    return el?.scrollTop || 0
   }
 
   function getTopHeader (headings, scrollTop = getScrollTop()) {
@@ -320,7 +351,7 @@ __webpack_require__.r(__webpack_exports__);
       if (!(window.location.hash === '#' || window.location.hash === '')) {
         window.history.pushState(null, null, '#')
       }
-    } else if (topHeader) {
+    } else if (topHeader && !getIsPageBottomMode()) {
       const newHash = `#${topHeader.id}`
       if (window.location.hash !== newHash) {
         window.history.pushState(null, null, newHash)
@@ -467,7 +498,10 @@ __webpack_require__.r(__webpack_exports__);
   tocScrollOffset: 30,
   // Enable the URL hash to update with the proper heading ID as
   // a user scrolls the page.
-  enableUrlHashUpdateOnScroll: false
+  enableUrlHashUpdateOnScroll: false,
+  // Threshold for when bottom mode should be enabled to handle
+  // highlighting links that cannot be scrolled to.
+  bottomModeThreshold: 30
 });
 
 
@@ -481,15 +515,15 @@ __webpack_require__.r(__webpack_exports__);
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "_buildHtml": () => (/* binding */ _buildHtml),
-/* harmony export */   "_headingsArray": () => (/* binding */ _headingsArray),
-/* harmony export */   "_options": () => (/* binding */ _options),
-/* harmony export */   "_parseContent": () => (/* binding */ _parseContent),
-/* harmony export */   "_scrollListener": () => (/* binding */ _scrollListener),
+/* harmony export */   _buildHtml: () => (/* binding */ _buildHtml),
+/* harmony export */   _headingsArray: () => (/* binding */ _headingsArray),
+/* harmony export */   _options: () => (/* binding */ _options),
+/* harmony export */   _parseContent: () => (/* binding */ _parseContent),
+/* harmony export */   _scrollListener: () => (/* binding */ _scrollListener),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
-/* harmony export */   "destroy": () => (/* binding */ destroy),
-/* harmony export */   "init": () => (/* binding */ init),
-/* harmony export */   "refresh": () => (/* binding */ refresh)
+/* harmony export */   destroy: () => (/* binding */ destroy),
+/* harmony export */   init: () => (/* binding */ init),
+/* harmony export */   refresh: () => (/* binding */ refresh)
 /* harmony export */ });
 /* harmony import */ var _build_html_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./build-html.js */ "./src/js/build-html.js");
 /* harmony import */ var _default_options_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./default-options.js */ "./src/js/default-options.js");
@@ -601,7 +635,14 @@ function init (customOptions) {
       }
     }
   }, _options.throttleTimeout)
+  // Fire it initially to setup the page.
   _scrollListener()
+
+  // Fire scroll listener on hash change to trigger highlighting changes too.
+  window.onhashchange = window.onscrollend = (e) => {
+    _scrollListener()
+  }
+
   if (
     _options.scrollContainer &&
     document.querySelector(_options.scrollContainer)
@@ -624,7 +665,7 @@ function init (customOptions) {
     if (_options.scrollSmooth) {
       _buildHtml.disableTocAnimation(event)
     }
-    _buildHtml.updateToc(_headingsArray)
+    _buildHtml.updateToc(_headingsArray, event)
     // Timeout to re-enable the animation.
     timeout && clearTimeout(timeout)
     timeout = setTimeout(() => {
@@ -1165,7 +1206,7 @@ function updateTocScroll (options) {
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+// This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
 (() => {
 /*!******************************!*\
   !*** ./src/js/index-dist.js ***!

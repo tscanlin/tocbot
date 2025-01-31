@@ -12,7 +12,7 @@ const TOCBOT_OPTIONS = {
   onClick: (e) => { console.log('you clicked a link', e) },
   // headingsOffset: 40,
   // scrollSmoothOffset: -40,
-  enableUrlHashUpdateOnScroll: true,
+  enableUrlHashUpdateOnScroll: true
   // skipRendering: true,
 }
 

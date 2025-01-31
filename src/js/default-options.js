@@ -115,5 +115,5 @@ export default {
   enableUrlHashUpdateOnScroll: false,
   // Threshold for when bottom mode should be enabled to handle
   // highlighting links that cannot be scrolled to.
-  bottomModeThreshold: 30,
+  bottomModeThreshold: 30
 }
