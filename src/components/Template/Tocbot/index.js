@@ -9,10 +9,12 @@ const TOCBOT_OPTIONS = {
   includeHtml: true,
   includeTitleTags: false,
   hasInnerContainers: true,
-  onClick: (e) => { console.log('you clicked a link', e) },
+  onClick: (e) => {
+    console.log('you clicked a link', e)
+  },
   // headingsOffset: 40,
   // scrollSmoothOffset: -40,
-  enableUrlHashUpdateOnScroll: true
+  enableUrlHashUpdateOnScroll: false
   // skipRendering: true,
 }
 
