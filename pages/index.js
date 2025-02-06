@@ -1,9 +1,9 @@
-import React from 'react'
-import Template from '../src/components/Template'
+import React from "react"
+import Template from "../src/components/Template"
 // import TryIt from '../src/components/Template/TryIt'
 
-import CONFIG from '../data/config.js'
-import PAGE_JSON from '../data/README.json'
+import CONFIG from "../data/config.js"
+import PAGE_JSON from "../data/README.json"
 
 const Index = (props) => {
   return (

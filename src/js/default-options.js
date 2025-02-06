@@ -1,39 +1,39 @@
 export default {
   // Where to render the table of contents.
-  tocSelector: '.js-toc',
+  tocSelector: ".js-toc",
   // Or, you can pass in a DOM node instead
   tocElement: null,
   // Where to grab the headings to build the table of contents.
-  contentSelector: '.js-toc-content',
+  contentSelector: ".js-toc-content",
   // Or, you can pass in a DOM node instead
   contentElement: null,
   // Which headings to grab inside of the contentSelector element.
-  headingSelector: 'h1, h2, h3',
+  headingSelector: "h1, h2, h3",
   // Headings that match the ignoreSelector will be skipped.
-  ignoreSelector: '.js-toc-ignore',
+  ignoreSelector: ".js-toc-ignore",
   // For headings inside relative or absolute positioned
   // containers within content.
   hasInnerContainers: false,
   // Main class to add to links.
-  linkClass: 'toc-link',
+  linkClass: "toc-link",
   // Extra classes to add to links.
-  extraLinkClasses: '',
+  extraLinkClasses: "",
   // Class to add to active links,
   // the link corresponding to the top most heading on the page.
-  activeLinkClass: 'is-active-link',
+  activeLinkClass: "is-active-link",
   // Main class to add to lists.
-  listClass: 'toc-list',
+  listClass: "toc-list",
   // Extra classes to add to lists.
-  extraListClasses: '',
+  extraListClasses: "",
   // Class that gets added when a list should be collapsed.
-  isCollapsedClass: 'is-collapsed',
+  isCollapsedClass: "is-collapsed",
   // Class that gets added when a list should be able
   // to be collapsed but isn't necessarily collapsed.
-  collapsibleClass: 'is-collapsible',
+  collapsibleClass: "is-collapsible",
   // Class to add to list items.
-  listItemClass: 'toc-list-item',
+  listItemClass: "toc-list-item",
   // Class to add to active list items.
-  activeListItemClass: 'is-active-li',
+  activeListItemClass: "is-active-li",
   // How many heading levels should not be collapsed.
   // For example, number 6 will show everything since
   // there are only 6 heading levels and number 0 will collapse them all.
@@ -58,11 +58,11 @@ export default {
   positionFixedSelector: null,
   // Fixed position class to add to make sidebar fixed after scrolling
   // down past the fixedSidebarOffset.
-  positionFixedClass: 'is-position-fixed',
+  positionFixedClass: "is-position-fixed",
   // fixedSidebarOffset can be any number but by default is set
   // to auto which sets the fixedSidebarOffset to the sidebar
   // element's offsetTop from the top of the document on init.
-  fixedSidebarOffset: 'auto',
+  fixedSidebarOffset: "auto",
   // includeHtml can be set to true to include the HTML markup from the
   // heading node instead of just including the innerText.
   includeHtml: false,
@@ -98,7 +98,7 @@ export default {
   // function (object, HTMLElement) => object | void
   headingObjectCallback: null,
   // Set the base path, useful if you use a `base` tag in `head`.
-  basePath: '',
+  basePath: "",
   // Only takes affect when `tocSelector` is scrolling,
   // keep the toc scroll position in sync with the content.
   disableTocScrollSync: false,
@@ -115,5 +115,5 @@ export default {
   enableUrlHashUpdateOnScroll: false,
   // Threshold for when bottom mode should be enabled to handle
   // highlighting links that cannot be scrolled to.
-  bottomModeThreshold: 30
+  bottomModeThreshold: 30,
 }
