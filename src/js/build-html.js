@@ -205,10 +205,12 @@ export default function (options) {
       const hashId = window.location.hash.replace("#", "")
       let activeId = topHeaderId
 
+      // Handle case where they clicked a link that cannot be scrolled to.
       if (clickedHref && isBottomMode) {
         activeId = clickedHref.replace("#", "")
       } else if (hashId && hashId !== topHeaderId) {
-        activeId = hashId
+        // This is causing a bug and may not be needed.
+        // activeId = hashId;
       }
 
       const activeTocLink = tocElement.querySelector(
