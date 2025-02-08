@@ -9,8 +9,11 @@ export default function (options) {
   const some = [].some
   const body = typeof window !== "undefined" && document.body
   const SPACE_CHAR = " "
+  const LOAD_TIMER_MS = 150
   let tocElement
   let currentlyHighlighting = true
+  let fullyLoaded = false
+  let loadedTimer = null
 
   /**
    * Create link and list elements.
@@ -208,9 +211,26 @@ export default function (options) {
       // Handle case where they clicked a link that cannot be scrolled to.
       if (clickedHref && isBottomMode) {
         activeId = clickedHref.replace("#", "")
-      } else if (hashId && hashId !== topHeaderId) {
-        // This is causing a bug and may not be needed.
-        // activeId = hashId;
+      } else if (
+        hashId &&
+        hashId !== topHeaderId &&
+        !fullyLoaded &&
+        getIsPageBottomMode()
+      ) {
+        // This condition should change to only be done
+        // on first load, it is meant to handle the case
+        // of showing the items as highlighted when they
+        // are in bottom mode and cannot be scrolled to.
+        activeId = hashId
+      }
+      // Handle first load timer needed for loading with
+      // a hash that is for a heading in `bottomMode`.
+      if (!fullyLoaded && !loadedTimer) {
+        loadedTimer = setTimeout(() => {
+          fullyLoaded = true
+        }, LOAD_TIMER_MS)
+      } else if (fullyLoaded && loadedTimer) {
+        clearTimeout(loadedTimer)
       }
 
       const activeTocLink = tocElement.querySelector(
@@ -344,7 +364,7 @@ export default function (options) {
 
   function getIsPageBottomMode() {
     const scrollEl = getScrollEl()
-    const isScrollable = scrollEl.scrollWidth > scrollEl.clientWidth
+    const isScrollable = scrollEl.scrollHeight > scrollEl.clientHeight
     const isBottomMode =
       getScrollTop() + scrollEl.clientHeight >
       scrollEl.offsetHeight - options.bottomModeThreshold
