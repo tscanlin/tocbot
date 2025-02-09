@@ -1,4 +1,4 @@
-const assetPrefix = '/tocbot'
+const assetPrefix = "/tocbot"
 
 export default {
   assetPrefix,
@@ -7,7 +7,7 @@ export default {
     return newConfig
   },
   exportPathMap: () => ({
-    '/': { page: '/' },
-    '/changelog': { page: '/changelog' }
-  })
+    "/": { page: "/" },
+    "/changelog": { page: "/changelog" },
+  }),
 }

@@ -1,5 +1,5 @@
-export = tocbot;
-export as namespace tocbot;
+export = tocbot
+export as namespace tocbot
 
 declare namespace tocbot {
   /**
@@ -62,7 +62,7 @@ declare namespace tocbot {
     // fixedSidebarOffset can be any number but by default is set
     // to auto which sets the fixedSidebarOffset to the sidebar
     // element's offsetTop from the top of the document on init.
-    fixedSidebarOffset?: 'auto' | number
+    fixedSidebarOffset?: "auto" | number
     // includeHtml can be set to true to include the HTML markup from the
     // heading node instead of just including the innerText.
     includeHtml?: boolean
@@ -102,6 +102,9 @@ declare namespace tocbot {
     // Enable the URL hash to update with the proper heading ID as
     // a user scrolls the page.
     enableUrlHashUpdateOnScroll?: boolean
+    // Threshold for when bottom mode should be enabled to handle
+    // highlighting links that cannot be scrolled to.
+    bottomModeThreshold?: number
   }
 
   /**

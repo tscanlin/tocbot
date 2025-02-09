@@ -7,8 +7,8 @@
 export default function (options) {
   const forEach = [].forEach
   const some = [].some
-  const body = typeof window !== 'undefined' && document.body
-  const SPACE_CHAR = ' '
+  const body = typeof window !== "undefined" && document.body
+  const SPACE_CHAR = " "
   let tocElement
   let currentlyHighlighting = true
 
@@ -18,7 +18,7 @@ export default function (options) {
    * @param {HTMLElement} container
    * @return {HTMLElement}
    */
-  function createEl (d, container) {
+  function createEl(d, container) {
     const link = container.appendChild(createLink(d))
     if (d.children.length) {
       const list = createList(d.isCollapsed)
@@ -35,7 +35,7 @@ export default function (options) {
    * @param {Array} data
    * @return {HTMLElement}
    */
-  function render (parent, data) {
+  function render(parent, data) {
     const collapsed = false
     const container = createList(collapsed)
 
@@ -68,11 +68,11 @@ export default function (options) {
    * @param {Object} data
    * @return {HTMLElement}
    */
-  function createLink (data) {
-    const item = document.createElement('li')
-    const a = document.createElement('a')
+  function createLink(data) {
+    const item = document.createElement("li")
+    const a = document.createElement("a")
     if (options.listItemClass) {
-      item.setAttribute('class', options.listItemClass)
+      item.setAttribute("class", options.listItemClass)
     }
 
     if (options.onClick) {
@@ -80,7 +80,7 @@ export default function (options) {
     }
 
     if (options.includeTitleTags) {
-      a.setAttribute('title', data.textContent)
+      a.setAttribute("title", data.textContent)
     }
 
     if (options.includeHtml && data.childNodes.length) {
@@ -91,9 +91,13 @@ export default function (options) {
       // Default behavior. Set to textContent to keep tests happy.
       a.textContent = data.textContent
     }
-    a.setAttribute('href', `${options.basePath}#${data.id}`)
-    a.setAttribute('class', `${options.linkClass +
-      SPACE_CHAR}node-name--${data.nodeName}${SPACE_CHAR}${options.extraLinkClasses}`)
+    a.setAttribute("href", `${options.basePath}#${data.id}`)
+    a.setAttribute(
+      "class",
+      `${
+        options.linkClass + SPACE_CHAR
+      }node-name--${data.nodeName}${SPACE_CHAR}${options.extraLinkClasses}`,
+    )
     item.appendChild(a)
     return item
   }
@@ -103,8 +107,8 @@ export default function (options) {
    * @param {Boolean} isCollapsed
    * @return {HTMLElement}
    */
-  function createList (isCollapsed) {
-    const listElement = (options.orderedList) ? 'ol' : 'ul'
+  function createList(isCollapsed) {
+    const listElement = options.orderedList ? "ol" : "ul"
     const list = document.createElement(listElement)
     let classes = options.listClass + SPACE_CHAR + options.extraListClasses
     if (isCollapsed) {
@@ -112,7 +116,7 @@ export default function (options) {
       classes = classes + SPACE_CHAR + options.collapsibleClass
       classes = classes + SPACE_CHAR + options.isCollapsedClass
     }
-    list.setAttribute('class', classes)
+    list.setAttribute("class", classes)
     return list
   }
 
@@ -120,11 +124,11 @@ export default function (options) {
    * Update fixed sidebar class.
    * @return {HTMLElement}
    */
-  function updateFixedSidebarClass () {
+  function updateFixedSidebarClass() {
     const scrollTop = getScrollTop()
 
     const posFixedEl = document.querySelector(options.positionFixedSelector)
-    if (options.fixedSidebarOffset === 'auto') {
+    if (options.fixedSidebarOffset === "auto") {
       options.fixedSidebarOffset = tocElement.offsetTop
     }
 
@@ -133,7 +137,10 @@ export default function (options) {
         posFixedEl.className += SPACE_CHAR + options.positionFixedClass
       }
     } else {
-      posFixedEl.className = posFixedEl.className.replace(SPACE_CHAR + options.positionFixedClass, '')
+      posFixedEl.className = posFixedEl.className.replace(
+        SPACE_CHAR + options.positionFixedClass,
+        "",
+      )
     }
   }
 
@@ -142,11 +149,13 @@ export default function (options) {
    * @param {HTMLElement} obj
    * @return {int} position
    */
-  function getHeadingTopPos (obj) {
+  function getHeadingTopPos(obj) {
     let position = 0
     if (obj !== null) {
       position = obj.offsetTop
-      if (options.hasInnerContainers) { position += getHeadingTopPos(obj.offsetParent) }
+      if (options.hasInnerContainers) {
+        position += getHeadingTopPos(obj.offsetParent)
+      }
     }
     return position
   }
@@ -157,7 +166,7 @@ export default function (options) {
    * @param {string} className
    * @return {HTMLElement} obj
    */
-  function updateClassname (obj, className) {
+  function updateClassname(obj, className) {
     if (obj && obj.className !== className) {
       obj.className = className
     }
@@ -167,7 +176,7 @@ export default function (options) {
   /**
    * Update TOC highlighting and collapsed groupings.
    */
-  function updateToc (headingsArray, event) {
+  function updateToc(headingsArray, event) {
     // Add fixed class at offset
     if (options.positionFixedSelector) {
       updateFixedSidebarClass()
@@ -175,29 +184,44 @@ export default function (options) {
     // Get the top most heading currently visible on the page so we know what to highlight.
     const headings = headingsArray
 
-    const clickedHref = event?.target?.getAttribute('href') || null
-    const isBottomMode = clickedHref && clickedHref.charAt(0) === '#' ? getIsHeaderBottomMode(clickedHref.replace('#', '')) : false
+    // This is needed for scroll events since document doesn't have getAttribute
+    const clickedHref = event?.target?.getAttribute
+      ? event?.target?.getAttribute("href")
+      : null
+    const isBottomMode =
+      clickedHref && clickedHref.charAt(0) === "#"
+        ? getIsHeaderBottomMode(clickedHref.replace("#", ""))
+        : false
     const shouldUpdate = currentlyHighlighting || isBottomMode
 
-    if (shouldUpdate &&
-      !!tocElement &&
-      headings.length > 0) {
+    if (shouldUpdate && !!tocElement && headings.length > 0) {
       const topHeader = getTopHeader(headings)
 
-      const oldActiveTocLink = tocElement.querySelector(`.${options.activeLinkClass}`)
+      const oldActiveTocLink = tocElement.querySelector(
+        `.${options.activeLinkClass}`,
+      )
 
-      const topHeaderId = topHeader.id.replace(/([ #;&,.+*~':"!^$[\]()=>|/\\@])/g, '\\$1')
-      const hashId = window.location.hash.replace('#', '')
+      const topHeaderId = topHeader.id.replace(
+        /([ #;&,.+*~':"!^$[\]()=>|/\\@])/g,
+        "\\$1",
+      )
+      const hashId = window.location.hash.replace("#", "")
       let activeId = topHeaderId
 
+      // Handle case where they clicked a link that cannot be scrolled to.
+      const isPageBottomMode = getIsPageBottomMode()
       if (clickedHref && isBottomMode) {
-        activeId = clickedHref.replace('#', '')
-      } else if (hashId && hashId !== topHeaderId) {
+        activeId = clickedHref.replace("#", "")
+      } else if (hashId && hashId !== topHeaderId && isPageBottomMode) {
+        // This is meant to handle the case
+        // of showing the items as highlighted when they
+        // are in bottom mode and cannot be scrolled to.
         activeId = hashId
       }
 
-      const activeTocLink = tocElement
-        .querySelector(`.${options.linkClass}[href="${options.basePath}#${activeId}"]`)
+      const activeTocLink = tocElement.querySelector(
+        `.${options.linkClass}[href="${options.basePath}#${activeId}"]`,
+      )
       // Performance improvement to only change the classes
       // for the toc if a new link should be highlighted.
       if (oldActiveTocLink === activeTocLink) {
@@ -205,19 +229,26 @@ export default function (options) {
       }
 
       // Remove the active class from the other tocLinks.
-      const tocLinks = tocElement
-        .querySelectorAll(`.${options.linkClass}`)
+      const tocLinks = tocElement.querySelectorAll(`.${options.linkClass}`)
       forEach.call(tocLinks, (tocLink) => {
-        updateClassname(tocLink, tocLink.className.replace(SPACE_CHAR + options.activeLinkClass, ''))
+        updateClassname(
+          tocLink,
+          tocLink.className.replace(SPACE_CHAR + options.activeLinkClass, ""),
+        )
       })
-      const tocLis = tocElement
-        .querySelectorAll(`.${options.listItemClass}`)
+      const tocLis = tocElement.querySelectorAll(`.${options.listItemClass}`)
       forEach.call(tocLis, (tocLi) => {
-        updateClassname(tocLi, tocLi.className.replace(SPACE_CHAR + options.activeListItemClass, ''))
+        updateClassname(
+          tocLi,
+          tocLi.className.replace(SPACE_CHAR + options.activeListItemClass, ""),
+        )
       })
 
       // Add the active class to the active tocLink.
-      if (activeTocLink && activeTocLink.className.indexOf(options.activeLinkClass) === -1) {
+      if (
+        activeTocLink &&
+        activeTocLink.className.indexOf(options.activeLinkClass) === -1
+      ) {
         activeTocLink.className += SPACE_CHAR + options.activeLinkClass
       }
       const li = activeTocLink?.parentNode
@@ -225,8 +256,9 @@ export default function (options) {
         li.className += SPACE_CHAR + options.activeListItemClass
       }
 
-      const tocLists = tocElement
-        .querySelectorAll(`.${options.listClass}.${options.collapsibleClass}`)
+      const tocLists = tocElement.querySelectorAll(
+        `.${options.listClass}.${options.collapsibleClass}`,
+      )
 
       // Collapse the other collapsible lists.
       forEach.call(tocLists, (list) => {
@@ -236,8 +268,19 @@ export default function (options) {
       })
 
       // Expand the active link's collapsible list and its sibling if applicable.
-      if (activeTocLink?.nextSibling && activeTocLink.nextSibling.className.indexOf(options.isCollapsedClass) !== -1) {
-        updateClassname(activeTocLink.nextSibling, activeTocLink.nextSibling.className.replace(SPACE_CHAR + options.isCollapsedClass, ''))
+      if (
+        activeTocLink?.nextSibling &&
+        activeTocLink.nextSibling.className.indexOf(
+          options.isCollapsedClass,
+        ) !== -1
+      ) {
+        updateClassname(
+          activeTocLink.nextSibling,
+          activeTocLink.nextSibling.className.replace(
+            SPACE_CHAR + options.isCollapsedClass,
+            "",
+          ),
+        )
       }
       removeCollapsedFromParents(activeTocLink?.parentNode.parentNode)
     }
@@ -248,9 +291,16 @@ export default function (options) {
    * @param {HTMLElement} element
    * @return {HTMLElement}
    */
-  function removeCollapsedFromParents (element) {
-    if (element && element.className.indexOf(options.collapsibleClass) !== -1 && element.className.indexOf(options.isCollapsedClass) !== -1) {
-      updateClassname(element, element.className.replace(SPACE_CHAR + options.isCollapsedClass, ''))
+  function removeCollapsedFromParents(element) {
+    if (
+      element &&
+      element.className.indexOf(options.collapsibleClass) !== -1 &&
+      element.className.indexOf(options.isCollapsedClass) !== -1
+    ) {
+      updateClassname(
+        element,
+        element.className.replace(SPACE_CHAR + options.isCollapsedClass, ""),
+      )
       return removeCollapsedFromParents(element.parentNode.parentNode)
     }
     return element
@@ -260,9 +310,12 @@ export default function (options) {
    * Disable TOC Animation when a link is clicked.
    * @param {Event} event
    */
-  function disableTocAnimation (event) {
+  function disableTocAnimation(event) {
     const target = event.target || event.srcElement
-    if (typeof target.className !== 'string' || target.className.indexOf(options.linkClass) === -1) {
+    if (
+      typeof target.className !== "string" ||
+      target.className.indexOf(options.linkClass) === -1
+    ) {
       return
     }
     // Bind to tocLink clicks to temporarily disable highlighting
@@ -273,33 +326,43 @@ export default function (options) {
   /**
    * Enable TOC Animation.
    */
-  function enableTocAnimation () {
+  function enableTocAnimation() {
     currentlyHighlighting = true
   }
 
   /**
    * Return currently highlighting status.
    */
-  function getCurrentlyHighlighting () {
+  function getCurrentlyHighlighting() {
     return currentlyHighlighting
   }
 
-  function getIsHeaderBottomMode (headerId) {
+  function getIsHeaderBottomMode(headerId) {
     const scrollEl = getScrollEl()
     const activeHeading = scrollEl?.querySelector(`#${headerId}`)
-    const isBottomMode = activeHeading.offsetTop > scrollEl.offsetHeight - (scrollEl.clientHeight * 1.4) - options.bottomModeThreshold
+    const isBottomMode =
+      activeHeading.offsetTop >
+      scrollEl.offsetHeight -
+        scrollEl.clientHeight * 1.4 -
+        options.bottomModeThreshold
     return isBottomMode
   }
 
-  function getIsPageBottomMode () {
+  function getIsPageBottomMode() {
     const scrollEl = getScrollEl()
-    const isBottomMode = getScrollTop() + scrollEl.clientHeight > scrollEl.offsetHeight - options.bottomModeThreshold
-    return isBottomMode
+    const isScrollable = scrollEl.scrollHeight > scrollEl.clientHeight
+    const isBottomMode =
+      getScrollTop() + scrollEl.clientHeight >
+      scrollEl.offsetHeight - options.bottomModeThreshold
+    return isScrollable && isBottomMode
   }
 
-  function getScrollEl () {
+  function getScrollEl() {
     let el
-    if (options.scrollContainer && document.querySelector(options.scrollContainer)) {
+    if (
+      options.scrollContainer &&
+      document.querySelector(options.scrollContainer)
+    ) {
       el = document.querySelector(options.scrollContainer)
     } else {
       el = document.documentElement || body
@@ -307,17 +370,17 @@ export default function (options) {
     return el
   }
 
-  function getScrollTop () {
+  function getScrollTop() {
     const el = getScrollEl()
     return el?.scrollTop || 0
   }
 
-  function getTopHeader (headings, scrollTop = getScrollTop()) {
+  function getTopHeader(headings, scrollTop = getScrollTop()) {
     let topHeader
     some.call(headings, (heading, i) => {
       if (getHeadingTopPos(heading) > scrollTop + options.headingsOffset + 10) {
         // Don't allow negative index value.
-        const index = (i === 0) ? i : i - 1
+        const index = i === 0 ? i : i - 1
         topHeader = headings[index]
         return true
       }
@@ -330,14 +393,15 @@ export default function (options) {
     return topHeader
   }
 
-  function updateUrlHashForHeader (headingsArray) {
+  function updateUrlHashForHeader(headingsArray) {
     const scrollTop = getScrollTop()
     const topHeader = getTopHeader(headingsArray, scrollTop)
-    if (!topHeader || scrollTop < 5) {
-      if (!(window.location.hash === '#' || window.location.hash === '')) {
-        window.history.pushState(null, null, '#')
+    const isPageBottomMode = getIsPageBottomMode()
+    if ((!topHeader || scrollTop < 5) && !isPageBottomMode) {
+      if (!(window.location.hash === "#" || window.location.hash === "")) {
+        window.history.pushState(null, null, "#")
       }
-    } else if (topHeader && !getIsPageBottomMode()) {
+    } else if (topHeader && !isPageBottomMode) {
       const newHash = `#${topHeader.id}`
       if (window.location.hash !== newHash) {
         window.history.pushState(null, null, newHash)
@@ -353,6 +417,6 @@ export default function (options) {
     getCurrentlyHighlighting,
     getTopHeader,
     getScrollTop,
-    updateUrlHashForHeader
+    updateUrlHashForHeader,
   }
 }

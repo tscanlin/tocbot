@@ -1,6 +1,8 @@
-
-export default function updateTocScroll (options) {
-  const toc = options.tocScrollingWrapper || options.tocElement || document.querySelector(options.tocSelector)
+export default function updateTocScroll(options) {
+  const toc =
+    options.tocScrollingWrapper ||
+    options.tocElement ||
+    document.querySelector(options.tocSelector)
   if (toc && toc.scrollHeight > toc.clientHeight) {
     const activeItem = toc.querySelector(`.${options.activeListItemClass}`)
     if (activeItem) {

@@ -9,11 +9,11 @@
  * @author Tim Scanlin
  */
 
-import BuildHtml from './build-html.js'
-import defaultOptions from './default-options.js'
-import ParseContent from './parse-content.js'
-import initSmoothScrolling from './scroll-smooth/index.js'
-import updateTocScroll from './update-toc-scroll.js'
+import BuildHtml from "./build-html.js"
+import defaultOptions from "./default-options.js"
+import ParseContent from "./parse-content.js"
+import initSmoothScrolling from "./scroll-smooth/index.js"
+import updateTocScroll from "./update-toc-scroll.js"
 
 // For testing purposes.
 export let _options = {} // Object to store current options.
@@ -28,9 +28,10 @@ let clickListener
  * Initialize tocbot.
  * @param {object} customOptions
  */
-export function init (customOptions) {
+export function init(customOptions) {
   // Merge defaults with user options.
   // Set to options variable at the top.
+  let hasInitialized = false
   _options = extend(defaultOptions, customOptions || {})
 
   // Init smooth scroll if enabled (default).
@@ -61,7 +62,7 @@ export function init (customOptions) {
   // Get headings array.
   _headingsArray = _parseContent.selectHeadings(
     contentElement,
-    _options.headingSelector
+    _options.headingSelector,
   )
 
   // Return if no headings are found.
@@ -84,18 +85,17 @@ export function init (customOptions) {
   // Update Sidebar and bind listeners.
   let isClick = false
   _scrollListener = throttle((e) => {
-    _buildHtml.updateToc(_headingsArray)
+    _buildHtml.updateToc(_headingsArray, e)
     // Only do this update for normal scrolls and not during clicks.
     !_options.disableTocScrollSync && !isClick && updateTocScroll(_options)
 
-    if (_options.enableUrlHashUpdateOnScroll) {
+    if (_options.enableUrlHashUpdateOnScroll && hasInitialized) {
       const enableUpdatingHash = _buildHtml.getCurrentlyHighlighting()
       enableUpdatingHash && _buildHtml.updateUrlHashForHeader(_headingsArray)
     }
 
     const isTop =
-      e?.target?.scrollingElement &&
-      e.target.scrollingElement.scrollTop === 0
+      e?.target?.scrollingElement && e.target.scrollingElement.scrollTop === 0
     if ((e && (e.eventPhase === 0 || e.currentTarget === null)) || isTop) {
       _buildHtml.updateToc(_headingsArray)
       if (_options.scrollEndCallback) {
@@ -104,11 +104,14 @@ export function init (customOptions) {
     }
   }, _options.throttleTimeout)
   // Fire it initially to setup the page.
-  _scrollListener()
+  if (!hasInitialized) {
+    _scrollListener()
+    hasInitialized = true
+  }
 
   // Fire scroll listener on hash change to trigger highlighting changes too.
   window.onhashchange = window.onscrollend = (e) => {
-    _scrollListener()
+    _scrollListener(e)
   }
 
   if (
@@ -117,13 +120,13 @@ export function init (customOptions) {
   ) {
     document
       .querySelector(_options.scrollContainer)
-      .addEventListener('scroll', _scrollListener, false)
+      .addEventListener("scroll", _scrollListener, false)
     document
       .querySelector(_options.scrollContainer)
-      .addEventListener('resize', _scrollListener, false)
+      .addEventListener("resize", _scrollListener, false)
   } else {
-    document.addEventListener('scroll', _scrollListener, false)
-    document.addEventListener('resize', _scrollListener, false)
+    document.addEventListener("scroll", _scrollListener, false)
+    document.addEventListener("resize", _scrollListener, false)
   }
 
   // Bind click listeners to disable animation.
@@ -152,16 +155,16 @@ export function init (customOptions) {
   ) {
     document
       .querySelector(_options.scrollContainer)
-      .addEventListener('click', clickListener, false)
+      .addEventListener("click", clickListener, false)
   } else {
-    document.addEventListener('click', clickListener, false)
+    document.addEventListener("click", clickListener, false)
   }
 }
 
 /**
  * Destroy tocbot.
  */
-export function destroy () {
+export function destroy() {
   const tocElement = getTocElement(_options)
   if (tocElement === null) {
     return
@@ -170,7 +173,7 @@ export function destroy () {
   if (!_options.skipRendering) {
     // Clear HTML.
     if (tocElement) {
-      tocElement.innerHTML = ''
+      tocElement.innerHTML = ""
     }
   }
 
@@ -181,20 +184,20 @@ export function destroy () {
   ) {
     document
       .querySelector(_options.scrollContainer)
-      .removeEventListener('scroll', _scrollListener, false)
+      .removeEventListener("scroll", _scrollListener, false)
     document
       .querySelector(_options.scrollContainer)
-      .removeEventListener('resize', _scrollListener, false)
+      .removeEventListener("resize", _scrollListener, false)
     if (_buildHtml) {
       document
         .querySelector(_options.scrollContainer)
-        .removeEventListener('click', clickListener, false)
+        .removeEventListener("click", clickListener, false)
     }
   } else {
-    document.removeEventListener('scroll', _scrollListener, false)
-    document.removeEventListener('resize', _scrollListener, false)
+    document.removeEventListener("scroll", _scrollListener, false)
+    document.removeEventListener("resize", _scrollListener, false)
     if (_buildHtml) {
-      document.removeEventListener('click', clickListener, false)
+      document.removeEventListener("click", clickListener, false)
     }
   }
 }
@@ -202,14 +205,14 @@ export function destroy () {
 /**
  * Refresh tocbot.
  */
-export function refresh (customOptions) {
+export function refresh(customOptions) {
   destroy()
   init(customOptions || _options)
 }
 
 // From: https://github.com/Raynos/xtend
 const hasOwnProp = Object.prototype.hasOwnProperty
-function extend (...args) {
+function extend(...args) {
   const target = {}
   for (let i = 0; i < args.length; i++) {
     const source = args[i]
@@ -223,7 +226,7 @@ function extend (...args) {
 }
 
 // From: https://remysharp.com/2010/07/21/throttling-function-calls
-function throttle (fn, threshold, scope) {
+function throttle(fn, threshold, scope) {
   threshold || (threshold = 250)
   let last
   let deferTimer
@@ -244,7 +247,7 @@ function throttle (fn, threshold, scope) {
   }
 }
 
-function getContentElement (options) {
+function getContentElement(options) {
   try {
     return (
       options.contentElement || document.querySelector(options.contentSelector)
@@ -255,7 +258,7 @@ function getContentElement (options) {
   }
 }
 
-function getTocElement (options) {
+function getTocElement(options) {
   try {
     return options.tocElement || document.querySelector(options.tocSelector)
   } catch (e) {
@@ -271,7 +274,7 @@ const tocbot = {
   _parseContent,
   init,
   destroy,
-  refresh
+  refresh,
 }
 
 export default tocbot
