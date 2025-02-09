@@ -31,6 +31,7 @@ let clickListener
 export function init(customOptions) {
   // Merge defaults with user options.
   // Set to options variable at the top.
+  let hasInitialized = false
   _options = extend(defaultOptions, customOptions || {})
 
   // Init smooth scroll if enabled (default).
@@ -84,11 +85,11 @@ export function init(customOptions) {
   // Update Sidebar and bind listeners.
   let isClick = false
   _scrollListener = throttle((e) => {
-    _buildHtml.updateToc(_headingsArray)
+    _buildHtml.updateToc(_headingsArray, e)
     // Only do this update for normal scrolls and not during clicks.
     !_options.disableTocScrollSync && !isClick && updateTocScroll(_options)
 
-    if (_options.enableUrlHashUpdateOnScroll) {
+    if (_options.enableUrlHashUpdateOnScroll && hasInitialized) {
       const enableUpdatingHash = _buildHtml.getCurrentlyHighlighting()
       enableUpdatingHash && _buildHtml.updateUrlHashForHeader(_headingsArray)
     }
@@ -103,11 +104,14 @@ export function init(customOptions) {
     }
   }, _options.throttleTimeout)
   // Fire it initially to setup the page.
-  _scrollListener()
+  if (!hasInitialized) {
+    _scrollListener()
+    hasInitialized = true
+  }
 
   // Fire scroll listener on hash change to trigger highlighting changes too.
   window.onhashchange = window.onscrollend = (e) => {
-    _scrollListener()
+    _scrollListener(e)
   }
 
   if (

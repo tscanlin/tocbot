@@ -9,11 +9,8 @@ export default function (options) {
   const some = [].some
   const body = typeof window !== "undefined" && document.body
   const SPACE_CHAR = " "
-  const LOAD_TIMER_MS = 150
   let tocElement
   let currentlyHighlighting = true
-  let fullyLoaded = false
-  let loadedTimer = null
 
   /**
    * Create link and list elements.
@@ -187,7 +184,10 @@ export default function (options) {
     // Get the top most heading currently visible on the page so we know what to highlight.
     const headings = headingsArray
 
-    const clickedHref = event?.target?.getAttribute("href") || null
+    // This is needed for scroll events since document doesn't have getAttribute
+    const clickedHref = event?.target?.getAttribute
+      ? event?.target?.getAttribute("href")
+      : null
     const isBottomMode =
       clickedHref && clickedHref.charAt(0) === "#"
         ? getIsHeaderBottomMode(clickedHref.replace("#", ""))
@@ -209,28 +209,14 @@ export default function (options) {
       let activeId = topHeaderId
 
       // Handle case where they clicked a link that cannot be scrolled to.
+      const isPageBottomMode = getIsPageBottomMode()
       if (clickedHref && isBottomMode) {
         activeId = clickedHref.replace("#", "")
-      } else if (
-        hashId &&
-        hashId !== topHeaderId &&
-        !fullyLoaded &&
-        getIsPageBottomMode()
-      ) {
-        // This condition should change to only be done
-        // on first load, it is meant to handle the case
+      } else if (hashId && hashId !== topHeaderId && isPageBottomMode) {
+        // This is meant to handle the case
         // of showing the items as highlighted when they
         // are in bottom mode and cannot be scrolled to.
         activeId = hashId
-      }
-      // Handle first load timer needed for loading with
-      // a hash that is for a heading in `bottomMode`.
-      if (!fullyLoaded && !loadedTimer) {
-        loadedTimer = setTimeout(() => {
-          fullyLoaded = true
-        }, LOAD_TIMER_MS)
-      } else if (fullyLoaded && loadedTimer) {
-        clearTimeout(loadedTimer)
       }
 
       const activeTocLink = tocElement.querySelector(
@@ -410,11 +396,12 @@ export default function (options) {
   function updateUrlHashForHeader(headingsArray) {
     const scrollTop = getScrollTop()
     const topHeader = getTopHeader(headingsArray, scrollTop)
-    if (!topHeader || scrollTop < 5) {
+    const isPageBottomMode = getIsPageBottomMode()
+    if ((!topHeader || scrollTop < 5) && !isPageBottomMode) {
       if (!(window.location.hash === "#" || window.location.hash === "")) {
         window.history.pushState(null, null, "#")
       }
-    } else if (topHeader && !getIsPageBottomMode()) {
+    } else if (topHeader && !isPageBottomMode) {
       const newHash = `#${topHeader.id}`
       if (window.location.hash !== newHash) {
         window.history.pushState(null, null, newHash)

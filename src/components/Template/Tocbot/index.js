@@ -14,7 +14,7 @@ const TOCBOT_OPTIONS = {
   },
   // headingsOffset: 40,
   // scrollSmoothOffset: -40,
-  enableUrlHashUpdateOnScroll: false,
+  enableUrlHashUpdateOnScroll: true,
   // skipRendering: true,
 }
 
