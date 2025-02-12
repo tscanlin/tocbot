@@ -1,9 +1,9 @@
 /* Styles */
 
 // Page
-@import 'page-styles';
-@import 'code-styles';
-@import 'tocbot-responsive';
+@use 'page-styles';
+@use 'code-styles';
+@use 'tocbot-responsive';
 
 * {
   box-sizing: border-box;
