@@ -11,6 +11,7 @@ export default function (options) {
   const SPACE_CHAR = " "
   let tocElement
   let currentlyHighlighting = true
+  let eventCount = 0
 
   /**
    * Create link and list elements.
@@ -183,7 +184,6 @@ export default function (options) {
     }
     // Get the top most heading currently visible on the page so we know what to highlight.
     const headings = headingsArray
-
     // This is needed for scroll events since document doesn't have getAttribute
     const clickedHref = event?.target?.getAttribute
       ? event?.target?.getAttribute("href")
@@ -193,6 +193,9 @@ export default function (options) {
         ? getIsHeaderBottomMode(clickedHref.replace("#", ""))
         : false
     const shouldUpdate = currentlyHighlighting || isBottomMode
+    if (event && eventCount < 5) {
+      eventCount++
+    }
 
     if (shouldUpdate && !!tocElement && headings.length > 0) {
       const topHeader = getTopHeader(headings)
@@ -212,10 +215,17 @@ export default function (options) {
       const isPageBottomMode = getIsPageBottomMode()
       if (clickedHref && isBottomMode) {
         activeId = clickedHref.replace("#", "")
-      } else if (hashId && hashId !== topHeaderId && isPageBottomMode) {
+      } else if (
+        hashId &&
+        hashId !== topHeaderId &&
+        isPageBottomMode &&
+        (getIsHeaderBottomMode(topHeaderId) || eventCount <= 2)
+      ) {
         // This is meant to handle the case
         // of showing the items as highlighted when they
         // are in bottom mode and cannot be scrolled to.
+        // Make sure that they stay highlighted on refresh
+        // too, not just when clicked.
         activeId = hashId
       }
 
