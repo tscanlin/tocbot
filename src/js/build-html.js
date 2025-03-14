@@ -339,7 +339,7 @@ export default function (options) {
 
   function getIsHeaderBottomMode(headerId) {
     const scrollEl = getScrollEl()
-    const activeHeading = scrollEl?.getElementById(headerId)
+    const activeHeading = document?.getElementById(headerId)
     const isBottomMode =
       activeHeading.offsetTop >
       scrollEl.offsetHeight -
