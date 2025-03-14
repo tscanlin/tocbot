@@ -353,7 +353,7 @@ __webpack_require__.r(__webpack_exports__);
 
   function getIsHeaderBottomMode(headerId) {
     const scrollEl = getScrollEl()
-    const activeHeading = scrollEl?.querySelector(`#${headerId}`)
+    const activeHeading = document?.getElementById(headerId)
     const isBottomMode =
       activeHeading.offsetTop >
       scrollEl.offsetHeight -
