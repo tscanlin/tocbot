@@ -1,4 +1,4 @@
-export = tocbot
+export default tocbot
 export as namespace tocbot
 
 declare namespace tocbot {
@@ -8,19 +8,25 @@ declare namespace tocbot {
   interface IStaticOptions {
     // Where to render the table of contents.
     tocSelector?: string
+    // Or, you can pass in a DOM node instead
+    tocElement?: HTMLElement
     // Where to grab the headings to build the table of contents.
     contentSelector?: string
+    // Or, you can pass in a DOM node instead
+    contentElement?: HTMLElement
     // Which headings to grab inside of the contentSelector element.
     headingSelector?: string
     // Headings that match the ignoreSelector will be skipped.
     ignoreSelector?: string
-    // For headings inside relative or absolute positioned containers within content.
+    // For headings inside relative or absolute positioned 
+    // containers within content.
     hasInnerContainers?: boolean
     // Main class to add to links.
     linkClass?: string
     // Extra classes to add to links.
     extraLinkClasses?: string
-    // Class to add to active links    // the link corresponding to the top most heading on the page.
+    // Class to add to active links,
+    // the link corresponding to the top most heading on the page.
     activeLinkClass?: string
     // Main class to add to lists.
     listClass?: string
@@ -36,7 +42,7 @@ declare namespace tocbot {
     // Class to add to active list items.
     activeListItemClass?: string
     // How many heading levels should not be collapsed.
-    // For example; number 6 will show everything since
+    // For example, number 6 will show everything since
     // there are only 6 heading levels and number 0 will collapse them all.
     // The sections that are hidden will open
     // and close as you scroll to headings within them.
@@ -49,7 +55,8 @@ declare namespace tocbot {
     scrollSmoothOffset?: number
     // Callback for scroll end.
     scrollEndCallback?(e: WheelEvent): void
-    // Headings offset between the headings and the top of the document (this is meant for minor adjustments).
+    // Headings offset between the headings and the top of
+    // the document (this is meant for minor adjustments).
     headingsOffset?: number
     // Timeout between events firing to make sure it's
     // not too rapid (for performance reasons).
@@ -71,23 +78,27 @@ declare namespace tocbot {
     // when truncating titles.
     includeTitleTags?: boolean
     // onclick function to apply to all links in toc. will be called with
-    // the event as the first parameter; and this can be used to stop    // propagation; prevent default or perform action
+    // the event as the first parameter, and this can be used to stop,
+    // propagation, prevent default or perform action
     onClick?: (e: MouseEvent) => void
     // orderedList can be set to false to generate unordered lists (ul)
     // instead of ordered lists (ol)
     orderedList?: boolean
-    // If there is a fixed article scroll container; set to calculate titles' offset
+    // If there is a fixed article scroll container, set to calculate offset.
     scrollContainer?: string | null
-    // prevent ToC DOM rendering if it's already rendered by an external system
+    // prevent ToC DOM rendering if it's already rendered by an external system.
     skipRendering?: boolean
     // Optional callback to change heading labels.
     // For example it can be used to cut down and put ellipses on multiline headings you deem too long.
-    // Called each time a heading is parsed. Expects a string in return, the modified label to display.
+    // Called each time a heading is parsed. Expects a string and returns the modified label to display.
+    // Additionally, the attribute `data-heading-label` may be used on a heading to specify
+    // a shorter string to be used in the TOC.
     headingLabelCallback?: (headingLabel: string) => string
     // ignore headings that are hidden in DOM
     ignoreHiddenElements?: boolean
     // Optional callback to modify properties of parsed headings.
-    // The heading element is passed in node parameter and information parsed by default parser is provided in obj parameter.
+    // The heading element is passed in node parameter and information
+    // parsed by default parser is provided in obj parameter.
     // Function has to return the same or modified obj.
     // The heading will be excluded from TOC if nothing is returned.
     headingObjectCallback?: (obj: object, node: HTMLElement) => object | void
@@ -96,6 +107,11 @@ declare namespace tocbot {
     // Only takes affect when `tocSelector` is scrolling,
     // keep the toc scroll position in sync with the content.
     disableTocScrollSync?: boolean
+    // If this is null then just use `tocElement` or `tocSelector` instead
+    // assuming `disableTocScrollSync` is set to false. This allows for
+    // scrolling an outer element (like a nav panel w/ search) containing the toc.
+    // Please pass an element, not a selector here.
+    tocScrollingWrapper: null
     // Offset for the toc scroll (top) position when scrolling the page.
     // Only effective if `disableTocScrollSync` is false.
     tocScrollOffset?: number
