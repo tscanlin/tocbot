@@ -84,7 +84,24 @@ export function init(customOptions) {
 
   // Update Sidebar and bind listeners.
   let isClick = false
-  _scrollListener = throttle((e) => {
+  // add scrollHandlerType to switch between debounce and throttle
+  const scrollHandlerTimeout =
+    _options.scrollHandlerTimeout || _options.throttleTimeout // compatible with legacy configurations
+  // default use debounce when delay is less than 333ms
+  // the reason is ios browser has a limit : can't use history.pushState() more than 100 times per 30 seconds
+  const scrollHandlerType =
+    _options.scrollHandlerType || scrollHandlerTimeout < 333
+      ? "debounce"
+      : "throttle"
+
+  // choose debounce or throttle
+  const scrollHandler = (fn, delay) => {
+    return scrollHandlerType === "debounce"
+      ? debounce(fn, delay)
+      : throttle(fn, delay)
+  }
+
+  _scrollListener = scrollHandler((e) => {
     _buildHtml.updateToc(_headingsArray, e)
     // Only do this update for normal scrolls and not during clicks.
     !_options.disableTocScrollSync && !isClick && updateTocScroll(_options)
@@ -94,15 +111,12 @@ export function init(customOptions) {
       enableUpdatingHash && _buildHtml.updateUrlHashForHeader(_headingsArray)
     }
 
-    const isTop =
-      e?.target?.scrollingElement && e.target.scrollingElement.scrollTop === 0
+    const isTop = e?.target?.scrollingElement?.scrollTop === 0
     if ((e && (e.eventPhase === 0 || e.currentTarget === null)) || isTop) {
       _buildHtml.updateToc(_headingsArray)
-      if (_options.scrollEndCallback) {
-        _options.scrollEndCallback(e)
-      }
+      _options.scrollEndCallback?.(e)
     }
-  }, _options.throttleTimeout)
+  }, scrollHandlerTimeout)
   // Fire it initially to setup the page.
   if (!hasInitialized) {
     _scrollListener()
@@ -244,6 +258,22 @@ function throttle(fn, threshold, scope) {
       last = now
       fn.apply(context, args)
     }
+  }
+}
+
+/**
+ * Creates a debounced function that delays invoking `func` until after `wait` milliseconds
+ * have elapsed since the last time the debounced function was invoked.
+ *
+ * @param {Function} func - The function to debounce.
+ * @param {number} wait - The number of milliseconds to delay.
+ * @returns {Function} - Returns the new debounced function.
+ */
+function debounce(func, wait) {
+  let timeout
+  return (...args) => {
+    clearTimeout(timeout)
+    timeout = setTimeout(() => func.apply(this, args), wait)
   }
 }
 
