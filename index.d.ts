@@ -63,9 +63,9 @@ declare namespace tocbot {
     enableUrlHashUpdateOnScroll?: boolean
     // type of scroll handler to use. to make scroll event not too rapid.
     // Options are: "debounce" or "throttle"
-    // If not set,use debounce less than 333ms , other use throttle.
+    // when set auto , use debounce less than 333ms , other use throttle.
     // for ios browser can't use history.pushState() more than 100 times per 30 seconds reason
-    scrollHandlerType?: "debounce" | "throttle"
+    scrollHandlerType?: "auto" | "debounce" | "throttle" 
     //  scrollHandler delay in ms.
     scrollHandlerTimeout: number
     // Timeout between events firing to make sure it's

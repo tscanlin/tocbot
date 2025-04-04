@@ -84,22 +84,14 @@ export function init(customOptions) {
 
   // Update Sidebar and bind listeners.
   let isClick = false
-  // add scrollHandlerType to switch between debounce and throttle
+  // choose timeout by _options
   const scrollHandlerTimeout =
     _options.scrollHandlerTimeout || _options.throttleTimeout // compatible with legacy configurations
+  // choose debounce or throttle
   // default use debounce when delay is less than 333ms
   // the reason is ios browser has a limit : can't use history.pushState() more than 100 times per 30 seconds
-  const scrollHandlerType =
-    _options.scrollHandlerType || scrollHandlerTimeout < 333
-      ? "debounce"
-      : "throttle"
-
-  // choose debounce or throttle
-  const scrollHandler = (fn, delay) => {
-    return scrollHandlerType === "debounce"
-      ? debounce(fn, delay)
-      : throttle(fn, delay)
-  }
+  const scrollHandler = (fn, delay) =>
+    getScrollHandler(fn, delay, _options.scrollHandlerType)
 
   _scrollListener = scrollHandler((e) => {
     _buildHtml.updateToc(_headingsArray, e)
@@ -274,6 +266,23 @@ function debounce(func, wait) {
   return (...args) => {
     clearTimeout(timeout)
     timeout = setTimeout(() => func.apply(this, args), wait)
+  }
+}
+
+/**
+ * Creates a scroll handler with specified timeout strategy
+ * @param {number} timeout - Delay duration in milliseconds
+ * @param {'debounce'|'throttle'|'auto'} type - Strategy type for scroll handling
+ * @returns {Function} Configured scroll handler function
+ */
+function getScrollHandler(func, timeout, type = "auto") {
+  switch (type) {
+    case "debounce":
+      return debounce(func, timeout)
+    case "throttle":
+      return throttle(func, timeout)
+    default:
+      return timeout < 334 ? debounce(func, timeout) : throttle(func, timeout)
   }
 }
 
