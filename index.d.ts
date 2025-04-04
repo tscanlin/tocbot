@@ -65,9 +65,9 @@ declare namespace tocbot {
     // Options are: "debounce" or "throttle"
     // when set auto , use debounce less than 333ms , other use throttle.
     // for ios browser can't use history.pushState() more than 100 times per 30 seconds reason
-    scrollHandlerType?: "auto" | "debounce" | "throttle" 
+    scrollHandlerType?: "auto" | "debounce" | "throttle"
     //  scrollHandler delay in ms.
-    scrollHandlerTimeout: number
+    scrollHandlerTimeout?: number
     // Timeout between events firing to make sure it's
     // not too rapid (for performance reasons).
     throttleTimeout?: number
@@ -121,7 +121,7 @@ declare namespace tocbot {
     // assuming `disableTocScrollSync` is set to false. This allows for
     // scrolling an outer element (like a nav panel w/ search) containing the toc.
     // Please pass an element, not a selector here.
-    tocScrollingWrapper: null
+    tocScrollingWrapper?: null
     // Offset for the toc scroll (top) position when scrolling the page.
     // Only effective if `disableTocScrollSync` is false.
     tocScrollOffset?: number
