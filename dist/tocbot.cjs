@@ -511,6 +511,16 @@ __webpack_require__.r(__webpack_exports__);
   // Headings offset between the headings and the top of
   // the document (this is meant for minor adjustments).
   headingsOffset: 1,
+  // Enable the URL hash to update with the proper heading ID as
+  // a user scrolls the page.
+  enableUrlHashUpdateOnScroll: false,
+  // type of scroll handler to use. to make scroll event not too rapid.
+  // Options are: "debounce" or "throttle"
+  // when set auto , use debounce less than 333ms , other use throttle.
+  // for ios browser can't use history.pushState() more than 100 times per 30 seconds reason
+  scrollHandlerType: "auto",
+  //  scrollHandler delay in ms.
+  scrollHandlerTimeout: 50,
   // Timeout between events firing to make sure it's
   // not too rapid (for performance reasons).
   throttleTimeout: 50,
@@ -570,9 +580,6 @@ __webpack_require__.r(__webpack_exports__);
   // Offset for the toc scroll (top) position when scrolling the page.
   // Only effective if `disableTocScrollSync` is false.
   tocScrollOffset: 30,
-  // Enable the URL hash to update with the proper heading ID as
-  // a user scrolls the page.
-  enableUrlHashUpdateOnScroll: false,
   // Threshold for when bottom mode should be enabled to handle
   // highlighting links that cannot be scrolled to.
   bottomModeThreshold: 30,
@@ -690,7 +697,16 @@ function init(customOptions) {
 
   // Update Sidebar and bind listeners.
   let isClick = false
-  _scrollListener = throttle((e) => {
+  // choose timeout by _options
+  const scrollHandlerTimeout =
+    _options.scrollHandlerTimeout || _options.throttleTimeout // compatible with legacy configurations
+  // choose debounce or throttle
+  // default use debounce when delay is less than 333ms
+  // the reason is ios browser has a limit : can't use history.pushState() more than 100 times per 30 seconds
+  const scrollHandler = (fn, delay) =>
+    getScrollHandler(fn, delay, _options.scrollHandlerType)
+
+  _scrollListener = scrollHandler((e) => {
     _buildHtml.updateToc(_headingsArray, e)
     // Only do this update for normal scrolls and not during clicks.
     !_options.disableTocScrollSync && !isClick && (0,_update_toc_scroll_js__WEBPACK_IMPORTED_MODULE_4__["default"])(_options)
@@ -700,15 +716,12 @@ function init(customOptions) {
       enableUpdatingHash && _buildHtml.updateUrlHashForHeader(_headingsArray)
     }
 
-    const isTop =
-      e?.target?.scrollingElement && e.target.scrollingElement.scrollTop === 0
+    const isTop = e?.target?.scrollingElement?.scrollTop === 0
     if ((e && (e.eventPhase === 0 || e.currentTarget === null)) || isTop) {
       _buildHtml.updateToc(_headingsArray)
-      if (_options.scrollEndCallback) {
-        _options.scrollEndCallback(e)
-      }
+      _options.scrollEndCallback?.(e)
     }
-  }, _options.throttleTimeout)
+  }, scrollHandlerTimeout)
   // Fire it initially to setup the page.
   if (!hasInitialized) {
     _scrollListener()
@@ -850,6 +863,39 @@ function throttle(fn, threshold, scope) {
       last = now
       fn.apply(context, args)
     }
+  }
+}
+
+/**
+ * Creates a debounced function that delays invoking `func` until after `wait` milliseconds
+ * have elapsed since the last time the debounced function was invoked.
+ *
+ * @param {Function} func - The function to debounce.
+ * @param {number} wait - The number of milliseconds to delay.
+ * @returns {Function} - Returns the new debounced function.
+ */
+function debounce(func, wait) {
+  let timeout
+  return (...args) => {
+    clearTimeout(timeout)
+    timeout = setTimeout(() => func.apply(this, args), wait)
+  }
+}
+
+/**
+ * Creates a scroll handler with specified timeout strategy
+ * @param {number} timeout - Delay duration in milliseconds
+ * @param {'debounce'|'throttle'|'auto'} type - Strategy type for scroll handling
+ * @returns {Function} Configured scroll handler function
+ */
+function getScrollHandler(func, timeout, type = "auto") {
+  switch (type) {
+    case "debounce":
+      return debounce(func, timeout)
+    case "throttle":
+      return throttle(func, timeout)
+    default:
+      return timeout < 334 ? debounce(func, timeout) : throttle(func, timeout)
   }
 }
 
