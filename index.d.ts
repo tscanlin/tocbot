@@ -18,7 +18,7 @@ declare namespace tocbot {
     headingSelector?: string
     // Headings that match the ignoreSelector will be skipped.
     ignoreSelector?: string
-    // For headings inside relative or absolute positioned 
+    // For headings inside relative or absolute positioned
     // containers within content.
     hasInnerContainers?: boolean
     // Main class to add to links.
@@ -58,6 +58,16 @@ declare namespace tocbot {
     // Headings offset between the headings and the top of
     // the document (this is meant for minor adjustments).
     headingsOffset?: number
+    // Enable the URL hash to update with the proper heading ID as
+    // a user scrolls the page.
+    enableUrlHashUpdateOnScroll?: boolean
+    // type of scroll handler to use. to make scroll event not too rapid.
+    // Options are: "debounce" or "throttle"
+    // when set auto , use debounce less than 333ms , other use throttle.
+    // for ios browser can't use history.pushState() more than 100 times per 30 seconds reason
+    scrollHandlerType?: "auto" | "debounce" | "throttle" 
+    //  scrollHandler delay in ms.
+    scrollHandlerTimeout: number
     // Timeout between events firing to make sure it's
     // not too rapid (for performance reasons).
     throttleTimeout?: number
@@ -115,9 +125,6 @@ declare namespace tocbot {
     // Offset for the toc scroll (top) position when scrolling the page.
     // Only effective if `disableTocScrollSync` is false.
     tocScrollOffset?: number
-    // Enable the URL hash to update with the proper heading ID as
-    // a user scrolls the page.
-    enableUrlHashUpdateOnScroll?: boolean
     // Threshold for when bottom mode should be enabled to handle
     // highlighting links that cannot be scrolled to.
     bottomModeThreshold?: number

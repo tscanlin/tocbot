@@ -84,7 +84,16 @@ export function init(customOptions) {
 
   // Update Sidebar and bind listeners.
   let isClick = false
-  _scrollListener = throttle((e) => {
+  // choose timeout by _options
+  const scrollHandlerTimeout =
+    _options.scrollHandlerTimeout || _options.throttleTimeout // compatible with legacy configurations
+  // choose debounce or throttle
+  // default use debounce when delay is less than 333ms
+  // the reason is ios browser has a limit : can't use history.pushState() more than 100 times per 30 seconds
+  const scrollHandler = (fn, delay) =>
+    getScrollHandler(fn, delay, _options.scrollHandlerType)
+
+  _scrollListener = scrollHandler((e) => {
     _buildHtml.updateToc(_headingsArray, e)
     // Only do this update for normal scrolls and not during clicks.
     !_options.disableTocScrollSync && !isClick && updateTocScroll(_options)
@@ -94,15 +103,12 @@ export function init(customOptions) {
       enableUpdatingHash && _buildHtml.updateUrlHashForHeader(_headingsArray)
     }
 
-    const isTop =
-      e?.target?.scrollingElement && e.target.scrollingElement.scrollTop === 0
+    const isTop = e?.target?.scrollingElement?.scrollTop === 0
     if ((e && (e.eventPhase === 0 || e.currentTarget === null)) || isTop) {
       _buildHtml.updateToc(_headingsArray)
-      if (_options.scrollEndCallback) {
-        _options.scrollEndCallback(e)
-      }
+      _options.scrollEndCallback?.(e)
     }
-  }, _options.throttleTimeout)
+  }, scrollHandlerTimeout)
   // Fire it initially to setup the page.
   if (!hasInitialized) {
     _scrollListener()
@@ -244,6 +250,39 @@ function throttle(fn, threshold, scope) {
       last = now
       fn.apply(context, args)
     }
+  }
+}
+
+/**
+ * Creates a debounced function that delays invoking `func` until after `wait` milliseconds
+ * have elapsed since the last time the debounced function was invoked.
+ *
+ * @param {Function} func - The function to debounce.
+ * @param {number} wait - The number of milliseconds to delay.
+ * @returns {Function} - Returns the new debounced function.
+ */
+function debounce(func, wait) {
+  let timeout
+  return (...args) => {
+    clearTimeout(timeout)
+    timeout = setTimeout(() => func.apply(this, args), wait)
+  }
+}
+
+/**
+ * Creates a scroll handler with specified timeout strategy
+ * @param {number} timeout - Delay duration in milliseconds
+ * @param {'debounce'|'throttle'|'auto'} type - Strategy type for scroll handling
+ * @returns {Function} Configured scroll handler function
+ */
+function getScrollHandler(func, timeout, type = "auto") {
+  switch (type) {
+    case "debounce":
+      return debounce(func, timeout)
+    case "throttle":
+      return throttle(func, timeout)
+    default:
+      return timeout < 334 ? debounce(func, timeout) : throttle(func, timeout)
   }
 }
 
