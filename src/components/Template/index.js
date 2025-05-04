@@ -1,10 +1,10 @@
-import React from "react"
-import PropTypes from "prop-types"
 import Head from "next/head"
+import PropTypes from "prop-types"
+import React from "react"
+import pkg from "../../../package.json"
 import Hero from "./Hero"
 import Tocbot from "./Tocbot"
 import Tracking from "./Tracking"
-import pkg from "../../../package.json"
 
 function Template(props) {
   return (
