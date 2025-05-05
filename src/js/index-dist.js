@@ -1,29 +1,32 @@
 /* globals define */
 
 import * as tocbot from "./index-esm.js"
-;(function (root, factory) {
+;((root, factory) => {
   if (typeof define === "function" && define.amd) {
     define([], factory(root))
-  } else if (typeof exports === "object") {
+  } else if (typeof exports === "object" && !(exports instanceof HTMLElement)) {
     module.exports = factory(root)
   } else {
     root.tocbot = factory(root)
   }
-})(typeof global !== "undefined" ? global : window || global, function (root) {
-  "use strict"
+})(
+  typeof global !== "undefined" && !(global instanceof HTMLElement)
+    ? global
+    : window || global,
+  (root) => {
+    // Just return if its not a browser.
+    const supports =
+      !!root &&
+      !!root.document &&
+      !!root.document.querySelector &&
+      !!root.addEventListener // Feature test
+    if (typeof window === "undefined" && !supports) {
+      return
+    }
 
-  // Just return if its not a browser.
-  const supports =
-    !!root &&
-    !!root.document &&
-    !!root.document.querySelector &&
-    !!root.addEventListener // Feature test
-  if (typeof window === "undefined" && !supports) {
-    return
-  }
+    // Make tocbot available globally.
+    root.tocbot = tocbot
 
-  // Make tocbot available globally.
-  root.tocbot = tocbot
-
-  return tocbot
-})
+    return tocbot
+  },
+)
