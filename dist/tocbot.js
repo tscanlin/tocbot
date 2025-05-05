@@ -1361,32 +1361,35 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _index_esm_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index-esm.js */ "./src/js/index-esm.js");
 /* globals define */
 
-(function (root, factory) {
+((root, factory) => {
   if (typeof define === "function" && define.amd) {
     define([], factory(root))
-  } else if (typeof exports === "object") {
+  } else if (typeof exports === "object" && !(exports instanceof HTMLElement)) {
     module.exports = factory(root)
   } else {
     root.tocbot = factory(root)
   }
-})(typeof global !== "undefined" ? global : window || global, function (root) {
-  "use strict"
+})(
+  typeof global !== "undefined" && !(global instanceof HTMLElement)
+    ? global
+    : window || global,
+  (root) => {
+    // Just return if its not a browser.
+    const supports =
+      !!root &&
+      !!root.document &&
+      !!root.document.querySelector &&
+      !!root.addEventListener // Feature test
+    if (typeof window === "undefined" && !supports) {
+      return
+    }
 
-  // Just return if its not a browser.
-  const supports =
-    !!root &&
-    !!root.document &&
-    !!root.document.querySelector &&
-    !!root.addEventListener // Feature test
-  if (typeof window === "undefined" && !supports) {
-    return
-  }
+    // Make tocbot available globally.
+    root.tocbot = _index_esm_js__WEBPACK_IMPORTED_MODULE_0__
 
-  // Make tocbot available globally.
-  root.tocbot = _index_esm_js__WEBPACK_IMPORTED_MODULE_0__
-
-  return _index_esm_js__WEBPACK_IMPORTED_MODULE_0__
-})
+    return _index_esm_js__WEBPACK_IMPORTED_MODULE_0__
+  },
+)
 
 })();
 
