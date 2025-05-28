@@ -34,6 +34,10 @@ a.toc-link {
 
 .is-collapsed {
   max-height: 0;
+
+  &:has(:focus) {
+    max-height: 1000px;
+  }
 }
 
 .is-position-fixed {
