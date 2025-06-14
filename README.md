@@ -179,6 +179,7 @@ tocbot.init({
   // and close as you scroll to headings within them.
   collapseDepth: 0,
   // Smooth scrolling enabled.
+  // CAUTION: Doesn't work well of you already have scroll-behavior set to smooth globally in your CSS - see https://github.com/tscanlin/tocbot/issues/273#issuecomment-2916799033
   scrollSmooth: true,
   // Smooth scroll duration.
   scrollSmoothDuration: 420,
@@ -296,6 +297,7 @@ tocbot.refresh()
 - Tocbot scrolls to the right position onClick but highlighting doesn't seem to show the active section
   - Try running this from the console: `tocbot.refresh({ ...tocbot.options, hasInnerContainers: true })`. If that works then one option (`hasInnerContainers: true`) to handle inner containers should be all you need to add.
 - If you have a really long TOC and are seeing headings getting truncated, then have a [look at this issue for a workaround to resolve it](https://github.com/tscanlin/tocbot/issues/330).
+- If you notice strange behavior after enabling the `scrollSmooth` prop, check if you already have a global `scroll-behavior: smooth` CSS property defined. If yes, then disable the `scrollSmooth` property in tocbot config. - https://github.com/tscanlin/tocbot/issues/273#issuecomment-2916799033
 
 
 ## Contributing
