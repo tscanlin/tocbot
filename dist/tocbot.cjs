@@ -365,7 +365,7 @@ __webpack_require__.r(__webpack_exports__);
     const scrollEl = getScrollEl()
     const activeHeading = document?.getElementById(headerId)
     const isBottomMode =
-      activeHeading.offsetTop >
+      activeHeading && activeHeading.offsetTop >
       scrollEl.offsetHeight -
         scrollEl.clientHeight * 1.4 -
         options.bottomModeThreshold
